@@ -1,14 +1,19 @@
+import {useState} from "react";
 import styles from "./App.less";
 import Cmps from "./components/Cmps";
 import Content from "./components/Content";
 import EditCmps from "./components/EditCmps";
 
 function App() {
+  // const [cmpToAdd, setAddCmp] = useState(null);
+  // let cmpToAdd = null;
+  // const setAddCmp = (v) => {
+  //   cmpToAdd = v;
+  // };
   return (
     <div className={styles.main}>
       <Cmps />
       <Content />
-      <EditCmps />
     </div>
   );
 }

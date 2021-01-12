@@ -1,19 +1,18 @@
-import React from "react";
-import {useSelector, useDispatch} from "react-redux";
-import {UPDATE_CANVAS} from "../../store/reducerType";
+import styles from "./index.less";
 
 export default function Text(data) {
-  const dispatch = useDispatch();
-
-  const handleChange = (e) => {
-    const newValue = e.target.value;
-    console.log("handleChange", {...data, desc: newValue}); //sy-log
-    dispatch({type: UPDATE_CANVAS, payload: {...data, desc: newValue}});
-  };
+  const {style} = data;
 
   return (
-    <div>
-      <input type="text" value={data.desc} onChange={handleChange} />
+    <div
+      className={styles.main}
+      style={{
+        fontSize: style.fontSize,
+        width: style.width,
+        height: style.height,
+        lineHeight: style.lineHeight,
+      }}>
+      {data.value}
     </div>
   );
 }

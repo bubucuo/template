@@ -1,6 +1,6 @@
-import {createStore} from "redux";
-import {canvasReducer} from "./canvasReducer";
+import {combineReducers, createStore} from "redux";
+import {cmpsReducer} from "./cmpsReducer";
 
-const store = createStore(canvasReducer);
+const store = createStore(combineReducers({cmps: cmpsReducer}));
 
 export default store;

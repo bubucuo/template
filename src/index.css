@@ -22,5 +22,30 @@ code {
 }
 
 * {
+  margin: 0;
+  padding: 0;
+  border: none;
   box-sizing: border-box;
+}
+
+input {
+  min-width: 80px;
+  min-height: 28px;
+  line-height: 28px;
+  border: solid 1px #eee;
+  padding: 0 6px;
+}
+/* 
+input:active, input:hover, input:focus {
+  border: solid 1px yellow;
+
+} */
+
+
+.txtCenter {
+  text-align: center;
+}
+
+.selected {
+  border: solid 1px orange;
 }

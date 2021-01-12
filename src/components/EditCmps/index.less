@@ -1,7 +1,35 @@
 .main {
+  position: absolute;
+  top: 0;
+  right: 0;
   width: 320px;
+  min-height: 100%;
   background-color: white;
   font-size: 12px;
   border-left: solid 1px #dddddd;
-  padding: 4px;
+
+  .empty {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 200px;
+    margin-top: 300px;
+    font-size: 14px;
+  }
+
+  .title {
+    line-height: 36px;
+    border-bottom: solid 1px #ddd;
+    text-align: center;
+  }
+  .item {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin: 8px 0;
+    padding: 4px;
+  }
+  .itemRight {
+    margin-left: 10px;
+  }
 }
