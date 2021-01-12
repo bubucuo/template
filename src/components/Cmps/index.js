@@ -1,5 +1,5 @@
 import {useState} from "react";
-import {useSelector, useDispatch} from "react-redux";
+import {useDispatch} from "react-redux";
 import {ADD_TO_CANVAS} from "../../store/reducerType";
 import {getOnlyKey} from "../../utils";
 import {getCanvasPos, globalCanvas} from "../../utils/globalCanvas";
@@ -20,7 +20,7 @@ const menus = [
         left: 0,
         width: 80,
         height: 30,
-        lineHeight: 30,
+        lineHeight: "30px",
         fontSize: 12,
       },
     },
@@ -35,7 +35,7 @@ const menus = [
         left: 0,
         width: 80,
         height: 30,
-        lineHeight: 30,
+        lineHeight: "30px",
         fontSize: 12,
       },
     },

@@ -1,4 +1,4 @@
-import {useEffect, useRef} from "react";
+import {useEffect, useRef, useState} from "react";
 import {useSelector} from "react-redux";
 import {ADD_TO_CANVAS} from "../../store/reducerType";
 import {getOnlyKey} from "../../utils";
@@ -30,7 +30,10 @@ function getCmp(cmp, basePos) {
 }
 
 function Content(props) {
-  console.log("Content 重新渲染"); //sy-log
+  // 当前选中的组件
+
+  const [selectedCmp, setSelectCmp] = useState({});
+
   const canvasRef = useRef();
   const cmps = useSelector(({cmps}) => cmps);
   console.log("cmps", cmps); //sy-log
@@ -66,6 +69,7 @@ function Content(props) {
     };
     globalCanvas.setActiveCmp(newAllData);
     dispatch(newAllData);
+    setSelectCmp(newAllData);
   };
 
   return (
@@ -83,14 +87,16 @@ function Content(props) {
               <Draggable
                 targetData={cmp}
                 basePos={canvasRef.current}
-                key={cmp.onlyKey}>
+                key={cmp.onlyKey}
+                setSelectCmp={setSelectCmp}
+                selected={selectedCmp.onlyKey === cmp.onlyKey}>
                 {getCmp(cmp, canvasRef.current)}
               </Draggable>
             );
           })}
       </div>
 
-      <EditCmps />
+      <EditCmps selectedCmp={selectedCmp} setSelectCmp={setSelectCmp} />
     </div>
   );
 }

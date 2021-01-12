@@ -3,10 +3,10 @@ import {globalCanvas} from "../../utils/globalCanvas";
 import useUpdateCanvas from "../hooks/useUpdateCanvas";
 import styles from "./index.less";
 
-function EditCmps(props) {
-  const cmpToAdd = globalCanvas.getActiveCmp();
+function EditCmps({selectedCmp, setSelectCmp}) {
+  //const cmpToAdd = globalCanvas.getActiveCmp();
 
-  const {data} = cmpToAdd;
+  const {data} = selectedCmp; //cmpToAdd;
 
   const {style = {}} = data || {};
 
@@ -14,13 +14,14 @@ function EditCmps(props) {
 
   const handleChange = (payload) => {
     dispatch(payload);
-    globalCanvas.setActiveCmp(payload);
+    //globalCanvas.setActiveCmp(payload);
+    setSelectCmp(payload);
   };
 
   const handleValueChange = (e) => {
     const newValue = e.target.value;
     let payload = {
-      ...cmpToAdd,
+      ...selectedCmp,
       data: {
         ...data,
         value: newValue,
@@ -33,7 +34,7 @@ function EditCmps(props) {
   const handleStyleChange = (e, name) => {
     const newValue = e.target.value;
     let payload = {
-      ...cmpToAdd,
+      ...selectedCmp,
       data: {
         ...data,
         style: {
@@ -55,7 +56,7 @@ function EditCmps(props) {
       )}
       {data && (
         <>
-          <div className={styles.title}>{cmpToAdd.desc}</div>
+          <div className={styles.title}>{selectedCmp.desc}</div>
           <Item label="描述">
             <input
               className={styles.itemRight}

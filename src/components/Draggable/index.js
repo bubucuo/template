@@ -5,7 +5,15 @@ import {useEffect, useRef, useState} from "react";
 import {globalCanvas} from "../../utils/globalCanvas";
 import {useForceUpdate} from "../../utils";
 
-export default function Draggable({children, targetData, basePos}) {
+// setSelectCmp 选中的组件
+// selected 是否是选中的组件，选中的组件加橙色标记边框
+export default function Draggable({
+  children,
+  targetData,
+  basePos,
+  setSelectCmp,
+  selected,
+}) {
   const forceUpdate = useForceUpdate();
 
   const {style} = targetData.data;
@@ -33,8 +41,9 @@ export default function Draggable({children, targetData, basePos}) {
   };
 
   const setActive = () => {
-    globalCanvas.setActiveCmp(targetData);
-    forceUpdate();
+    // globalCanvas.setActiveCmp(targetData);
+    // forceUpdate();
+    setSelectCmp(targetData);
   };
 
   const domStyle = {
@@ -46,13 +55,12 @@ export default function Draggable({children, targetData, basePos}) {
 
   useEffect(() => {}, [pos]);
 
-  let activeCmp = globalCanvas.getActiveCmp();
-  let selected = activeCmp.onlyKey === targetData.onlyKey;
-
   return (
     <div
       ref={dragRef}
-      className={classnames(styles.main, ("selected": selected))}
+      className={
+        styles.main + " " + (selected ? "selected" : styles.unselected)
+      }
       style={domStyle}
       draggable={true}
       onDrag={onDrag}
