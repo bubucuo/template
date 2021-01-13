@@ -3,12 +3,27 @@ import {globalCanvas} from "../../utils/globalCanvas";
 import useUpdateCanvas from "../hooks/useUpdateCanvas";
 import styles from "./index.less";
 
-function EditCmps({selectedCmp, setSelectCmp, editCmp}) {
+export default function EditCmp(props) {
+  console.log("props", props); //sy-log
+  return props.selectedCmp ? <Edit {...props} /> : <EmptyEditCmp />;
+}
+
+function EmptyEditCmp() {
+  return (
+    <div className={styles.main}>
+      <div className={styles.empty}>
+        <p>编辑区域</p>
+      </div>
+    </div>
+  );
+}
+
+function Edit({selectedCmp, setSelectCmp, editCmp}) {
   //const cmpToAdd = globalCanvas.getActiveCmp();
 
   const {data} = selectedCmp; //cmpToAdd;
 
-  const {style = {}} = data || {};
+  const {style} = data;
 
   const [dispatch] = useUpdateCanvas();
 
@@ -50,35 +65,28 @@ function EditCmps({selectedCmp, setSelectCmp, editCmp}) {
 
   return (
     <div className={styles.main}>
-      {!data && (
-        <div className={styles.empty}>
-          <p>编辑区域</p>
-        </div>
-      )}
-      {data && (
-        <>
-          <div className={styles.title}>{selectedCmp.desc}</div>
-          <Item label="描述">
+      <>
+        <div className={styles.title}>{selectedCmp.desc}</div>
+        <Item label="描述">
+          <input
+            className={styles.itemRight}
+            type="text"
+            value={data.value}
+            onChange={(e) => handleValueChange(e)}
+          />
+        </Item>
+
+        {style.fontSize && (
+          <Item label="字体">
             <input
               className={styles.itemRight}
-              type="text"
-              value={data.value}
-              onChange={(e) => handleValueChange(e)}
+              type="number"
+              value={style.fontSize}
+              onChange={(e) => handleStyleChange(e, "fontSize")}
             />
           </Item>
-
-          {style.fontSize && (
-            <Item label="字体">
-              <input
-                className={styles.itemRight}
-                type="number"
-                value={style.fontSize}
-                onChange={(e) => handleStyleChange(e, "fontSize")}
-              />
-            </Item>
-          )}
-        </>
-      )}
+        )}
+      </>
     </div>
   );
 }
@@ -91,5 +99,3 @@ function Item({label, children}) {
     </div>
   );
 }
-
-export default EditCmps;

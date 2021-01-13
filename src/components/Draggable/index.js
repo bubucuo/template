@@ -10,7 +10,6 @@ import {useForceUpdate} from "../../utils";
 export default function Draggable({
   children,
   targetData,
-  basePos,
   setSelectCmp,
   selected,
 }) {
@@ -33,27 +32,33 @@ export default function Draggable({
   };
 
   const onDragEnd = (e) => {
-    let _pos = {
-      top: basePos.top - pos.top,
-      left: basePos.left - pos.left,
-    };
-    update({...targetData, style: _pos});
+    // let _pos = {
+    //   top: basePos.top - pos.top,
+    //   left: basePos.left - pos.left,
+    // };
+    // update({...targetData, style: _pos});
   };
 
-  const setActive = () => {
+  const setActive = (e) => {
+    e.stopPropagation();
+
     // globalCanvas.setActiveCmp(targetData);
     // forceUpdate();
     setSelectCmp(targetData);
   };
 
   const domStyle = {
-    top: style.top, //+ basePos.top,
-    left: style.left, //+ basePos.left,
-    width: style.width,
-    height: style.height,
+    // top: style.top, //+ basePos.top,
+    // left: style.left, //+ basePos.left,
+    // width: style.width,
+    // height: style.height,
+
+    ...style,
+    top: style.top,
+    left: style.left,
   };
 
-  useEffect(() => {}, [pos]);
+  // useEffect(() => {}, [pos]);
 
   return (
     <div

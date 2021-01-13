@@ -2,7 +2,7 @@ import {useState} from "react";
 import {useDispatch} from "react-redux";
 import {ADD_TO_CANVAS} from "../../store/reducerType";
 import {getOnlyKey} from "../../utils";
-import {getCanvasPos, globalCanvas} from "../../utils/globalCanvas";
+import {globalCanvas} from "../../utils/globalCanvas";
 import styles from "./index.less";
 
 export const TextComponent = 0;
