@@ -7,6 +7,7 @@ function getNewStateFromUpdate(state, newData) {
       newState[index] = {...newData};
     }
   });
+
   return newState;
 }
 

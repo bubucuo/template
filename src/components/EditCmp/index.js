@@ -3,7 +3,7 @@ import {globalCanvas} from "../../utils/globalCanvas";
 import useUpdateCanvas from "../hooks/useUpdateCanvas";
 import styles from "./index.less";
 
-function EditCmps({selectedCmp, setSelectCmp}) {
+function EditCmps({selectedCmp, setSelectCmp, editCmp}) {
   //const cmpToAdd = globalCanvas.getActiveCmp();
 
   const {data} = selectedCmp; //cmpToAdd;
@@ -13,8 +13,9 @@ function EditCmps({selectedCmp, setSelectCmp}) {
   const [dispatch] = useUpdateCanvas();
 
   const handleChange = (payload) => {
-    dispatch(payload);
+    // dispatch(payload);
     //globalCanvas.setActiveCmp(payload);
+    editCmp(payload);
     setSelectCmp(payload);
   };
 

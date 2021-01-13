@@ -63,6 +63,7 @@ export default function Draggable({
       }
       style={domStyle}
       draggable={true}
+      onDragStart={setActive}
       onDrag={onDrag}
       onDragEnd={onDragEnd}
       onClick={setActive}>
