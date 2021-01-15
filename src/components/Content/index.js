@@ -1,12 +1,8 @@
 import {useEffect, useReducer, useRef, useState} from "react";
-import {useSelector} from "react-redux";
 import {cmpsReducer} from "../../store/cmpsReducer";
 import {ADD_TO_CANVAS, UPDATE_CANVAS} from "../../store/reducerType";
-import {getOnlyKey, useForceUpdate} from "../../utils";
-import {
-  // getCanvasPos,
-  globalCanvas,
-} from "../../utils/globalCanvas";
+import {getOnlyKey} from "../../utils";
+import {globalCanvas} from "../../utils/globalCanvas";
 import Button from "../Button";
 import {ButtonComponent, TextComponent} from "../Cmps/index";
 import Draggable from "../Draggable";
@@ -74,7 +70,7 @@ function Content(props) {
 
       let addingCmp = globalCanvas.getActiveCmp();
 
-      resData = {...addingCmp, index: cmps.length};
+      resData = {...addingCmp};
     } else {
       // 移动画布内的组件
       top = e.pageY - canvasPos.top - 15;
@@ -104,23 +100,24 @@ function Content(props) {
     setSelectCmp(newAllData);
   };
 
-  const forceUpdate = useForceUpdate();
-
   const editCmp = (cmp) => {
-    console.log("当前组件", cmp, !cmp.data); //sy-log
     let newCmps = cmps;
-    if (!cmp.data) {
-      // 删除
-      newCmps.splice(cmp.index, 1);
-      // setCmps(newCmps);
-      setSelectCmp(null);
-    }
+    let index; //记录找到指定组件的下标
     for (let i = 0; i < newCmps.length; i++) {
       if (newCmps[i].onlyKey === cmp.onlyKey) {
-        newCmps[i] = cmp;
-        setCmps(newCmps);
+        index = i;
         break;
       }
+    }
+
+    if (cmp.data) {
+      // 参数更新
+      newCmps[index] = cmp;
+      setCmps(newCmps);
+    } else {
+      // 删除
+      newCmps.splice(index, 1);
+      setSelectCmp(null);
     }
   };
 
@@ -136,12 +133,11 @@ function Content(props) {
         // 点击画布非组件区域的时候，取消选中的组件
         onClick={() => setSelectCmp(null)}>
         {canvasRef.current &&
-          cmps.map((cmp, index) => {
+          cmps.map((cmp) => {
             return cmp.data ? (
               <Draggable
                 cmp={cmp}
                 key={cmp.onlyKey}
-                index={index}
                 setSelectCmp={setSelectCmp}
                 editCmp={editCmp}
                 selected={(selectedCmp && selectedCmp.onlyKey) === cmp.onlyKey}>

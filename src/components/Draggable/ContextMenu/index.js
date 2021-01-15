@@ -1,6 +1,6 @@
 import styles from "./index.less";
 
-export default function ContextMenu({pos, cmp, editCmp, index}) {
+export default function ContextMenu({pos, cmp, editCmp}) {
   const del = (e) => {
     e.stopPropagation();
     editCmp({

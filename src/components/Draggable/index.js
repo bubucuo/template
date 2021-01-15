@@ -10,7 +10,6 @@ export default function Draggable({
   setSelectCmp,
   selected,
   editCmp,
-  index,
 }) {
   const [showContextMenu, setShowContextMenu] = useState(false);
   const {style} = cmp.data;
@@ -29,7 +28,7 @@ export default function Draggable({
     document.getElementById("root").addEventListener("click", () => {
       // 点击非组件区域的时候，取消选中的组件
       // setSelectCmp(null);
-      setShowContextMenu(false);
+      showContextMenu && setShowContextMenu(false);
     });
   }, []);
 
@@ -50,7 +49,6 @@ export default function Draggable({
         <ContextMenu
           pos={{top: style.top + 10, left: style.left + 60}}
           cmp={cmp}
-          index={index}
           editCmp={editCmp}
         />
       )}
