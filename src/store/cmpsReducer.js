@@ -1,4 +1,4 @@
-import {ADD_TO_CANVAS, UPDATE_CANVAS} from "./reducerType";
+import {ADD_TO_CANVAS, UPDATE_CANVAS, REPLACE_CANVAS} from "./reducerType";
 
 function getNewStateFromUpdate(state, newData) {
   let newState = [...state];

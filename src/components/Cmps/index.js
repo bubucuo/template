@@ -1,7 +1,3 @@
-import {useState} from "react";
-import {useDispatch} from "react-redux";
-import {ADD_TO_CANVAS} from "../../store/reducerType";
-import {getOnlyKey} from "../../utils";
 import {globalCanvas} from "../../utils/globalCanvas";
 import styles from "./index.less";
 
@@ -54,15 +50,10 @@ const menus = [
 ];
 
 export default function Cmps(props) {
-  const dispatch = useDispatch();
-
   const handleDragStart = (e, data) => {
-    // props.setAddCmp({...data});
+    let startPos = {pageX: e.pageY, pageY: e.pageY};
+    e.dataTransfer.setData("startPos", JSON.stringify(startPos));
     globalCanvas.setActiveCmp({...data});
-  };
-
-  const handleDragEnd = (e, data) => {
-    // props.setAddCmp(null);
   };
 
   return (
@@ -72,8 +63,7 @@ export default function Cmps(props) {
           key={item.desc}
           className={styles.cmp}
           draggable="true"
-          onDragStart={(e) => handleDragStart(e, item)}
-          onDragEnd={(e) => handleDragEnd(e, item)}>
+          onDragStart={(e) => handleDragStart(e, item)}>
           {item.desc}
         </span>
       ))}

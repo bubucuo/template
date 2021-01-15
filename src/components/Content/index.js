@@ -2,7 +2,7 @@ import {useEffect, useReducer, useRef, useState} from "react";
 import {useSelector} from "react-redux";
 import {cmpsReducer} from "../../store/cmpsReducer";
 import {ADD_TO_CANVAS, UPDATE_CANVAS} from "../../store/reducerType";
-import {getOnlyKey} from "../../utils";
+import {getOnlyKey, useForceUpdate} from "../../utils";
 import {
   // getCanvasPos,
   globalCanvas,
@@ -61,20 +61,28 @@ function Content(props) {
     e.preventDefault();
     e.stopPropagation();
 
-    let resData; //将要移动到画布的组件信息或者是移动中的组件信息
+    let startPos = e.dataTransfer.getData("startPos");
 
-    // globalCanvas中存的是新增的
-    let addingCmp = globalCanvas.getActiveCmp();
-    if (addingCmp.data) {
-      resData = {...addingCmp};
-      // 置空将要要添加的组件信息
-      globalCanvas.setActiveCmp(null);
+    let resData;
+    let top, left;
+
+    if (startPos) {
+      // 移动新增的组件
+      startPos = JSON.parse(startPos);
+      top = e.pageY - canvasPos.top - 15;
+      left = e.pageX - canvasPos.left - 40;
+
+      let addingCmp = globalCanvas.getActiveCmp();
+
+      resData = {...addingCmp, index: cmps.length};
     } else {
+      // 移动画布内的组件
+      top = e.pageY - canvasPos.top - 15;
+      left = e.pageX - canvasPos.left - 40;
+
       resData = selectedCmp;
     }
 
-    let top = e.pageY - canvasPos.top;
-    let left = e.pageX - canvasPos.left;
     const style = {...resData.data.style, top, left};
     let newAllData = {
       ...resData,
@@ -96,22 +104,25 @@ function Content(props) {
     setSelectCmp(newAllData);
   };
 
+  const forceUpdate = useForceUpdate();
+
   const editCmp = (cmp) => {
-    for (let i = 0; i < cmps.length; i++) {
-      if (cmps[i].onlyKey === cmp.onlyKey) {
-        cmps[i] = cmp;
-        setCmps(cmps);
+    console.log("当前组件", cmp, !cmp.data); //sy-log
+    let newCmps = cmps;
+    if (!cmp.data) {
+      // 删除
+      newCmps.splice(cmp.index, 1);
+      // setCmps(newCmps);
+      setSelectCmp(null);
+    }
+    for (let i = 0; i < newCmps.length; i++) {
+      if (newCmps[i].onlyKey === cmp.onlyKey) {
+        newCmps[i] = cmp;
+        setCmps(newCmps);
         break;
       }
     }
   };
-
-  useEffect(() => {
-    // document.getElementById("root").addEventListener("click", () => {
-    //   // 点击非组件区域的时候，取消选中的组件
-    //   setSelectCmp(null);
-    // });
-  }, []);
 
   return (
     <div className={styles.main}>
@@ -125,16 +136,18 @@ function Content(props) {
         // 点击画布非组件区域的时候，取消选中的组件
         onClick={() => setSelectCmp(null)}>
         {canvasRef.current &&
-          cmps.map((cmp) => {
-            return (
+          cmps.map((cmp, index) => {
+            return cmp.data ? (
               <Draggable
-                targetData={cmp}
+                cmp={cmp}
                 key={cmp.onlyKey}
+                index={index}
                 setSelectCmp={setSelectCmp}
+                editCmp={editCmp}
                 selected={(selectedCmp && selectedCmp.onlyKey) === cmp.onlyKey}>
                 {getCmp(cmp)}
               </Draggable>
-            );
+            ) : null;
           })}
       </div>
 

@@ -4,7 +4,6 @@ import useUpdateCanvas from "../hooks/useUpdateCanvas";
 import styles from "./index.less";
 
 export default function EditCmp(props) {
-  console.log("props", props); //sy-log
   return props.selectedCmp ? <Edit {...props} /> : <EmptyEditCmp />;
 }
 
@@ -19,8 +18,6 @@ function EmptyEditCmp() {
 }
 
 function Edit({selectedCmp, setSelectCmp, editCmp}) {
-  //const cmpToAdd = globalCanvas.getActiveCmp();
-
   const {data} = selectedCmp; //cmpToAdd;
 
   const {style} = data;
@@ -28,8 +25,6 @@ function Edit({selectedCmp, setSelectCmp, editCmp}) {
   const [dispatch] = useUpdateCanvas();
 
   const handleChange = (payload) => {
-    // dispatch(payload);
-    //globalCanvas.setActiveCmp(payload);
     editCmp(payload);
     setSelectCmp(payload);
   };

@@ -35,11 +35,17 @@ input {
   border: solid 1px #eee;
   padding: 0 6px;
 }
-/* 
-input:active, input:hover, input:focus {
-  border: solid 1px yellow;
 
-} */
+input,button,a {
+  outline:0 none ;
+}
+
+ul {
+  list-style-type: none;
+}
+
+
+
 
 
 .txtCenter {

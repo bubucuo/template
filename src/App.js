@@ -2,7 +2,6 @@ import {useState} from "react";
 import styles from "./App.less";
 import Cmps from "./components/Cmps";
 import Content from "./components/Content";
-import EditCmps from "./components/EditCmps";
 
 function App() {
   // const [cmpToAdd, setAddCmp] = useState(null);
