@@ -1,12 +1,17 @@
 import {useEffect, useReducer, useRef, useState} from "react";
 import {cmpsReducer} from "../../store/cmpsReducer";
-import {ADD_TO_CANVAS, UPDATE_CANVAS} from "../../store/reducerType";
-import {getOnlyKey} from "../../utils";
+import {
+  ADD_TO_CANVAS,
+  UPDATE_CANVAS,
+  REPLACE_CANVAS,
+} from "../../store/reducerType";
+import {getOnlyKey, useForceUpdate} from "../../utils";
 import {globalCanvas} from "../../utils/globalCanvas";
 import Button from "../Button";
-import {ButtonComponent, TextComponent} from "../Cmps/index";
+import {ButtonComponent, ImgComponent, TextComponent} from "../Cmps/index";
 import Draggable from "../Draggable";
 import EditCmp from "../EditCmp";
+import Img from "../Img";
 import Text from "../Text";
 import styles from "./index.less";
 
@@ -20,6 +25,8 @@ function getCmp(cmp) {
     case ButtonComponent:
       res = <Button {...data} />;
       break;
+    case ImgComponent:
+      res = <Img {...data} />;
   }
   return res;
 }
@@ -62,6 +69,7 @@ function Content(props) {
     let resData;
     let top, left;
 
+    let style;
     if (startPos) {
       // 移动新增的组件
       startPos = JSON.parse(startPos);
@@ -71,6 +79,9 @@ function Content(props) {
       let addingCmp = globalCanvas.getActiveCmp();
 
       resData = {...addingCmp};
+      style = {
+        //zIndex: cmps.length, // 以下标来定义层级关系
+      };
     } else {
       // 移动画布内的组件
       top = e.pageY - canvasPos.top - 15;
@@ -79,7 +90,7 @@ function Content(props) {
       resData = selectedCmp;
     }
 
-    const style = {...resData.data.style, top, left};
+    style = {...resData.data.style, ...style, top, left};
     let newAllData = {
       ...resData,
       data: {
@@ -121,6 +132,28 @@ function Content(props) {
     }
   };
 
+  const editCmpStyle = (cmp, newStyle) => {
+    editCmp({
+      ...cmp,
+      data: {...cmp.data, style: {...cmp.data.style, ...newStyle}},
+    });
+  };
+
+  const forceUpdate = useForceUpdate();
+
+  // 交换i、j位置的元素
+  const changeCmpIndex = (i, j = cmps.length - 1) => {
+    if (i === j) {
+      return;
+    }
+
+    let newCmps = [...cmps];
+    let tem = newCmps[i];
+    newCmps[i] = newCmps[j];
+    newCmps[j] = tem;
+    setCmps({type: REPLACE_CANVAS, payload: newCmps});
+  };
+
   return (
     <div className={styles.main}>
       <div
@@ -131,15 +164,23 @@ function Content(props) {
         onDragLeave={handleDragLeave}
         onDrop={handleDrop}
         // 点击画布非组件区域的时候，取消选中的组件
-        onClick={() => setSelectCmp(null)}>
+        onClick={() => {
+          console.log("cancel"); //sy-log
+          setSelectCmp(null);
+        }}
+        //
+      >
         {canvasRef.current &&
-          cmps.map((cmp) => {
+          cmps.map((cmp, index) => {
             return cmp.data ? (
               <Draggable
+                index={index}
                 cmp={cmp}
                 key={cmp.onlyKey}
                 setSelectCmp={setSelectCmp}
                 editCmp={editCmp}
+                editCmpStyle={editCmpStyle}
+                changeCmpIndex={changeCmpIndex}
                 selected={(selectedCmp && selectedCmp.onlyKey) === cmp.onlyKey}>
                 {getCmp(cmp)}
               </Draggable>

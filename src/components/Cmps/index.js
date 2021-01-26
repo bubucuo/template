@@ -12,7 +12,7 @@ const menus = [
       type: TextComponent,
       value: "文本",
       style: {
-        top: 0,
+        top: 1,
         left: 0,
         width: 80,
         height: 30,
@@ -40,10 +40,11 @@ const menus = [
     desc: "图片",
     data: {
       type: ImgComponent,
-      value: "文字",
+      value: "",
       style: {
         top: 0,
         left: 0,
+        width: 200,
       },
     },
   },

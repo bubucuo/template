@@ -44,6 +44,9 @@ function Edit({selectedCmp, setSelectCmp, editCmp}) {
 
   const handleStyleChange = (e, name) => {
     const newValue = e.target.value;
+    // if (!validate(newValue)) {
+    //   return;
+    // }
     let payload = {
       ...selectedCmp,
       data: {
@@ -62,16 +65,18 @@ function Edit({selectedCmp, setSelectCmp, editCmp}) {
     <div className={styles.main}>
       <>
         <div className={styles.title}>{selectedCmp.desc}</div>
-        <Item label="描述">
-          <input
-            className={styles.itemRight}
-            type="text"
-            value={data.value}
-            onChange={(e) => handleValueChange(e)}
-          />
-        </Item>
+        {data.value !== undefined && (
+          <Item label="描述">
+            <input
+              className={styles.itemRight}
+              type="text"
+              value={data.value}
+              onChange={(e) => handleValueChange(e)}
+            />
+          </Item>
+        )}
 
-        {style.fontSize && (
+        {style.fontSize !== undefined && (
           <Item label="字体">
             <input
               className={styles.itemRight}
@@ -81,6 +86,15 @@ function Edit({selectedCmp, setSelectCmp, editCmp}) {
             />
           </Item>
         )}
+
+        {/* <Item label="层级">
+          <input
+            className={styles.itemRight}
+            type="number"
+            value={style.zIndex}
+            onChange={(e) => handleStyleChange(e, "zIndex", (v) => v >= 0)}
+          />
+        </Item> */}
       </>
     </div>
   );

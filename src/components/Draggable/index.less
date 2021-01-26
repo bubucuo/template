@@ -2,6 +2,7 @@
   position: absolute;
   // padding: 1px;
   box-sizing: content-box;
+  border: 1px solid #02dcf7;
 
   &.unselected {
     border: solid 1px transparent;
@@ -9,5 +10,18 @@
 
   &:active {
     border: solid 2px orange;
+  }
+}
+
+.stretch {
+  position: absolute;
+  @size: 8px;
+  li {
+    z-index: 9999;
+    position: absolute;
+    width: @size;
+    height: @size;
+    background-color: #02dcf7;
+    border-radius: 50%;
   }
 }
