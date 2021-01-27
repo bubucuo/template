@@ -1,6 +1,7 @@
 import {useForceUpdate} from "../../utils";
 import {globalCanvas} from "../../utils/globalCanvas";
 import useUpdateCanvas from "../hooks/useUpdateCanvas";
+import InputColor from "react-input-color";
 import styles from "./index.less";
 
 export default function EditCmp(props) {
@@ -42,18 +43,14 @@ function Edit({selectedCmp, setSelectCmp, editCmp}) {
     handleChange(payload);
   };
 
-  const handleStyleChange = (e, name) => {
-    const newValue = e.target.value;
-    // if (!validate(newValue)) {
-    //   return;
-    // }
+  const handleStyleChange = ({name, value}) => {
     let payload = {
       ...selectedCmp,
       data: {
         ...data,
         style: {
           ...style,
-          [name]: newValue,
+          [name]: value,
         },
       },
     };
@@ -82,7 +79,33 @@ function Edit({selectedCmp, setSelectCmp, editCmp}) {
               className={styles.itemRight}
               type="number"
               value={style.fontSize}
-              onChange={(e) => handleStyleChange(e, "fontSize")}
+              onChange={(e) =>
+                handleStyleChange({name: "fontSize", value: e.target.value})
+              }
+            />
+          </Item>
+        )}
+
+        {style.color !== undefined && (
+          <Item label="颜色">
+            <InputColor
+              className={styles.itemRight}
+              initialValue={style.color}
+              onChange={(e) => handleStyleChange({name: "color", value: e.hex})}
+              placement="right"
+            />
+          </Item>
+        )}
+
+        {style.backgroundColor !== undefined && (
+          <Item label="背景颜色">
+            <InputColor
+              className={styles.itemRight}
+              initialValue={style.backgroundColor}
+              onChange={(e) =>
+                handleStyleChange({name: "backgroundColor", value: e.hex})
+              }
+              placement="right"
             />
           </Item>
         )}

@@ -32,6 +32,8 @@ export const menus = [
         height: 30,
         lineHeight: 30,
         fontSize: 12,
+        color: "#ff0000",
+        backgroundColor: "#f5deb3",
       },
     },
   },
