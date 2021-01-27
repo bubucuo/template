@@ -85,9 +85,6 @@ export default function Draggable({
     document.addEventListener("mouseup", up);
   };
 
-  const handleMouseDownOfLeft = (e) => {};
-
-  const handleMouseDownOfRight = (e) => {};
   return (
     <>
       <div
