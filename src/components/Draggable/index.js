@@ -49,8 +49,6 @@ export default function Draggable({
 
     const target = e.target;
 
-    console.log("e", target); //sy-log
-
     const move = (e) => {
       let x = e.pageX;
       let y = e.pageY;
@@ -58,8 +56,6 @@ export default function Draggable({
       let disX = x - startX;
       let disY = y - startY;
       let newStyle = {};
-
-      console.log("direction", direction); //sy-log
 
       if (direction) {
         if (direction.indexOf("top") >= 0) {

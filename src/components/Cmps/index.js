@@ -45,6 +45,7 @@ const menus = [
         top: 0,
         left: 0,
         width: 200,
+        height: 100,
       },
     },
   },
