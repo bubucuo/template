@@ -85,6 +85,13 @@ export default function Draggable({
     document.addEventListener("mouseup", up);
   };
 
+  const handleDragStart = (e) => {
+    setActive(e);
+    let startX = e.pageX;
+    let startY = e.pageY;
+    e.dataTransfer.setData("startPos", JSON.stringify({startX, startY}));
+  };
+
   return (
     <>
       <div
@@ -93,7 +100,9 @@ export default function Draggable({
         }
         style={{...style, zIndex: index}}
         draggable={true}
-        onDragStart={setActive}
+        //onDragStart={setActive}
+        onDragStart={handleDragStart}
+        //onMouseDown={handleCmpMouseDown}
         onClick={setActive}
         onContextMenu={handleContextMenu}>
         {children}

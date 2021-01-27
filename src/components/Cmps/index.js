@@ -1,11 +1,10 @@
-import {globalCanvas} from "../../utils/globalCanvas";
 import styles from "./index.less";
 
 export const TextComponent = 0;
 export const ButtonComponent = 1;
 export const ImgComponent = 2;
 
-const menus = [
+export const menus = [
   {
     desc: "文本",
     data: {
@@ -53,9 +52,7 @@ const menus = [
 
 export default function Cmps(props) {
   const handleDragStart = (e, data) => {
-    let startPos = {pageX: e.pageY, pageY: e.pageY};
-    e.dataTransfer.setData("startPos", JSON.stringify(startPos));
-    globalCanvas.setActiveCmp({...data});
+    e.dataTransfer.setData("add-component", JSON.stringify(data));
   };
 
   return (

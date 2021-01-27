@@ -4,9 +4,9 @@ import {
   ADD_TO_CANVAS,
   UPDATE_CANVAS,
   REPLACE_CANVAS,
+  UPDATE_CANVAS_STYLE,
 } from "../../store/reducerType";
 import {getOnlyKey, useForceUpdate} from "../../utils";
-import {globalCanvas} from "../../utils/globalCanvas";
 import Button from "../Button";
 import {ButtonComponent, ImgComponent, TextComponent} from "../Cmps/index";
 import Draggable from "../Draggable";
@@ -64,51 +64,49 @@ function Content(props) {
     e.preventDefault();
     e.stopPropagation();
 
-    let startPos = e.dataTransfer.getData("startPos");
+    // 新增的组件
+    let addingCmp = e.dataTransfer.getData("add-component");
 
-    let resData;
     let top, left;
-
-    let style;
-    if (startPos) {
-      // 移动新增的组件
-      startPos = JSON.parse(startPos);
+    if (addingCmp) {
+      // 拖拽进来新增的组件
+      addingCmp = JSON.parse(addingCmp);
       top = e.pageY - canvasPos.top - 15;
       left = e.pageX - canvasPos.left - 40;
-
-      let addingCmp = globalCanvas.getActiveCmp();
-
-      resData = {...addingCmp};
-      style = {
-        //zIndex: cmps.length, // 以下标来定义层级关系
+      let resData = {
+        ...addingCmp,
+        onlyKey: getOnlyKey(),
+        data: {
+          ...addingCmp.data,
+          style: {
+            ...addingCmp.data.style,
+            top,
+            left,
+          },
+        },
       };
+      setCmps({type: ADD_TO_CANVAS, payload: resData});
+      setSelectCmp(resData);
     } else {
-      // 移动画布内的组件
-      top = e.pageY - canvasPos.top - 15;
-      left = e.pageX - canvasPos.left - 40;
+      // 拖拽画布内的组件
+      let resData = {...selectedCmp};
+      let startPos = e.dataTransfer.getData("startPos");
+      startPos = JSON.parse(startPos);
 
-      resData = selectedCmp;
+      let disX = e.pageX - startPos.startX;
+      let disY = e.pageY - startPos.startY;
+
+      top = resData.data.style.top + disY;
+      left = resData.data.style.left + disX;
+
+      setCmps({
+        type: UPDATE_CANVAS_STYLE,
+        payload: {
+          cmp: resData,
+          style: {top, left},
+        },
+      });
     }
-
-    style = {...resData.data.style, ...style, top, left};
-    let newAllData = {
-      ...resData,
-      data: {
-        ...resData.data,
-        style,
-      },
-    };
-
-    // 如果还没有onlyKey，证明是新增进来的
-    // 如果没有，则是拖动，这个时候更新位置即可
-    if (!newAllData.onlyKey) {
-      newAllData.onlyKey = getOnlyKey();
-      setCmps({type: ADD_TO_CANVAS, payload: newAllData});
-    } else {
-      setCmps({type: UPDATE_CANVAS, payload: newAllData});
-    }
-
-    setSelectCmp(newAllData);
   };
 
   const editCmp = (cmp) => {
