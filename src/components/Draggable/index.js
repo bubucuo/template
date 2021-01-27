@@ -40,7 +40,7 @@ export default function Draggable({
   const width = style.width,
     height = style.height;
 
-  const handleMouseDown = (e) => {
+  const handleMouseDown = (e, direction) => {
     e.stopPropagation();
     e.preventDefault();
 
@@ -55,14 +55,28 @@ export default function Draggable({
       let x = e.pageX;
       let y = e.pageY;
 
-      const disX = x - startX;
-      const disY = y - startY;
+      let disX = x - startX;
+      let disY = y - startY;
+      let newStyle = {};
 
-      console.log("ddddddddd", disX, disY); //sy-log
+      console.log("direction", direction); //sy-log
+
+      if (direction) {
+        if (direction.indexOf("top") >= 0) {
+          disY = 0 - disY;
+          newStyle.top = cmp.data.style.top - disY;
+        }
+
+        if (direction.indexOf("left") >= 0) {
+          disX = 0 - disX;
+          newStyle.left = cmp.data.style.left - disX;
+        }
+      }
 
       editCmpStyle(cmp, {
         width: cmp.data.style.width + disX,
         height: cmp.data.style.height + disY,
+        ...newStyle,
       });
     };
 
@@ -93,19 +107,23 @@ export default function Draggable({
       </div>
       {selected && (
         <ul className={styles.stretch}>
-          <li className="top left" style={{top, left}}></li>
+          <li
+            className="top left"
+            style={{top, left}}
+            onMouseDown={(e) => handleMouseDown(e, "top left")}
+          />
           <li
             className="top"
             style={{
               top,
               left: left + width / 2,
             }}
-            onMouseDown={handleMouseDown}
+            onMouseDown={(e) => handleMouseDown(e, "top")}
           />
           <li
             className="top right"
             style={{top, left: left + width + 2}}
-            onMouseDown={handleMouseDown}
+            onMouseDown={(e) => handleMouseDown(e, "top right")}
           />
           <li
             className="right"
@@ -137,7 +155,7 @@ export default function Draggable({
               top: top + height + 2,
               left,
             }}
-            onMouseDown={handleMouseDown}
+            onMouseDown={(e) => handleMouseDown(e, "bottom left")}
           />
           <li
             className="left"
@@ -145,7 +163,7 @@ export default function Draggable({
               top: top + height / 2,
               left,
             }}
-            onMouseDown={handleMouseDown}
+            onMouseDown={(e) => handleMouseDown(e, "left")}
           />
         </ul>
       )}
