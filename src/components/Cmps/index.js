@@ -4,6 +4,8 @@ export const TextComponent = 0;
 export const ButtonComponent = 1;
 export const ImgComponent = 2;
 
+const commomStyle = {};
+
 export const menus = [
   {
     desc: "文本",
@@ -17,6 +19,10 @@ export const menus = [
         height: 30,
         lineHeight: 30,
         fontSize: 12,
+        color: "#ff0000",
+        backgroundColor: "#f5deb3",
+        textAlign: "left",
+        borderRadius: "0%",
       },
     },
   },
@@ -34,6 +40,8 @@ export const menus = [
         fontSize: 12,
         color: "#ff0000",
         backgroundColor: "#f5deb3",
+        textAlign: "left",
+        borderRadius: "0%",
       },
     },
   },
@@ -41,12 +49,14 @@ export const menus = [
     desc: "图片",
     data: {
       type: ImgComponent,
-      value: "",
+      value:
+        "https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=1333208373,3297678241&fm=26&gp=0.jpg", // 图片地址
       style: {
         top: 0,
         left: 0,
         width: 200,
         height: 100,
+        borderRadius: "0%",
       },
     },
   },

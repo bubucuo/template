@@ -92,6 +92,7 @@ export default function Draggable({
     e.dataTransfer.setData("startPos", JSON.stringify({startX, startY}));
   };
 
+  console.log("ssssssssssss", style); //sy-log
   return (
     <>
       <div

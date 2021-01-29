@@ -58,12 +58,14 @@ function Edit({selectedCmp, setSelectCmp, editCmp}) {
     handleChange(payload);
   };
 
+  console.log("哈哈哈哈", style.borderRadius); //sy-log
+
   return (
     <div className={styles.main}>
       <>
         <div className={styles.title}>{selectedCmp.desc}</div>
         {data.value !== undefined && (
-          <Item label="描述">
+          <Item label={selectedCmp.desc === "图片" ? "图片地址" : "描述"}>
             <input
               className={styles.itemRight}
               type="text"
@@ -81,6 +83,49 @@ function Edit({selectedCmp, setSelectCmp, editCmp}) {
               value={style.fontSize}
               onChange={(e) =>
                 handleStyleChange({name: "fontSize", value: e.target.value})
+              }
+            />
+          </Item>
+        )}
+        {style.lineHeight !== undefined && (
+          <Item label="行高">
+            <input
+              className={styles.itemRight}
+              type="number"
+              value={style.lineHeight}
+              onChange={(e) =>
+                handleStyleChange({name: "lineHeight", value: e.target.value})
+              }
+            />
+          </Item>
+        )}
+
+        {style.textAlign !== undefined && (
+          <Item label="对齐">
+            <select
+              className={styles.itemRight}
+              value={style.textAlign}
+              onChange={(e) => {
+                handleStyleChange({name: "textAlign", value: e.target.value});
+              }}>
+              <option value="left">居左</option>
+              <option value="center">居中</option>
+              <option value="right">居右边</option>
+            </select>
+          </Item>
+        )}
+
+        {style.borderRadius !== undefined && (
+          <Item label="圆角">
+            <input
+              className={styles.itemRight}
+              type="text"
+              value={style.borderRadius}
+              onChange={(e) =>
+                handleStyleChange({
+                  name: "borderRadius",
+                  value: e.target.value,
+                })
               }
             />
           </Item>

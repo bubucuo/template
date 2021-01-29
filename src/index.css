@@ -28,7 +28,7 @@ code {
   box-sizing: border-box;
 }
 
-input {
+select,input {
   min-width: 80px;
   min-height: 28px;
   line-height: 28px;
@@ -36,7 +36,7 @@ input {
   padding: 0 6px;
 }
 
-input,button,a {
+input,button,a, select {
   outline:0 none ;
 }
 
