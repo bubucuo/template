@@ -1,5 +1,4 @@
 import {useContext} from "react";
-import useUpdateCanvas from "../hooks/useUpdateCanvas";
 import InputColor from "react-input-color";
 import styles from "./index.less";
 import {CanvasContext} from "../Context";

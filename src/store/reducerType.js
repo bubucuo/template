@@ -1,4 +1,0 @@
-export const UPDATE_CANVAS = "ADD";
-export const ADD_TO_CANVAS = "ADD_TO_CANVAS";
-export const REPLACE_CANVAS = "REPLACE_CANVAS";
-export const UPDATE_CANVAS_STYLE = "UPDATE_CANVAS_STYLE";

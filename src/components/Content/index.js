@@ -1,13 +1,6 @@
 import {useEffect, useReducer, useRef, useState} from "react";
-import {cmpsReducer} from "../../store/cmpsReducer";
-import {
-  ADD_TO_CANVAS,
-  UPDATE_CANVAS,
-  REPLACE_CANVAS,
-  UPDATE_CANVAS_STYLE,
-} from "../../store/reducerType";
 import {getOnlyKey, useForceUpdate} from "../../utils";
-import {useCanvas} from "../../utils/globalCanvas";
+import {useCanvas} from "../../store/globalCanvas";
 import Button from "../Button";
 import {ButtonComponent, ImgComponent, TextComponent} from "../Cmps/index";
 import {CanvasContext} from "../Context";

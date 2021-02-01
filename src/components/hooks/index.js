@@ -1,6 +1,4 @@
 import React, {useState, useCallback} from "react";
-import useAddCanvas from "./useAddCanvas";
-import useUpdateCanvas from "./useUpdateCanvas";
 
 function useForceUpdate() {
   const [state, setState] = useState(0);
@@ -13,6 +11,4 @@ function useForceUpdate() {
 
 export default {
   useForceUpdate,
-  useAddCanvas,
-  useUpdateCanvas,
 };
