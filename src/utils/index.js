@@ -36,7 +36,7 @@ function checkPx(newStyle, names) {
 }
 
 // 节流， 默认500ms
-export function throttle(func, wait = 100) {
+export function throttle(func, wait = 500) {
   let timer = 0;
   return (...args) => {
     if (timer) {
