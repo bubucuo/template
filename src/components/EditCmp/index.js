@@ -1,11 +1,18 @@
-import {useForceUpdate} from "../../utils";
-import {globalCanvas} from "../../utils/globalCanvas";
+import {useContext} from "react";
 import useUpdateCanvas from "../hooks/useUpdateCanvas";
 import InputColor from "react-input-color";
 import styles from "./index.less";
+import {CanvasContext} from "../Context";
 
 export default function EditCmp(props) {
-  return props.selectedCmp ? <Edit {...props} /> : <EmptyEditCmp />;
+  const globalCanvas = useContext(CanvasContext);
+  const selectedCmp = globalCanvas.getSelectedCmp();
+
+  return selectedCmp ? (
+    <Edit {...props} selectedCmp={selectedCmp} globalCanvas={globalCanvas} />
+  ) : (
+    <EmptyEditCmp />
+  );
 }
 
 function EmptyEditCmp() {
@@ -18,47 +25,22 @@ function EmptyEditCmp() {
   );
 }
 
-function Edit({selectedCmp, setSelectCmp, editCmp}) {
+function Edit({selectedCmp, globalCanvas}) {
   const {data} = selectedCmp; //cmpToAdd;
 
   const {style} = data;
 
-  const [dispatch] = useUpdateCanvas();
-
-  const handleChange = (payload) => {
-    editCmp(payload);
-    setSelectCmp(payload);
-  };
-
   const handleValueChange = (e) => {
     const newValue = e.target.value;
-    let payload = {
-      ...selectedCmp,
-      data: {
-        ...data,
-        value: newValue,
-      },
-    };
 
-    handleChange(payload);
+    globalCanvas.updateSelectedCmpValue(newValue);
   };
 
   const handleStyleChange = ({name, value}) => {
-    let payload = {
-      ...selectedCmp,
-      data: {
-        ...data,
-        style: {
-          ...style,
-          [name]: value,
-        },
-      },
-    };
-
-    handleChange(payload);
+    globalCanvas.updateSelectedCmpStyle({
+      [name]: value,
+    });
   };
-
-  console.log("哈哈哈哈", style.borderRadius); //sy-log
 
   return (
     <div className={styles.main}>

@@ -12,6 +12,7 @@ export function useForceUpdate() {
   return update;
 }
 
+// 规范style，如传入的lineHeight只是数字，没有px，则这里加上
 export function formatStyle(style, noNeedPos) {
   let newStyle = {...style};
 
@@ -32,4 +33,18 @@ function checkPx(newStyle, names) {
     }
   });
   return newStyle;
+}
+
+// 节流， 默认500ms
+export function throttle(func, wait = 100) {
+  let timer = 0;
+  return (...args) => {
+    if (timer) {
+      return;
+    }
+    timer = window.setTimeout(() => {
+      func(...args);
+      timer = 0;
+    }, wait);
+  };
 }

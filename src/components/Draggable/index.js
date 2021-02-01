@@ -1,4 +1,6 @@
-import {useState, useEffect} from "react";
+import {useState, useEffect, useContext} from "react";
+import {throttle} from "../../utils";
+import {CanvasContext} from "../Context";
 import ContextMenu from "./ContextMenu";
 import styles from "./index.less";
 
@@ -8,18 +10,17 @@ export default function Draggable({
   index,
   children,
   cmp,
-  setSelectCmp,
+  // setSelectCmp,
   selected,
-  editCmp,
-  editCmpStyle,
-  changeCmpIndex,
 }) {
+  const globalCanvas = useContext(CanvasContext);
+
   const [showContextMenu, setShowContextMenu] = useState(false);
   const {style} = cmp.data;
 
   const setActive = (e) => {
     e.stopPropagation();
-    setSelectCmp(cmp);
+    globalCanvas.setSelectedCmp(cmp);
   };
 
   const handleContextMenu = (e) => {
@@ -69,11 +70,12 @@ export default function Draggable({
         }
       }
 
-      editCmpStyle(cmp, {
-        width: cmp.data.style.width + disX,
-        height: cmp.data.style.height + disY,
-        ...newStyle,
-      });
+      throttle(
+        globalCanvas.updateSelectedCmpStyle({
+          width: cmp.data.style.width + disX,
+          height: cmp.data.style.height + disY,
+        })
+      );
     };
 
     const up = () => {
@@ -92,7 +94,6 @@ export default function Draggable({
     e.dataTransfer.setData("startPos", JSON.stringify({startX, startY}));
   };
 
-  console.log("ssssssssssss", style); //sy-log
   return (
     <>
       <div
@@ -175,8 +176,6 @@ export default function Draggable({
           index={index}
           pos={{top: style.top + 10, left: style.left + 60}}
           cmp={cmp}
-          editCmp={editCmp}
-          changeCmpIndex={changeCmpIndex}
         />
       )}
     </>

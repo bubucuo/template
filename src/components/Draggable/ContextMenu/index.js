@@ -1,26 +1,21 @@
+import {useContext} from "react";
+import {CanvasContext} from "../../Context";
 import styles from "./index.less";
 
-export default function ContextMenu({
-  index,
-  pos,
-  cmp,
-  editCmp,
-  changeCmpIndex,
-}) {
+export default function ContextMenu({index, pos, cmp}) {
+  const globalCanvas = useContext(CanvasContext);
+
   const del = (e) => {
     e.stopPropagation();
-    editCmp({
-      ...cmp,
-      data: null,
-    });
+    globalCanvas.deleteSelectedCmp(cmp);
   };
 
   const beTop = (e) => {
-    changeCmpIndex(index);
+    globalCanvas.changeCmpIndex(index);
   };
 
   const beBottom = (e) => {
-    changeCmpIndex(index, 0);
+    globalCanvas.changeCmpIndex(index, 0);
   };
 
   return (

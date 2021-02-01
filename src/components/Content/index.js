@@ -7,8 +7,10 @@ import {
   UPDATE_CANVAS_STYLE,
 } from "../../store/reducerType";
 import {getOnlyKey, useForceUpdate} from "../../utils";
+import {useCanvas} from "../../utils/globalCanvas";
 import Button from "../Button";
 import {ButtonComponent, ImgComponent, TextComponent} from "../Cmps/index";
+import {CanvasContext} from "../Context";
 import Draggable from "../Draggable";
 import EditCmp from "../EditCmp";
 import Img from "../Img";
@@ -32,11 +34,24 @@ function getCmp(cmp) {
 }
 
 function Content(props) {
+  const forceUpdate = useForceUpdate();
+
   // 所有组件
-  const [cmps, setCmps] = useReducer(cmpsReducer, []);
+  const globalCanvas = useCanvas();
+  const cmps = globalCanvas.getCmps();
+
+  useEffect(() => {
+    const unsubscribe = globalCanvas.subscribe(() => {
+      forceUpdate();
+    });
+    return () => {
+      unsubscribe();
+    };
+  }, []);
 
   // 当前选中的组件
-  const [selectedCmp, setSelectCmp] = useState(null);
+
+  const selectedCmp = globalCanvas.getSelectedCmp();
 
   // 画布的位置，
   const [canvasPos, setCanvasPos] = useState(null);
@@ -85,8 +100,7 @@ function Content(props) {
           },
         },
       };
-      setCmps({type: ADD_TO_CANVAS, payload: resData});
-      setSelectCmp(resData);
+      globalCanvas.addCmp(resData);
     } else {
       // 拖拽画布内的组件
       let resData = {...selectedCmp};
@@ -98,100 +112,42 @@ function Content(props) {
 
       top = resData.data.style.top + disY;
       left = resData.data.style.left + disX;
-
-      setCmps({
-        type: UPDATE_CANVAS_STYLE,
-        payload: {
-          cmp: resData,
-          style: {top, left},
-        },
-      });
+      globalCanvas.updateSelectedCmpStyle({top, left});
     }
-  };
-
-  const editCmp = (cmp) => {
-    let newCmps = cmps;
-    let index; //记录找到指定组件的下标
-    for (let i = 0; i < newCmps.length; i++) {
-      if (newCmps[i].onlyKey === cmp.onlyKey) {
-        index = i;
-        break;
-      }
-    }
-
-    if (cmp.data) {
-      // 参数更新
-      newCmps[index] = cmp;
-      setCmps(newCmps);
-    } else {
-      // 删除
-      newCmps.splice(index, 1);
-      setSelectCmp(null);
-    }
-  };
-
-  const editCmpStyle = (cmp, newStyle) => {
-    editCmp({
-      ...cmp,
-      data: {...cmp.data, style: {...cmp.data.style, ...newStyle}},
-    });
-  };
-
-  const forceUpdate = useForceUpdate();
-
-  // 交换i、j位置的元素
-  const changeCmpIndex = (i, j = cmps.length - 1) => {
-    if (i === j) {
-      return;
-    }
-
-    let newCmps = [...cmps];
-    let tem = newCmps[i];
-    newCmps[i] = newCmps[j];
-    newCmps[j] = tem;
-    setCmps({type: REPLACE_CANVAS, payload: newCmps});
   };
 
   return (
-    <div className={styles.main}>
-      <div
-        className={styles.canvas}
-        ref={canvasRef}
-        onDragEnter={handleDragEnter}
-        onDragOver={handleDragEnter}
-        onDragLeave={handleDragLeave}
-        onDrop={handleDrop}
-        // 点击画布非组件区域的时候，取消选中的组件
-        onClick={() => {
-          console.log("cancel"); //sy-log
-          setSelectCmp(null);
-        }}
-        //
-      >
-        {canvasRef.current &&
-          cmps.map((cmp, index) => {
-            return cmp.data ? (
-              <Draggable
-                index={index}
-                cmp={cmp}
-                key={cmp.onlyKey}
-                setSelectCmp={setSelectCmp}
-                editCmp={editCmp}
-                editCmpStyle={editCmpStyle}
-                changeCmpIndex={changeCmpIndex}
-                selected={(selectedCmp && selectedCmp.onlyKey) === cmp.onlyKey}>
-                {getCmp(cmp)}
-              </Draggable>
-            ) : null;
-          })}
+    <CanvasContext.Provider value={globalCanvas}>
+      <div className={styles.main}>
+        <div
+          className={styles.canvas}
+          ref={canvasRef}
+          onDragEnter={handleDragEnter}
+          onDragOver={handleDragEnter}
+          onDragLeave={handleDragLeave}
+          onDrop={handleDrop}
+          // 点击画布非组件区域的时候，取消选中的组件
+          onClick={() => {
+            globalCanvas.setSelectedCmp(null);
+          }}>
+          {canvasRef.current &&
+            cmps.map((cmp, index) => {
+              return cmp.data ? (
+                <Draggable
+                  index={index}
+                  cmp={cmp}
+                  key={cmp.onlyKey}
+                  selected={
+                    (selectedCmp && selectedCmp.onlyKey) === cmp.onlyKey
+                  }>
+                  {getCmp(cmp)}
+                </Draggable>
+              ) : null;
+            })}
+        </div>
+        <EditCmp />
       </div>
-
-      <EditCmp
-        selectedCmp={selectedCmp}
-        setSelectCmp={setSelectCmp}
-        editCmp={editCmp}
-      />
-    </div>
+    </CanvasContext.Provider>
   );
 }
 export default Content;
