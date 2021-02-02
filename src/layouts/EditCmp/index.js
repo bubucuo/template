@@ -1,7 +1,7 @@
 import {useContext} from "react";
 import InputColor from "react-input-color";
+import {CanvasContext} from "../../Context";
 import styles from "./index.less";
-import {CanvasContext} from "../Context";
 
 export default function EditCmp(props) {
   const globalCanvas = useContext(CanvasContext);

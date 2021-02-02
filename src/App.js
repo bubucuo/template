@@ -1,12 +1,34 @@
+import {useLayoutEffect, useEffect, useRef, useState} from "react";
 import styles from "./App.less";
-import Cmps from "./components/Cmps";
-import Content from "./components/Content";
+import {CanvasContext} from "./Context";
+import Cmps from "./layouts/Cmps";
+import Content from "./layouts/Content";
+import EditCmp from "./layouts/EditCmp";
+import {useForceUpdate} from "./layouts/hooks";
+import {useCanvas} from "./store/globalCanvas";
 
 function App() {
+  const forceUpdate = useForceUpdate();
+
+  // 所有组件
+  const globalCanvas = useCanvas();
+
+  useLayoutEffect(() => {
+    const unsubscribe = globalCanvas.subscribe(() => {
+      forceUpdate();
+    });
+    return () => {
+      unsubscribe();
+    };
+  }, [globalCanvas, forceUpdate]);
+
   return (
     <div className={styles.main}>
-      <Cmps />
-      <Content />
+      <CanvasContext.Provider value={globalCanvas}>
+        <Cmps />
+        <Content />
+        <EditCmp />
+      </CanvasContext.Provider>
     </div>
   );
 }

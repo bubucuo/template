@@ -1,4 +1,5 @@
 import {useRef} from "react";
+import {getOnlyKey} from "../utils";
 class Canvas {
   constructor() {
     this.cmps = [];
@@ -14,11 +15,25 @@ class Canvas {
     this.cmps = [..._cmps];
     this.runListeners();
   };
+
   addCmp = (_cmp) => {
-    this.cmps.push(_cmp);
+    this.cmps.push({..._cmp, onlyKey: getOnlyKey()});
     this.runListeners();
     this.selectedCmp = _cmp;
   };
+
+  // addCmpByValue = (_cmp, value) => {
+  //   let cmp = {
+  //     ..._cmp,
+  //     onlyKey: getOnlyKey(),
+  //     data: {
+  //       ..._cmp.data,
+  //       value,
+  //     },
+  //   };
+  //   this.addCmp(cmp);
+  // };
+
   updateCmp = (_cmp) => {
     let cmps = this.cmps;
     for (let i = 0; i < cmps.length; i++) {

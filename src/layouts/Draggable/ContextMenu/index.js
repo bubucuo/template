@@ -1,5 +1,5 @@
 import {useContext} from "react";
-import {CanvasContext} from "../../Context";
+import {CanvasContext} from "../../../Context";
 import styles from "./index.less";
 
 export default function ContextMenu({index, pos, cmp}) {

@@ -1,6 +1,6 @@
 import {useState, useEffect, useContext} from "react";
+import {CanvasContext} from "../../Context";
 import {throttle} from "../../utils";
-import {CanvasContext} from "../Context";
 import ContextMenu from "./ContextMenu";
 import styles from "./index.less";
 
@@ -29,11 +29,15 @@ export default function Draggable({
   };
 
   useEffect(() => {
-    document.getElementById("root").addEventListener("click", () => {
+    let handleSet = () => {
       // 点击非组件区域的时候，取消选中的组件
       // showContextMenu &&
       setShowContextMenu(false);
-    });
+    };
+    document.getElementById("root").addEventListener("click", handleSet);
+    return () => {
+      document.getElementById("root").removeEventListener("click", handleSet);
+    };
   }, []);
 
   const top = style.top - 4;

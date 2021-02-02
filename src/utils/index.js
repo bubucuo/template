@@ -2,14 +2,6 @@ export function getOnlyKey() {
   return Math.random();
 }
 
-// export function useForceUpdate() {
-//   const [state, setState] = useState(0);
-//   const update = useCallback(() => {
-//     setState((prev) => prev + 1);
-//   }, []);
-//   return update;
-// }
-
 // 规范style，如传入的lineHeight只是数字，没有px，则这里加上
 export function formatStyle(style, noNeedPos) {
   let newStyle = {...style};

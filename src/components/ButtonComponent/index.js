@@ -1,7 +1,7 @@
 import {formatStyle} from "../../utils";
 import styles from "./index.less";
 
-export default function Button(data) {
+export default function ButtonComponent(data) {
   const {style} = data;
 
   return (
