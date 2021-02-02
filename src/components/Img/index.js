@@ -1,4 +1,3 @@
-import {formatStyle} from "../../utils";
 import styles from "./index.less";
 
 export default function Img(data) {

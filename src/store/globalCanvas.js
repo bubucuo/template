@@ -127,7 +127,7 @@ class Canvas {
       "subscribe",
     ];
     const obj = {};
-    returnFuncs.map((func) => {
+    returnFuncs.forEach((func) => {
       obj[func] = this[func];
     });
     return obj;

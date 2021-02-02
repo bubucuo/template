@@ -1,5 +1,6 @@
-import {useEffect, useReducer, useRef, useState} from "react";
-import {getOnlyKey, useForceUpdate} from "../../utils";
+import {useEffect, useRef, useState} from "react";
+import {getOnlyKey} from "../../utils";
+import {useForceUpdate} from "../hooks/";
 import {useCanvas} from "../../store/globalCanvas";
 import Button from "../Button";
 import {ButtonComponent, ImgComponent, TextComponent} from "../Cmps/index";
@@ -22,6 +23,9 @@ function getCmp(cmp) {
       break;
     case ImgComponent:
       res = <Img {...data} />;
+      break;
+    default:
+      res = null;
   }
   return res;
 }
@@ -40,7 +44,7 @@ function Content(props) {
     return () => {
       unsubscribe();
     };
-  }, []);
+  }, [globalCanvas, forceUpdate]);
 
   // 当前选中的组件
 

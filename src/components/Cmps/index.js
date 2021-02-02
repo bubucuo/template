@@ -4,8 +4,6 @@ export const TextComponent = 0;
 export const ButtonComponent = 1;
 export const ImgComponent = 2;
 
-const commomStyle = {};
-
 export const menus = [
   {
     desc: "文本",

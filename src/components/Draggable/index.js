@@ -48,8 +48,6 @@ export default function Draggable({
     let startX = e.pageX;
     let startY = e.pageY;
 
-    const target = e.target;
-
     const move = (e) => {
       let x = e.pageX;
       let y = e.pageY;
