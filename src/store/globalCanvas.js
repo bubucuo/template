@@ -17,40 +17,25 @@ class Canvas {
   };
 
   addCmp = (_cmp) => {
-    this.cmps.push({..._cmp, onlyKey: getOnlyKey()});
+    this.selectedCmp = {
+      ..._cmp,
+      onlyKey: getOnlyKey(),
+    };
+    this.cmps.push(this.selectedCmp);
     this.runListeners();
-    this.selectedCmp = _cmp;
   };
-
-  // addCmpByValue = (_cmp, value) => {
-  //   let cmp = {
-  //     ..._cmp,
-  //     onlyKey: getOnlyKey(),
-  //     data: {
-  //       ..._cmp.data,
-  //       value,
-  //     },
-  //   };
-  //   this.addCmp(cmp);
-  // };
 
   updateCmp = (_cmp) => {
     let cmps = this.cmps;
     for (let i = 0; i < cmps.length; i++) {
       if (cmps[i].onlyKey === _cmp.onlyKey) {
         this.cmps[i] = _cmp;
+
         break;
       }
     }
     this.runListeners();
   };
-
-  // updateCmpStyle = (_cmp, _style) => {
-  //   this.updateCmp({
-  //     ..._cmp,
-  //     data: {..._cmp.data, style: {..._cmp.data.style, ..._style}},
-  //   });
-  // };
 
   /** 选中组件的操作 **/
 
@@ -65,12 +50,6 @@ class Canvas {
     this.selectedCmp = _cmp;
     this.runListeners();
   };
-
-  // updateSelectedCmp = (_cmp) => {
-  //   this.setSelectedCmp(_cmp);
-  //   this.updateCmp(_cmp);
-  //   this.runListeners();
-  // };
 
   updateSelectedCmpStyle = (_style) => {
     let _cmp = this.getSelectedCmp();
@@ -134,7 +113,6 @@ class Canvas {
       "addCmp",
       "getSelectedCmp",
       "setSelectedCmp",
-      // "updateSelectedCmp",
       "updateSelectedCmpStyle",
       "updateSelectedCmpValue",
       "deleteSelectedCmp",
