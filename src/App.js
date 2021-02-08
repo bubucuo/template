@@ -1,9 +1,9 @@
-import {useLayoutEffect, useEffect, useRef, useState} from "react";
+import {useLayoutEffect} from "react";
 import styles from "./App.less";
 import {CanvasContext} from "./Context";
 import Cmps from "./layouts/Cmps";
 import Content from "./layouts/Content";
-import EditCmp from "./layouts/EditCmp";
+import Edit from "./layouts/Edit";
 import {useForceUpdate} from "./layouts/hooks";
 import {useCanvas} from "./store/globalCanvas";
 
@@ -27,7 +27,7 @@ function App() {
       <CanvasContext.Provider value={globalCanvas}>
         <Cmps />
         <Content />
-        <EditCmp />
+        <Edit />
       </CanvasContext.Provider>
     </div>
   );

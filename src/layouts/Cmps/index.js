@@ -1,5 +1,6 @@
 import {useState, useEffect, useContext} from "react";
 import {CanvasContext} from "../../Context";
+import {getContainerDom} from "../../utils";
 import Img from "./Img";
 import styles from "./index.less";
 import {
@@ -8,6 +9,7 @@ import {
   isButtonComponent,
   menus,
 } from "./menus";
+import classnames from "classnames";
 
 export default function Cmps(props) {
   const globalCanvas = useContext(CanvasContext);
@@ -30,6 +32,7 @@ export default function Cmps(props) {
       globalCanvas.addCmp(cmp);
       return;
     }
+    // 图片组件
     if (list) {
       setList(null);
     } else {
@@ -45,12 +48,6 @@ export default function Cmps(props) {
     }
   };
 
-  useEffect(() => {
-    document.addEventListener("click", () => {
-      setList(null);
-    });
-  }, []);
-
   return (
     <div className={styles.main}>
       <div className={styles.cmpList}>
@@ -65,7 +62,12 @@ export default function Cmps(props) {
           </div>
         ))}
       </div>
-      {list && <ul className={styles.detailList}>{list}</ul>}
+      {list && (
+        <button
+          className={classnames("iconfont icon-close", styles.close)}
+          onClick={() => setList(null)}></button>
+      )}
+      {list && <ul className={styles.detailList}> {list}</ul>}
     </div>
   );
 }

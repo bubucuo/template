@@ -1,41 +1,26 @@
-import {useContext} from "react";
 import InputColor from "react-input-color";
-import {CanvasContext} from "../../Context";
 import styles from "./index.less";
 
-export default function EditCmp(props) {
-  const globalCanvas = useContext(CanvasContext);
-  const selectedCmp = globalCanvas.getSelectedCmp();
-
-  return selectedCmp ? (
-    <Edit {...props} selectedCmp={selectedCmp} globalCanvas={globalCanvas} />
-  ) : (
-    <EmptyEditCmp />
-  );
-}
-
-function EmptyEditCmp() {
-  return (
-    <div className={styles.main}>
-      <div className={styles.empty}>
-        <p>编辑区域</p>
-      </div>
-    </div>
-  );
-}
-
-function Edit({selectedCmp, globalCanvas}) {
-  const {data} = selectedCmp; //cmpToAdd;
+export default function EditCmp({selectedCmp, globalCanvas}) {
+  const {data} = selectedCmp;
 
   const {style} = data;
 
   const handleValueChange = (e) => {
+    e.stopPropagation();
+    e.preventDefault();
+
     const newValue = e.target.value;
 
     globalCanvas.updateSelectedCmpValue(newValue);
   };
 
-  const handleStyleChange = ({name, value}) => {
+  const handleStyleChange = (e, {name, value}) => {
+    if (e) {
+      e.stopPropagation();
+      e.preventDefault();
+    }
+
     globalCanvas.updateSelectedCmpStyle({
       [name]: value,
     });
@@ -63,7 +48,7 @@ function Edit({selectedCmp, globalCanvas}) {
               type="number"
               value={style.fontSize}
               onChange={(e) =>
-                handleStyleChange({name: "fontSize", value: e.target.value})
+                handleStyleChange(e, {name: "fontSize", value: e.target.value})
               }
             />
           </Item>
@@ -75,7 +60,10 @@ function Edit({selectedCmp, globalCanvas}) {
               type="number"
               value={style.lineHeight}
               onChange={(e) =>
-                handleStyleChange({name: "lineHeight", value: e.target.value})
+                handleStyleChange(e, {
+                  name: "lineHeight",
+                  value: e.target.value,
+                })
               }
             />
           </Item>
@@ -87,7 +75,10 @@ function Edit({selectedCmp, globalCanvas}) {
               className={styles.itemRight}
               value={style.textAlign}
               onChange={(e) => {
-                handleStyleChange({name: "textAlign", value: e.target.value});
+                handleStyleChange(e, {
+                  name: "textAlign",
+                  value: e.target.value,
+                });
               }}>
               <option value="left">居左</option>
               <option value="center">居中</option>
@@ -103,7 +94,7 @@ function Edit({selectedCmp, globalCanvas}) {
               type="text"
               value={style.borderRadius}
               onChange={(e) =>
-                handleStyleChange({
+                handleStyleChange(e, {
                   name: "borderRadius",
                   value: e.target.value,
                 })
@@ -117,7 +108,9 @@ function Edit({selectedCmp, globalCanvas}) {
             <InputColor
               className={styles.itemRight}
               initialValue={style.color}
-              onChange={(e) => handleStyleChange({name: "color", value: e.hex})}
+              onChange={(e) =>
+                handleStyleChange(null, {name: "color", value: e.hex})
+              }
               placement="right"
             />
           </Item>
@@ -129,7 +122,7 @@ function Edit({selectedCmp, globalCanvas}) {
               className={styles.itemRight}
               initialValue={style.backgroundColor}
               onChange={(e) =>
-                handleStyleChange({name: "backgroundColor", value: e.hex})
+                handleStyleChange(null, {name: "backgroundColor", value: e.hex})
               }
               placement="right"
             />

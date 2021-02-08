@@ -1,45 +1,17 @@
 import {useEffect, useRef, useState, useContext} from "react";
-import {
-  isButtonComponent,
-  isImgComponent,
-  isTextComponent,
-} from "../Cmps/menus";
 import Draggable from "../Draggable";
-import EditCmp from "../EditCmp";
-import styles from "./index.less";
-// 画布组件
-import TextComponent from "../../components/TextComponent";
-import ButtonComponent from "../../components/ButtonComponent";
-import ImgComponent from "../../components/ImgComponent";
 import {CanvasContext} from "../../Context";
-
-function getCmp(cmp) {
-  const {data} = cmp;
-  let res = null;
-  switch (data.type) {
-    case isTextComponent:
-      res = <TextComponent {...data} />;
-      break;
-    case isButtonComponent:
-      res = <ButtonComponent {...data} />;
-      break;
-    case isImgComponent:
-      res = <ImgComponent {...data} />;
-      break;
-    default:
-      res = null;
-  }
-  return res;
-}
+import styles from "./index.less";
+import {formatStyle} from "../../utils";
 
 function Content(props) {
   // 所有组件
   const globalCanvas = useContext(CanvasContext);
 
-  const cmps = globalCanvas.getCmps();
+  // 获取画布属性
+  const canvasStyle = globalCanvas.getCanvasStyle();
 
-  // 当前选中的组件
-  const selectedCmp = globalCanvas.getSelectedCmp();
+  const cmps = globalCanvas.getCmps();
 
   // 画布的位置，
   const [canvasPos, setCanvasPos] = useState(null);
@@ -70,12 +42,11 @@ function Content(props) {
     // 新增的组件
     let addingCmp = e.dataTransfer.getData("add-component");
 
-    let top, left;
     if (addingCmp) {
       // 拖拽进来新增的组件
       addingCmp = JSON.parse(addingCmp);
-      top = e.pageY - canvasPos.top - 15;
-      left = e.pageX - canvasPos.left - 40;
+      const top = e.pageY - canvasPos.top - 15;
+      const left = e.pageX - canvasPos.left - 40;
       let resData = {
         ...addingCmp,
         data: {
@@ -93,19 +64,28 @@ function Content(props) {
       let startPos = e.dataTransfer.getData("startPos");
       startPos = JSON.parse(startPos);
 
-      let disX = e.pageX - startPos.startX;
-      let disY = e.pageY - startPos.startY;
+      let disX = e.pageX - startPos.pageX;
+      let disY = e.pageY - startPos.pageY;
 
-      top = selectedCmp.data.style.top + disY;
-      left = selectedCmp.data.style.left + disX;
+      // 获取当前选中的组件的最新信息
+      const selectedCmp = globalCanvas.getSelectedCmp();
+
+      const top = selectedCmp.data.style.top + disY;
+      const left = selectedCmp.data.style.left + disX;
       globalCanvas.updateSelectedCmpStyle({top, left});
     }
   };
+
+  console.log("canvasStyle", canvasStyle); //sy-log
 
   return (
     <div className={styles.main}>
       <div
         className={styles.canvas}
+        style={{
+          ...formatStyle(canvasStyle),
+          backgroundImage: ` url(${canvasStyle.backgroundImage})`,
+        }}
         ref={canvasRef}
         onDragEnter={handleDragEnter}
         onDragOver={handleDragEnter}
@@ -118,13 +98,7 @@ function Content(props) {
         {canvasRef.current &&
           cmps.map((cmp, index) => {
             return cmp.data ? (
-              <Draggable
-                index={index}
-                cmp={cmp}
-                key={cmp.onlyKey}
-                selected={(selectedCmp && selectedCmp.onlyKey) === cmp.onlyKey}>
-                {getCmp(cmp)}
-              </Draggable>
+              <Draggable index={index} key={cmp.onlyKey} />
             ) : null;
           })}
       </div>

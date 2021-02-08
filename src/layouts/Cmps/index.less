@@ -10,16 +10,26 @@
   padding: 4px;
   .cmp {
     display: inline-block;
-    background-color: wheat;
+    background-color: white; //wheat;
     margin: 4px;
     padding: 6px;
     width: 50px;
     text-align: center;
+    border: solid 1px wheat;
     cursor: pointer;
     // &:nth-child(even) {
     //   float: right;
     // }
-    color: red;
+    // color: red;
+  }
+
+  .close {
+    z-index: 999999;
+    position: absolute;
+    top: 4px;
+    left: 274px;
+    background-color: transparent;
+    font-size: 24px;
   }
   .cmpList {
   }
@@ -31,7 +41,7 @@
     left: 72px;
     width: 230px;
     height: 100%;
-    padding: 4px;
+    padding: 22px 4px;
     border-right: solid 1px #dddddd;
     background-color: white;
   }

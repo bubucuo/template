@@ -6,7 +6,7 @@ export function getOnlyKey() {
 export function formatStyle(style, noNeedPos) {
   let newStyle = {...style};
 
-  newStyle = checkPx(newStyle, ["lineHeight", "fontSize"]);
+  newStyle = checkPx(newStyle, ["width", "height", "lineHeight", "fontSize"]);
 
   delete newStyle.top;
   delete newStyle.right;
@@ -17,7 +17,7 @@ export function formatStyle(style, noNeedPos) {
 }
 
 function checkPx(newStyle, names) {
-  names.map((name) => {
+  names.forEach((name) => {
     if (newStyle[name] && (newStyle[name] + "").indexOf("px") === -1) {
       newStyle[name] = newStyle[name] + "px";
     }
@@ -38,3 +38,9 @@ export function throttle(func, wait = 500) {
     }, wait);
   };
 }
+
+export function getContainerDom() {
+  return document.getElementById("root");
+}
+
+export function checkBackgroundImage() {}
