@@ -15,13 +15,16 @@ class Canvas {
     this.cmpsEntity = new Map(); // 实例
 
     // 画布属性
-    this.canvasStyle = {
-      width: 320,
-      height: 568,
-      backgroundColor: "#fff",
-      backgroundImage: "",
-      backgroundPosition: "center",
-      backgroundSize: "contain",
+    this.canvas = {
+      style: {
+        width: 320,
+        height: 568,
+        backgroundColor: "#fff",
+        backgroundImage: "",
+        backgroundPosition: "center",
+        backgroundSize: "contain",
+      },
+      cmps: [],
     };
 
     this.cmps = [];
@@ -34,10 +37,17 @@ class Canvas {
 
   // get canvasStyle
   getCanvasStyle = () => {
-    return {...this.canvasStyle};
+    return {...this.canvas.style};
   };
   updateCanvasStyle = (data) => {
-    Object.assign(this.canvasStyle, data);
+    this.canvas = {
+      ...this.canvas,
+      style: {
+        ...this.getCanvasStyle(),
+        ...data,
+      },
+    };
+
     // 更新Content层级
     this.runListeners();
   };
