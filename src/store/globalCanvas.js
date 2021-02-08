@@ -27,7 +27,6 @@ class Canvas {
       cmps: [],
     };
 
-    this.cmps = [];
     this.listeners = [];
     this.selectedCmp = null;
 
@@ -80,15 +79,20 @@ class Canvas {
   forceEditUpdate = () => {};
 
   getCmp = (index) => {
-    return {...this.cmps[index]};
+    const cmps = this.getCmps();
+    return {...cmps[index]};
   };
 
   getCmps = () => {
-    return [...this.cmps];
+    return [...this.canvas.cmps];
   };
 
   setCmps = (_cmps) => {
-    this.cmps = [..._cmps];
+    this.canvas = {
+      ...this.canvas,
+      cmps: _cmps,
+    };
+
     this.runListeners();
   };
 
@@ -97,19 +101,21 @@ class Canvas {
       ..._cmp,
       onlyKey: getOnlyKey(),
     };
-    this.cmps.push(this.selectedCmp);
+    const cmps = this.getCmps();
+    this.setCmps([...cmps, this.selectedCmp]);
     this.runListeners();
   };
 
   updateCmp = (_cmp) => {
-    let cmps = this.cmps;
+    const cmps = this.getCmps();
+
     for (let i = 0; i < cmps.length; i++) {
       if (cmps[i].onlyKey === _cmp.onlyKey) {
-        this.cmps[i] = _cmp;
+        cmps[i] = _cmp;
         break;
       }
     }
-
+    this.setCmps(cmps);
     this.forceCmpsUpdate(_cmp);
   };
 
@@ -171,11 +177,13 @@ class Canvas {
   // 删除组件
   deleteSelectedCmp = (_cmp) => {
     this.setSelectedCmp(null);
-    this.setCmps(this.cmps.filter((cmp) => cmp.onlyKey !== _cmp.onlyKey));
+
+    const cmps = this.getCmps();
+    this.setCmps(cmps.filter((cmp) => cmp.onlyKey !== _cmp.onlyKey));
   };
 
   // 交换i、j位置的元素
-  changeCmpIndex = (i, j = this.cmps.length - 1) => {
+  changeCmpIndex = (i, j = this.getCmps().length - 1) => {
     if (i === j) {
       return;
     }
