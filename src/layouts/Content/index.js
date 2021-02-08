@@ -76,15 +76,13 @@ function Content(props) {
     }
   };
 
-  console.log("canvasStyle", canvasStyle); //sy-log
-
   return (
     <div className={styles.main}>
       <div
         className={styles.canvas}
         style={{
           ...formatStyle(canvasStyle),
-          backgroundImage: ` url(${canvasStyle.backgroundImage})`,
+          backgroundImage: `url(${canvasStyle.backgroundImage})`,
         }}
         ref={canvasRef}
         onDragEnter={handleDragEnter}

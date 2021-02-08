@@ -15,8 +15,6 @@ export default function EditCanvas({globalCanvas}) {
     });
   };
 
-  console.log("style", style); //sy-log
-
   return (
     <div className={styles.main}>
       <>

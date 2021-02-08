@@ -20,8 +20,8 @@ class Canvas {
       height: 568,
       backgroundColor: "#fff",
       backgroundImage: "",
-      "background-position": "center",
-      "background-size": "contain",
+      backgroundPosition: "center",
+      backgroundSize: "contain",
     };
 
     this.cmps = [];
