@@ -10,6 +10,13 @@ import {getOnlyKey} from "../utils";
  * 组件更新的话 只更新组件自身
  */
 
+/**
+ * 函数命名规则
+ * get 获取数据
+ * set 设置数据
+ * update 更新数据，包括设置数据和组件更新
+ */
+
 class Canvas {
   constructor() {
     this.cmpsEntity = new Map(); // 实例
@@ -27,17 +34,57 @@ class Canvas {
       cmps: [],
     };
 
+    this.canvasChangeHistory = [];
+    this.canvasIndex = -1;
+
+    // state发生改变，需要执行的动作，如组件更新
     this.listeners = [];
+    // 被选中的组件
     this.selectedCmp = null;
 
     // 画布之外的组件更新，如编辑区域
     this.storeChangeCmps = [];
   }
 
+  goPrevCanvasHistory = () => {
+    const index = this.canvasIndex - 1 < 0 ? 0 : this.canvasIndex - 1;
+
+    if (index !== this.canvasIndex && this.canvasChangeHistory[index]) {
+      this.canvasIndex = index;
+      const lastCanvasHistorry = this.canvasChangeHistory[index];
+
+      this.canvas = lastCanvasHistorry;
+
+      this.runListeners();
+    }
+  };
+
+  goNextCanvasHistory = () => {
+    const index =
+      this.canvasIndex + 1 > this.canvasChangeHistory.length - 1
+        ? this.canvasChangeHistory.length - 1
+        : this.canvasIndex + 1;
+
+    if (index !== this.canvasIndex && this.canvasChangeHistory[index]) {
+      this.canvasIndex = index;
+      const lastCanvasHistorry = this.canvasChangeHistory[index];
+
+      this.canvas = lastCanvasHistorry;
+
+      this.runListeners();
+    }
+  };
+
+  recordCanvasChangeHistory = () => {
+    this.canvasChangeHistory.push(this.canvas);
+    this.canvasIndex = this.canvasChangeHistory.length - 1; //2;
+  };
+
   // get canvasStyle
   getCanvasStyle = () => {
     return {...this.canvas.style};
   };
+
   updateCanvasStyle = (data) => {
     this.canvas = {
       ...this.canvas,
@@ -49,6 +96,7 @@ class Canvas {
 
     // 更新Content层级
     this.runListeners();
+    this.recordCanvasChangeHistory();
   };
 
   registerStoreChangeCmps = (_cmp) => {
@@ -75,9 +123,6 @@ class Canvas {
     this.storeChangeCmps.forEach(({onStoreChange}) => onStoreChange());
   };
 
-  // 编辑区域更新
-  forceEditUpdate = () => {};
-
   getCmp = (index) => {
     const cmps = this.getCmps();
     return {...cmps[index]};
@@ -92,8 +137,13 @@ class Canvas {
       ...this.canvas,
       cmps: _cmps,
     };
+  };
 
+  // 设置cmps数据，并更新App
+  updateCmps = (_cmps) => {
+    this.setCmps(_cmps);
     this.runListeners();
+    this.recordCanvasChangeHistory();
   };
 
   addCmp = (_cmp) => {
@@ -102,8 +152,8 @@ class Canvas {
       onlyKey: getOnlyKey(),
     };
     const cmps = this.getCmps();
-    this.setCmps([...cmps, this.selectedCmp]);
-    this.runListeners();
+    this.updateCmps([...cmps, this.selectedCmp]);
+    //this.recordCanvasChangeHistory();
   };
 
   updateCmp = (_cmp) => {
@@ -149,17 +199,24 @@ class Canvas {
     this.forceCmpsUpdate(...needForceUpdateCmps);
   };
 
-  updateSelectedCmpStyle = (_style) => {
+  // 在编辑区域更新组价style、拖拽组件更新组件style
+  updateSelectedCmpStyle = (_style, frequently) => {
     let _cmp = this.getSelectedCmp();
     let cmp = {
       ..._cmp,
       data: {..._cmp.data, style: {..._cmp.data.style, ..._style}},
     };
+    if (JSON.stringify(cmp) !== JSON.stringify(this.selectedCmp)) {
+      this.selectedCmp = cmp;
+      this.updateCmp(cmp);
 
-    this.selectedCmp = cmp;
-    this.updateCmp(cmp);
+      if (!frequently) {
+        this.recordCanvasChangeHistory();
+      }
+    }
   };
 
+  // 在编辑区域更新组件value
   updateSelectedCmpValue = (value) => {
     let _cmp = this.getSelectedCmp();
     let cmp = {
@@ -172,17 +229,18 @@ class Canvas {
 
     this.selectedCmp = cmp;
     this.updateCmp(cmp);
+    this.recordCanvasChangeHistory();
   };
 
-  // 删除组件
+  // 点击组件，右键删除组件
   deleteSelectedCmp = (_cmp) => {
     this.setSelectedCmp(null);
 
     const cmps = this.getCmps();
-    this.setCmps(cmps.filter((cmp) => cmp.onlyKey !== _cmp.onlyKey));
+    this.updateCmps(cmps.filter((cmp) => cmp.onlyKey !== _cmp.onlyKey));
   };
 
-  // 交换i、j位置的元素
+  // 交换i、j位置的元素，置顶置底
   changeCmpIndex = (i, j = this.getCmps().length - 1) => {
     if (i === j) {
       return;
@@ -192,9 +250,10 @@ class Canvas {
     let tem = newCmps[i];
     newCmps[i] = newCmps[j];
     newCmps[j] = tem;
-    this.setCmps(newCmps);
+    this.updateCmps(newCmps);
   };
 
+  //现在只用到了更新整个App组件
   runListeners = () => {
     this.listeners.forEach((listener) => listener());
   };
@@ -207,8 +266,12 @@ class Canvas {
     };
   };
 
+  // 返回画布数据的增删改查函数
   getCanvas = () => {
     const returnFuncs = [
+      "recordCanvasChangeHistory",
+      "goPrevCanvasHistory",
+      "goNextCanvasHistory",
       "getCanvasStyle",
       "updateCanvasStyle",
       "registerStoreChangeCmps",

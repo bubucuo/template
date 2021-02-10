@@ -3,6 +3,7 @@ import Draggable from "../Draggable";
 import {CanvasContext} from "../../Context";
 import styles from "./index.less";
 import {formatStyle} from "../../utils";
+import Header from "../Header";
 
 function Content(props) {
   // 所有组件
@@ -78,6 +79,7 @@ function Content(props) {
 
   return (
     <div className={styles.main}>
+      <Header />
       <div
         className={styles.canvas}
         style={{

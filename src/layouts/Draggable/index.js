@@ -80,18 +80,23 @@ export default class Draggable extends Component {
         }
       }
 
+      // 特别频繁改变，加上一个标记，
       throttle(
-        this.context.updateSelectedCmpStyle({
-          ...newStyle,
-          width: cmp.data.style.width + disX,
-          height: cmp.data.style.height + disY,
-        })
+        this.context.updateSelectedCmpStyle(
+          {
+            ...newStyle,
+            width: cmp.data.style.width + disX,
+            height: cmp.data.style.height + disY,
+          },
+          "frequently"
+        )
       );
     };
 
     const up = () => {
       document.removeEventListener("mousemove", move);
       document.removeEventListener("mouseup", up);
+      this.context.recordCanvasChangeHistory();
     };
 
     document.addEventListener("mousemove", move);

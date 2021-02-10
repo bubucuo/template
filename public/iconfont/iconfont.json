@@ -6,6 +6,13 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "688061",
+      "name": "撤销 返回 撤回 上一步",
+      "font_class": "chexiaofanhuichehuishangyibu",
+      "unicode": "e76b",
+      "unicode_decimal": 59243
+    },
+    {
       "icon_id": "10678407",
       "name": "close",
       "font_class": "close",
