@@ -6,6 +6,13 @@ import styles from "./index.less";
 
 export default class Edit extends Component {
   static contextType = CanvasContext;
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      showIndex: 0,
+    };
+  }
   onStoreChange = () => {
     this.forceUpdate();
   };
@@ -20,7 +27,7 @@ export default class Edit extends Component {
 
   render() {
     const selectedCmp = this.context.getSelectedCmp();
-
+    const {showIndex} = this.state;
     return selectedCmp ? (
       <EditCmp
         {...this.props}

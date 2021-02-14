@@ -1,6 +1,6 @@
 import {Component} from "react";
 import {CanvasContext} from "../../Context";
-import {throttle} from "../../utils";
+import {debounce} from "../../utils";
 import ContextMenu from "./ContextMenu";
 import {
   isButtonComponent,
@@ -11,6 +11,7 @@ import {
 import TextComponent from "../../components/TextComponent";
 import ButtonComponent from "../../components/ButtonComponent";
 import ImgComponent from "../../components/ImgComponent";
+import classnames from "classnames";
 import styles from "./index.less";
 
 // setSelectCmp 选中的组件
@@ -81,7 +82,7 @@ export default class Draggable extends Component {
       }
 
       // 特别频繁改变，加上一个标记，
-      throttle(
+      debounce(
         this.context.updateSelectedCmpStyle(
           {
             ...newStyle,
@@ -114,7 +115,6 @@ export default class Draggable extends Component {
     e.stopPropagation();
     const selectCmp = this.context.getSelectedCmp();
     const cmp = this.context.getCmp(this.props.index);
-    // if (selectCmp === null || selectCmp.onlyKey !== cmp.onlyKey) {
 
     this.context.setSelectedCmp(cmp);
   };
@@ -122,6 +122,47 @@ export default class Draggable extends Component {
   handleContextMenu = (e) => {
     e.preventDefault();
     this.setState({showContextMenu: true});
+  };
+
+  handleMouseDownofRotate = (e) => {
+    e.stopPropagation();
+    e.preventDefault();
+
+    const {getCmp, updateSelectedCmpStyle} = this.context;
+
+    const cmp = getCmp(this.props.index);
+
+    let startX = e.pageX;
+    let startY = e.pageY;
+
+    const move = (e) => {
+      let x = e.pageX;
+      let y = e.pageY;
+
+      let disX = x - startX;
+      let disY = y - startY;
+
+      const deg = (360 * Math.atan2(disY, disX)) / (2 * Math.PI);
+
+      // 特别频繁改变，加上一个标记，
+      debounce(
+        updateSelectedCmpStyle(
+          {
+            transform: `rotate(${deg}deg)`,
+          },
+          "frequently"
+        )
+      );
+    };
+
+    const up = () => {
+      document.removeEventListener("mousemove", move);
+      document.removeEventListener("mouseup", up);
+      this.context.recordCanvasChangeHistory();
+    };
+
+    document.addEventListener("mousemove", move);
+    document.addEventListener("mouseup", up);
   };
 
   render() {
@@ -158,14 +199,24 @@ export default class Draggable extends Component {
           {getComponent(cmp)}
         </div>
         {selected && (
-          <ul className={styles.stretch}>
+          <ul
+            className={styles.stretch}
+            style={{transform: `rotate${style.transform}`}}>
             <li
-              className="top left"
+              className={classnames(styles.rotate, "iconfont icon-xuanzhuan")}
+              style={{
+                top: top - 20,
+                left: left + width / 2,
+              }}
+              onMouseDown={this.handleMouseDownofRotate}
+            />
+            <li
+              className={styles.stretchDot}
               style={{top, left}}
               onMouseDown={(e) => this.handleMouseDown(e, "top left")}
             />
             <li
-              className="top"
+              className={styles.stretchDot}
               style={{
                 top,
                 left: left + width / 2,
@@ -173,12 +224,11 @@ export default class Draggable extends Component {
               onMouseDown={(e) => this.handleMouseDown(e, "top")}
             />
             <li
-              className="top right"
+              className={styles.stretchDot}
               style={{top, left: left + width + 2}}
               onMouseDown={(e) => this.handleMouseDown(e, "top right")}
             />
             <li
-              className="right"
               style={{
                 top: top + height / 2,
                 left: left + width + 2,
@@ -186,7 +236,7 @@ export default class Draggable extends Component {
               onMouseDown={this.handleMouseDown}
             />
             <li
-              className="bottom right"
+              className={styles.stretchDot}
               style={{
                 top: top + height + 2,
                 left: left + width + 2,
@@ -194,7 +244,7 @@ export default class Draggable extends Component {
               onMouseDown={this.handleMouseDown}
             />
             <li
-              className="bottom"
+              className={styles.stretchDot}
               style={{
                 top: top + height + 2,
                 left: left + width / 2,
@@ -202,7 +252,7 @@ export default class Draggable extends Component {
               onMouseDown={this.handleMouseDown}
             />
             <li
-              className="bottom left"
+              className={styles.stretchDot}
               style={{
                 top: top + height + 2,
                 left,
@@ -210,7 +260,7 @@ export default class Draggable extends Component {
               onMouseDown={(e) => this.handleMouseDown(e, "bottom left")}
             />
             <li
-              className="left"
+              className={styles.stretchDot}
               style={{
                 top: top + height / 2,
                 left,

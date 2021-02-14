@@ -12,6 +12,7 @@ export function formatStyle(style, noNeedPos) {
   delete newStyle.right;
   delete newStyle.bottom;
   delete newStyle.left;
+  delete newStyle.transform;
 
   return newStyle;
 }
@@ -25,19 +26,35 @@ function checkPx(newStyle, names) {
   return newStyle;
 }
 
-// 节流， 默认500ms
-export function throttle(func, wait = 500) {
-  let timer = 0;
-  return (...args) => {
-    if (timer) {
-      return;
-    }
-    timer = window.setTimeout(() => {
-      func(...args);
-      timer = 0;
-    }, wait);
+// export function debounce(func, wait = 500) {
+//   var timer = null;
+//   return function() {
+//     if (timer !== null) clearTimeout(timer);
+//     timer = setTimeout(func, wait);
+//   };
+// }
+
+export const debounce = (func, wait = 500) => {
+  var timer = null;
+  return () => {
+    if (timer !== null) clearTimeout(timer);
+    timer = setTimeout(func, wait);
   };
-}
+};
+
+// 节流， 默认500ms
+// export function throttle(func, wait = 500) {
+//   let timer = 0;
+//   return (...args) => {
+//     if (timer) {
+//       return;
+//     }
+//     timer = window.setTimeout(() => {
+//       func(...args);
+//       timer = 0;
+//     }, wait);
+//   };
+// }
 
 export function getContainerDom() {
   return document.getElementById("root");

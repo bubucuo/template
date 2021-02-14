@@ -13,6 +13,13 @@
       "unicode_decimal": 59243
     },
     {
+      "icon_id": "9874547",
+      "name": "KHCFDC_旋转",
+      "font_class": "xuanzhuan",
+      "unicode": "e6e2",
+      "unicode_decimal": 59106
+    },
+    {
       "icon_id": "10678407",
       "name": "close",
       "font_class": "close",

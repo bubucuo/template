@@ -16,8 +16,15 @@
 
 .stretch {
   position: absolute;
+  .rotate {
+    z-index: 9999;
+    position: absolute;
+    color: #02dcf7;
+    font-weight: bold;
+  }
+
   @size: 8px;
-  li {
+  .stretchDot {
     z-index: 9999;
     position: absolute;
     width: @size;

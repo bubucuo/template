@@ -77,11 +77,18 @@ function Content(props) {
     }
   };
 
+  const cancelSelect = (e) => {
+    if (e.target.id === "canvas") {
+      globalCanvas.setSelectedCmp(null);
+    }
+  };
+
   return (
     <div className={styles.main}>
       <Header />
       <div
         className={styles.canvas}
+        id="canvas"
         style={{
           ...formatStyle(canvasStyle),
           backgroundImage: `url(${canvasStyle.backgroundImage})`,
@@ -92,9 +99,7 @@ function Content(props) {
         onDragLeave={handleDragLeave}
         onDrop={handleDrop}
         // 点击画布非组件区域的时候，取消选中的组件
-        onClick={() => {
-          globalCanvas.setSelectedCmp(null);
-        }}>
+        onClick={cancelSelect}>
         {canvasRef.current &&
           cmps.map((cmp, index) => {
             return cmp.data ? (
