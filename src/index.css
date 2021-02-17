@@ -53,7 +53,7 @@ ul {
 }
 
 .selected {
-  border: solid 1px #02dcf7;;
+  border: solid 1px #02dcf7 !important;
 }
 
 
