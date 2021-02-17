@@ -190,10 +190,7 @@ export default class Draggable extends Component {
         <div
           id={"cmp" + cmp.onlyKey}
           className={
-            styles.main +
-            " " +
-            (selected ? "selected" : styles.unselected) +
-            " jello"
+            styles.main + " " + (selected ? "selected" : styles.unselected)
           }
           style={{
             ...formatStyle(style, true),

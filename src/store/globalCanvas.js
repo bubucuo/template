@@ -27,8 +27,9 @@ class Canvas {
         backgroundColor: "#fff",
         backgroundImage: "",
         backgroundPosition: "center",
-        backgroundSize: "contain",
+        backgroundSize: "cover",
         backgroundRepeat: "no-repeat",
+        boxSizing: "content-box",
       },
       cmps: [],
     };
@@ -92,7 +93,10 @@ class Canvas {
     return {...this.canvas.style};
   };
 
+  // 更新整个画布
+  // 记得把选中的组件设置为null，因为画布都更新了，意味着原先选中的组件也已经没有了
   updateCanvas = (canvas) => {
+    this.selectedCmp = null;
     this.canvas = {...canvas};
     this.runListeners();
     this.recordCanvasChangeHistory();

@@ -21,7 +21,6 @@ function App() {
       unsubscribe();
     };
   }, [globalCanvas, forceUpdate]);
-
   return (
     <div id="app" className={styles.main}>
       <CanvasContext.Provider value={globalCanvas}>
