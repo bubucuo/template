@@ -49,7 +49,7 @@ export default function Cmps(props) {
   };
 
   return (
-    <div className={styles.main}>
+    <div id="cmps" className={styles.main}>
       <div className={styles.cmpList}>
         {menus.map((item) => (
           <div

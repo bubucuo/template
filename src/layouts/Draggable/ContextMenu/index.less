@@ -1,18 +1,30 @@
 .main {
   z-index: 9999;
   position: absolute;
+  height: 410px;
+  overflow: scroll;
   border: solid 1px wheat;
   text-align: left;
   min-width: 80px;
   font-size: 12px;
   background-color: white;
+  opacity: 0.9;
   .item {
     line-height: 30px;
-    padding: 4px;
+    padding: 10px 4px;
     background-color: white;
-
+    cursor: default;
     &:hover {
       background-color: #eeeeee;
     }
+    border-bottom: solid 1px #eee;
+  }
+  .desc {
+    font-weight: bold;
+  }
+
+  .thumbnail {
+    overflow: hidden;
+    text-align: center;
   }
 }

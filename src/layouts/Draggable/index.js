@@ -1,6 +1,6 @@
 import {Component} from "react";
 import {CanvasContext} from "../../Context";
-import {debounce} from "../../utils";
+import {debounce, formatStyle} from "../../utils";
 import ContextMenu from "./ContextMenu";
 import {
   isButtonComponent,
@@ -188,10 +188,18 @@ export default class Draggable extends Component {
     return (
       <>
         <div
+          id={"cmp" + cmp.onlyKey}
           className={
-            styles.main + " " + (selected ? "selected" : styles.unselected)
+            styles.main +
+            " " +
+            (selected ? "selected" : styles.unselected) +
+            " jello"
           }
-          style={{...style, zIndex: index}}
+          style={{
+            ...formatStyle(style, true),
+            zIndex: index,
+            //animationPlayState: "pouse",
+          }}
           draggable={true}
           onDragStart={this.handleDragStart}
           onClick={this.setActive}
@@ -272,7 +280,7 @@ export default class Draggable extends Component {
         {showContextMenu && (
           <ContextMenu
             index={index}
-            pos={{top: style.top + 10, left: style.left + 60}}
+            pos={{top: style.top - 80, left: style.left + 60}}
             cmp={cmp}
           />
         )}
@@ -281,7 +289,7 @@ export default class Draggable extends Component {
   }
 }
 
-function getComponent(cmp) {
+export function getComponent(cmp) {
   const {data} = cmp;
   let res = null;
   switch (data.type) {

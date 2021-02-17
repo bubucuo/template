@@ -55,3 +55,11 @@ ul {
 .selected {
   border: solid 1px orange;
 }
+
+
+.hover {
+  z-index:999 !important;
+  border: solid 2px #02dcf7 !important;
+}
+
+

@@ -20,9 +20,7 @@ import {getOnlyKey} from "../utils";
 class Canvas {
   constructor() {
     this.cmpsEntity = new Map(); // 实例
-
-    // 画布属性
-    this.canvas = {
+    this.defaultCanvas = {
       style: {
         width: 320,
         height: 568,
@@ -30,8 +28,13 @@ class Canvas {
         backgroundImage: "",
         backgroundPosition: "center",
         backgroundSize: "contain",
+        backgroundRepeat: "no-repeat",
       },
       cmps: [],
+    };
+    // 画布属性
+    this.canvas = {
+      ...this.defaultCanvas,
     };
 
     this.canvasChangeHistory = [];
@@ -45,6 +48,10 @@ class Canvas {
     // 画布之外的组件更新，如编辑区域
     this.storeChangeCmps = [];
   }
+
+  tt = () => {
+    return {...this.canvas};
+  };
 
   goPrevCanvasHistory = () => {
     const index = this.canvasIndex - 1 < 0 ? 0 : this.canvasIndex - 1;
@@ -83,6 +90,18 @@ class Canvas {
   // get canvasStyle
   getCanvasStyle = () => {
     return {...this.canvas.style};
+  };
+
+  updateCanvas = (canvas) => {
+    this.canvas = {...canvas};
+    this.runListeners();
+    this.recordCanvasChangeHistory();
+  };
+
+  emptyCanvas = () => {
+    this.canvas = {...this.defaultCanvas};
+    this.runListeners();
+    this.recordCanvasChangeHistory();
   };
 
   updateCanvasStyle = (data) => {
@@ -269,9 +288,12 @@ class Canvas {
   // 返回画布数据的增删改查函数
   getCanvas = () => {
     const returnFuncs = [
+      "tt",
       "recordCanvasChangeHistory",
       "goPrevCanvasHistory",
       "goNextCanvasHistory",
+      "updateCanvas",
+      "emptyCanvas",
       "getCanvasStyle",
       "updateCanvasStyle",
       "registerStoreChangeCmps",

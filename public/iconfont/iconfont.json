@@ -13,6 +13,13 @@
       "unicode_decimal": 59243
     },
     {
+      "icon_id": "722473",
+      "name": "loading",
+      "font_class": "loading",
+      "unicode": "e61d",
+      "unicode_decimal": 58909
+    },
+    {
       "icon_id": "9874547",
       "name": "KHCFDC_旋转",
       "font_class": "xuanzhuan",
@@ -25,6 +32,13 @@
       "font_class": "close",
       "unicode": "e6dc",
       "unicode_decimal": 59100
+    },
+    {
+      "icon_id": "18446819",
+      "name": "无穷大",
+      "font_class": "wuqiongda",
+      "unicode": "e674",
+      "unicode_decimal": 58996
     }
   ]
 }

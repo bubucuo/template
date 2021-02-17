@@ -19,12 +19,16 @@ function Content(props) {
 
   const canvasRef = useRef();
 
-  console.log("cmps", cmps); //sy-log
+  console.log("cmps", cmps, JSON.stringify(globalCanvas.tt())); //sy-log
 
   useEffect(() => {
     // 记录画布的位置，因为最终记录的位置是基于画布计算出来的相对位置
     const canvasPos = canvasRef.current.getBoundingClientRect();
     setCanvasPos(canvasPos);
+
+    // 取消选中
+
+    document.getElementById("root").addEventListener("click", cancelSelect);
   }, []);
 
   const handleDragEnter = (e) => {
@@ -78,13 +82,15 @@ function Content(props) {
   };
 
   const cancelSelect = (e) => {
-    if (e.target.id === "canvas") {
+    if (
+      ["canvas", "root", "app", "content", "editCmp"].indexOf(e.target.id) > -1
+    ) {
       globalCanvas.setSelectedCmp(null);
     }
   };
 
   return (
-    <div className={styles.main}>
+    <div id="content" className={styles.main}>
       <Header />
       <div
         className={styles.canvas}
@@ -99,7 +105,7 @@ function Content(props) {
         onDragLeave={handleDragLeave}
         onDrop={handleDrop}
         // 点击画布非组件区域的时候，取消选中的组件
-        onClick={cancelSelect}>
+      >
         {canvasRef.current &&
           cmps.map((cmp, index) => {
             return cmp.data ? (

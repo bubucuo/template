@@ -23,7 +23,7 @@ function App() {
   }, [globalCanvas, forceUpdate]);
 
   return (
-    <div className={styles.main}>
+    <div id="app" className={styles.main}>
       <CanvasContext.Provider value={globalCanvas}>
         <Cmps />
         <Content />

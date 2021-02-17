@@ -3,17 +3,27 @@ export function getOnlyKey() {
 }
 
 // 规范style，如传入的lineHeight只是数字，没有px，则这里加上
-export function formatStyle(style, noNeedPos) {
+export function formatStyle(style, noDel) {
   let newStyle = {...style};
 
-  newStyle = checkPx(newStyle, ["width", "height", "lineHeight", "fontSize"]);
+  newStyle = checkPx(newStyle, [
+    "width",
+    "height",
+    "lineHeight",
+    "fontSize",
+    "borderWidth",
+  ]);
 
-  delete newStyle.top;
-  delete newStyle.right;
-  delete newStyle.bottom;
-  delete newStyle.left;
-  delete newStyle.transform;
-
+  newStyle = checkSec(newStyle, ["animationDuration", "animationDelay"]);
+  if (!noDel) {
+    delete newStyle.top;
+    delete newStyle.right;
+    delete newStyle.bottom;
+    delete newStyle.left;
+    delete newStyle.transform;
+    delete newStyle.borderWidth;
+    delete newStyle.animationName;
+  }
   return newStyle;
 }
 
@@ -21,6 +31,16 @@ function checkPx(newStyle, names) {
   names.forEach((name) => {
     if (newStyle[name] && (newStyle[name] + "").indexOf("px") === -1) {
       newStyle[name] = newStyle[name] + "px";
+    }
+  });
+  return newStyle;
+}
+
+// 时间单位加上s
+function checkSec(newStyle, names) {
+  names.forEach((name) => {
+    if (newStyle[name] && (newStyle[name] + "").indexOf("s") === -1) {
+      newStyle[name] = newStyle[name] + "s";
     }
   });
   return newStyle;
@@ -61,3 +81,7 @@ export function getContainerDom() {
 }
 
 export function checkBackgroundImage() {}
+
+export function getCmpDom(onlyKey) {
+  return document.getElementById("cmp" + onlyKey);
+}
