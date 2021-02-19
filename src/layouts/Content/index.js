@@ -19,7 +19,7 @@ function Content(props) {
 
   const canvasRef = useRef();
 
-  console.log("cmps", cmps); //, JSON.stringify(globalCanvas.tt())); //sy-log
+  // console.log("cmps", cmps, JSON.stringify(globalCanvas.getCanvasData())); //sy-log
 
   useEffect(() => {
     // 记录画布的位置，因为最终记录的位置是基于画布计算出来的相对位置

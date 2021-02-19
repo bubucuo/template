@@ -7,7 +7,7 @@ import {useForceUpdate} from "./layouts/hooks";
 import {useCanvas} from "./store/globalCanvas";
 import styles from "./App.less";
 
-function App() {
+export default function App() {
   const forceUpdate = useForceUpdate();
 
   // 所有组件
@@ -31,5 +31,3 @@ function App() {
     </div>
   );
 }
-
-export default App;

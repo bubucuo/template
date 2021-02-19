@@ -50,7 +50,7 @@ class Canvas {
     this.storeChangeCmps = [];
   }
 
-  tt = () => {
+  getCanvasData = () => {
     return {...this.canvas};
   };
 
@@ -292,7 +292,7 @@ class Canvas {
   // 返回画布数据的增删改查函数
   getCanvas = () => {
     const returnFuncs = [
-      "tt",
+      "getCanvasData",
       "recordCanvasChangeHistory",
       "goPrevCanvasHistory",
       "goNextCanvasHistory",

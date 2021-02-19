@@ -24,6 +24,10 @@ export default function Header(props) {
     globalCanvas.emptyCanvas();
   };
 
+  const release = () => {
+    console.log("发布", globalCanvas.getCanvasData()); //sy-log
+  };
+
   return (
     <>
       <ul className={styles.main}>
@@ -50,6 +54,10 @@ export default function Header(props) {
         <li className={styles.item} onClick={emptyCanvas}>
           清空画布
         </li>
+        <li className={styles.item} onClick={release}>
+          发布
+        </li>
+        {/* <li className={styles.item}>下架</li> */}
       </ul>
       {showTpl && (
         <Tpl openOrCloseTpl={openOrCloseTpl} globalCanvas={globalCanvas} />

@@ -179,7 +179,7 @@ export default function EditCmp({selectedCmp, globalCanvas}) {
       <Item label="边框颜色">
         <InputColor
           className={styles.itemRight}
-          initialValue={style.borderColor || "#fff"}
+          initialValue={style.borderColor || "#ffffff00"}
           onChange={(e) =>
             handleStyleChange(null, {name: "borderColor", value: e.hex})
           }
