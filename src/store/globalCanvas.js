@@ -22,7 +22,7 @@ class Canvas {
     this.cmpsEntity = new Map(); // 实例
     this.defaultCanvas = {
       style: {
-        width: 320,
+        width: 720,
         height: 568,
         backgroundColor: "#fff",
         backgroundImage: "",
@@ -34,10 +34,10 @@ class Canvas {
       cmps: [],
     };
     // 画布属性
+    
     this.canvas = {
       ...this.defaultCanvas,
     };
-
     this.canvasChangeHistory = [];
     this.canvasIndex = -1;
 

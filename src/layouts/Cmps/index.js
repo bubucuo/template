@@ -1,6 +1,6 @@
-import {useState, useEffect, useContext} from "react";
-import {CanvasContext} from "../../Context";
-import {getContainerDom} from "../../utils";
+import { useState, useEffect, useContext } from "react";
+import { CanvasContext } from "../../Context";
+import { getContainerDom } from "../../utils";
 import Img from "./Img";
 import styles from "./index.less";
 import {
@@ -47,9 +47,10 @@ export default function Cmps(props) {
       setList(l);
     }
   };
-
+  //  左侧栏布局
   return (
     <div id="cmps" className={styles.main}>
+      <div className={styles.cmpTop}>嗷嗷的</div>
       <div className={styles.cmpList}>
         {menus.map((item) => (
           <div
@@ -57,15 +58,19 @@ export default function Cmps(props) {
             className={styles.cmp}
             draggable={item.data.type !== isImgComponent}
             onDragStart={(e) => handleDragStart(e, item)}
-            onClick={(e) => handleClick(e, item)}>
-            {item.desc}
+            onClick={(e) => handleClick(e, item)}
+          >
+            <span className={`${item.data.iconfont} ${styles.cmpIcon}`} > </span>
+
+            <span className = {styles.cmpText} > {item.desc} </span>
           </div>
         ))}
       </div>
       {list && (
         <button
           className={classnames("iconfont icon-close", styles.close)}
-          onClick={() => setList(null)}></button>
+          onClick={() => setList(null)}
+        ></button>
       )}
       {list && <ul className={styles.detailList}> {list}</ul>}
     </div>

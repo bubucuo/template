@@ -31,15 +31,18 @@ export default function Header(props) {
   return (
     <>
       <ul className={styles.main}>
-        <li className={styles.item} onClick={openOrCloseTpl}>
-          选择模板
+        <li className={ styles.item } onClick={openOrCloseTpl}>
+          <span className={`${'iconfont icon-xuanze'} ${styles.chooseTemplateIcon}`}></span>
+          <span className={styles.chooseTemplate}>选择模板</span>
+         
         </li>
         <li className={styles.item} onClick={prevCanvas}>
-          <span
+          <span   
             className={classnames(
               "iconfont icon-chexiaofanhuichehuishangyibu",
               styles.lastStep
-            )}></span>
+            )}>          
+          </span>
           <span className={styles.txt}>上一步</span>
         </li>
         <li className={styles.item} onClick={nextCanvas}>
@@ -52,10 +55,14 @@ export default function Header(props) {
         </li>
 
         <li className={styles.item} onClick={emptyCanvas}>
-          清空画布
+          <span className={`${'iconfont icon-qingkong'} ${styles.clearCanvasIcon}`}></span>
+          <span className={styles.clearCanvas}>清空画布</span>
+          
         </li>
         <li className={styles.item} onClick={release}>
-          发布
+          <span className={`${'iconfont icon-fabu'} ${styles.releaseIcon}`}></span>
+          <span className={styles.release}>发布</span>
+          
         </li>
         {/* <li className={styles.item}>下架</li> */}
       </ul>

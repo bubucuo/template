@@ -8,6 +8,7 @@ export const menus = [
     data: {
       type: isTextComponent,
       value: "文本",
+      iconfont:'iconfont icon-wenben',
       style: {
         top: 1,
         left: 0,
@@ -23,6 +24,7 @@ export const menus = [
         borderStyle: "none",
         borderWidth: "0",
         borderColor: "#fff",
+        
       },
     },
   },
@@ -31,6 +33,7 @@ export const menus = [
     data: {
       type: isButtonComponent,
       value: "按钮",
+      iconfont:'iconfont icon-anniu',
       style: {
         top: 0,
         left: 0,
@@ -53,6 +56,7 @@ export const menus = [
     desc: "图片",
     data: {
       type: isImgComponent,
+      iconfont:'iconfont icon-image',
       value:
         "https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=1333208373,3297678241&fm=26&gp=0.jpg", // 图片地址
       style: {

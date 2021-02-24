@@ -4,16 +4,66 @@
   justify-content: center;
   position: absolute;
   top: 0;
-  left: 70px;
-  right: 320px;
+  left: 130px;
+  right: 230px;
   height: 60px;
-  border-bottom: solid 1px #eee;
-
+  color:#fff;
+  z-index: 22;
+  background-color: #000;
   .item {
     width: 80px;
     cursor: default;
+    .release{
+      margin-left: 6px;
+      display: inline-block;
+    }
+    .releaseIcon{
+      display: inline-block;
+    }
+    .clearCanvasIcon{
+      display: inline-block;
+    }
+    .clearCanvas{
+      display: inline-block;
+      margin-left: 6px;
+    }
   }
-
+  .item:first-child{
+    display: inline-block;
+    position: absolute;
+    left:15%;
+    width: 120px;
+    .chooseTemplateIcon{
+      display: inline-block;
+    }
+    .chooseTemplate{
+      display: inline-block;
+      margin-left: 8px;
+    }
+  }
+  .item:nth-child(2){
+    position:absolute;
+    left: 30%;
+  }
+  .item:nth-child(3){
+    position:absolute;
+    left: 40%;
+  }
+  .item:nth-child(4){
+    width: 150px;
+    position:absolute;
+    left: 60%;
+  }
+  .item:last-child{
+    position: absolute;
+    right: 0;
+    width:90px;
+    height: 60px;
+    line-height: 60px;
+    text-align: center;
+    display: inline-block;
+    background: #0057ff;
+  }
   .nextStep {
     display: inline-block;
     transform: rotateY(180deg);
