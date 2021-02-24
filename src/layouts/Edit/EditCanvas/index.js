@@ -18,8 +18,11 @@ export default function EditCanvas({globalCanvas}) {
   return (
     <div className={styles.main}>
       <>
-        <div className={styles.title}>画布属性</div>
-
+        <div className={styles.title}>
+          <span className={`${'iconfont icon-shuxing'} ${styles.attributeIcon}`}></span>
+          <span className={styles.attribute}>画布属性</span>
+          
+        </div>
         {style.width !== undefined && (
           <Item label="画布宽度(px)">
             <input
