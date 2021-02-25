@@ -31,18 +31,19 @@ export default function Header(props) {
   return (
     <>
       <ul className={styles.main}>
-        <li className={ styles.item } onClick={openOrCloseTpl}>
-          <span className={`${'iconfont icon-xuanze'} ${styles.chooseTemplateIcon}`}></span>
-          <span className={styles.chooseTemplate}>选择模板</span>
-         
+        <li className={styles.item} onClick={openOrCloseTpl}>
+          <span
+            className={`${"iconfont icon-xuanze"} ${
+              styles.chooseTemplateIcon
+            }`}></span>
+          <span className={styles.txt}>选择模板</span>
         </li>
         <li className={styles.item} onClick={prevCanvas}>
-          <span   
+          <span
             className={classnames(
               "iconfont icon-chexiaofanhuichehuishangyibu",
               styles.lastStep
-            )}>          
-          </span>
+            )}></span>
           <span className={styles.txt}>上一步</span>
         </li>
         <li className={styles.item} onClick={nextCanvas}>
@@ -55,14 +56,22 @@ export default function Header(props) {
         </li>
 
         <li className={styles.item} onClick={emptyCanvas}>
-          <span className={`${'iconfont icon-qingkong'} ${styles.clearCanvasIcon}`}></span>
-          <span className={styles.clearCanvas}>清空画布</span>
-          
+          <span
+            className={classnames(
+              "iconfont icon-qingkong",
+              styles.clearCanvasIcon
+            )}></span>
+          <span className={styles.txt}>清空画布</span>
         </li>
-        <li className={styles.item} onClick={release}>
-          <span className={`${'iconfont icon-fabu'} ${styles.releaseIcon}`}></span>
-          <span className={styles.release}>发布</span>
-          
+        <li
+          className={classnames(styles.item, styles.release)}
+          onClick={release}>
+          <span
+            className={classnames(
+              "iconfont icon-fabu",
+              styles.releaseIcon
+            )}></span>
+          <span className={styles.txt}>发布</span>
         </li>
         {/* <li className={styles.item}>下架</li> */}
       </ul>
