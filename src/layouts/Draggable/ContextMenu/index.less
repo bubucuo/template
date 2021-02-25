@@ -3,11 +3,13 @@
   position: absolute;
   height: 410px;
   overflow: scroll;
-  border: solid 1px wheat;
+  // border: solid 1px wheat;
+  box-shadow: 0 2px 10px hsl(0deg 20% 85% / 1);
+  background:hsla(0,0%,100%,.94);
+  border-radius: 4px;
   text-align: left;
   min-width: 80px;
   font-size: 12px;
-  background-color: white;
   opacity: 0.9;
   .item {
     line-height: 30px;
@@ -15,9 +17,11 @@
     background-color: white;
     cursor: default;
     &:hover {
-      background-color: #eeeeee;
+      background-color: #0057ff;
+      color:#fff;
+      cursor: pointer;
     }
-    border-bottom: solid 1px #eee;
+    border-bottom: 1px solid #e4e9ee;
   }
   .desc {
     font-weight: bold;
