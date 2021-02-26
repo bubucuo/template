@@ -224,6 +224,7 @@ export default function EditCmp({selectedCmp, globalCanvas}) {
             });
           }}>
           <option value="">无动画</option>
+          <option value="toggle">闪烁</option>
           <option value="jello">果冻</option>
           <option value="shake">抖动</option>
           <option value="wobble">左右摇摆</option>

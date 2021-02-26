@@ -2,7 +2,12 @@ import React from "react";
 import {CanvasContext} from "../../../Context";
 import styles from "./index.less";
 
-export default function AddCmpWrapper({children, baseCmp, value}) {
+export default function AddCmpWrapper({
+  children,
+  baseCmp,
+  value,
+  style = {width: 200, height: 200},
+}) {
   const globalCanvas = React.useContext(CanvasContext);
 
   let cmp = React.useMemo(() => {
@@ -11,6 +16,10 @@ export default function AddCmpWrapper({children, baseCmp, value}) {
       data: {
         ...baseCmp.data,
         value,
+        style: {
+          ...baseCmp.data.style,
+          ...style,
+        },
       },
     };
   }, [baseCmp, value]);

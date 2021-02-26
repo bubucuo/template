@@ -5,6 +5,10 @@
   -webkit-animation-name: jello;
   animation-name: jello;
 }
+@keyframes toggle {
+  from {opacity: 0;}
+  to {opacity: 1;}
+}
 @keyframes jello {
   0%,
   11.1%,

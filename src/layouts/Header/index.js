@@ -25,7 +25,11 @@ export default function Header(props) {
   };
 
   const release = () => {
-    console.log("发布", globalCanvas.getCanvasData()); //sy-log
+    console.log(
+      "发布",
+      globalCanvas.getCanvasData(),
+      JSON.stringify(globalCanvas.getCanvasData())
+    ); //sy-log
   };
 
   return (

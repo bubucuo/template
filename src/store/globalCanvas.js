@@ -109,7 +109,9 @@ class Canvas {
   };
 
   updateCanvasStyle = (data) => {
-    this.canvas = {
+    console.log("hahah", this.canvasChangeHistory); //sy-log
+
+    const newCanvas = {
       ...this.canvas,
       style: {
         ...this.getCanvasStyle(),
@@ -117,6 +119,11 @@ class Canvas {
       },
     };
 
+    if (JSON.stringify(newCanvas) === JSON.stringify(this.canvas)) {
+      return;
+    }
+
+    this.canvas = newCanvas;
     // 更新Content层级
     this.runListeners();
     this.recordCanvasChangeHistory();
