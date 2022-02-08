@@ -196,7 +196,7 @@ class Canvas {
     this.setCmps(cmps);
     this.forceCmpsUpdate(_cmp);
 
-    // console.log("画布数据", JSON.stringify(this.canvas)); //sy-log
+    console.log("画布数据", JSON.stringify(this.canvas)); //sy-log
   };
 
   /** 选中组件的操作 **/

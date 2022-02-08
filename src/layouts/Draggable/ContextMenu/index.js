@@ -3,8 +3,13 @@ import { getComponent } from "..";
 import { CanvasContext } from "../../../Context";
 import styles from "./index.less";
 
-export default function ContextMenu({ index, pos, cmp, del }) {
+export default function ContextMenu({ index, pos, cmp }) {
   const globalCanvas = useContext(CanvasContext);
+
+  const del = (e) => {
+    e.stopPropagation();
+    globalCanvas.deleteSelectedCmp(cmp);
+  };
 
   const copy = () => {
     globalCanvas.addCmp(cmp);

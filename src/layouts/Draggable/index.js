@@ -45,11 +45,11 @@ export default class Draggable extends Component {
     this.unregisterCmpsEntity();
   }
 
-  del = (e, cmp) => {
-    e.stopPropagation();
-    const globalCanvas = this.context;
-    globalCanvas.deleteSelectedCmp(cmp);
-  };
+  // del = (e, cmp) => {
+  //   e.stopPropagation();
+  //   const globalCanvas = this.context;
+  //   globalCanvas.deleteSelectedCmp(cmp);
+  // };
 
   moveByMouse = (e, newStyle) => {
     e.preventDefault();
@@ -337,7 +337,6 @@ export default class Draggable extends Component {
             index={index}
             pos={{ top: style.top - 80, left: style.left + 60 }}
             cmp={cmp}
-            del={this.del}
           />
         )}
       </>
