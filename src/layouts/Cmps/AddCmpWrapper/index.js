@@ -1,12 +1,12 @@
 import React from "react";
-import {CanvasContext} from "../../../Context";
+import { CanvasContext } from "../../../Context";
 import styles from "./index.less";
 
 export default function AddCmpWrapper({
   children,
   baseCmp,
   value,
-  style = {width: 200, height: 200},
+  style = { width: 200, height: 200 },
 }) {
   const globalCanvas = React.useContext(CanvasContext);
 
@@ -22,7 +22,7 @@ export default function AddCmpWrapper({
         },
       },
     };
-  }, [baseCmp, value]);
+  }, [baseCmp, value, style]);
 
   const addCmp = (e) => {
     e.preventDefault();
@@ -39,7 +39,8 @@ export default function AddCmpWrapper({
       className={styles.main}
       onClick={addCmp}
       draggable="true"
-      onDragStart={handleDragStart}>
+      onDragStart={handleDragStart}
+    >
       {children}
     </li>
   );

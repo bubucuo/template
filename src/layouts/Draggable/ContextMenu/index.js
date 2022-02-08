@@ -1,18 +1,13 @@
-import {useContext} from "react";
-import {getComponent} from "..";
-import {CanvasContext} from "../../../Context";
+import { useContext } from "react";
+import { getComponent } from "..";
+import { CanvasContext } from "../../../Context";
 import styles from "./index.less";
 
-export default function ContextMenu({index, pos, cmp}) {
+export default function ContextMenu({ index, pos, cmp, del }) {
   const globalCanvas = useContext(CanvasContext);
 
   const copy = () => {
     globalCanvas.addCmp(cmp);
-  };
-
-  const del = (e) => {
-    e.stopPropagation();
-    globalCanvas.deleteSelectedCmp(cmp);
   };
 
   const beTop = (e) => {
@@ -67,14 +62,16 @@ export default function ContextMenu({index, pos, cmp}) {
           className={styles.item}
           onMouseOver={(e) => mouseOver(e, _cmp)}
           onMouseLeave={(e) => mouseLeave(e, _cmp)}
-          onClick={(e) => selectCmp(e, _cmp)}>
+          onClick={(e) => selectCmp(e, _cmp)}
+        >
           <div className={styles.desc}>{_cmp.desc}</div>
           <div
             className={styles.thumbnail}
             style={{
               width: _cmp.data.style.width,
               height: _cmp.data.style.height,
-            }}>
+            }}
+          >
             {getComponent(_cmp)}
           </div>
         </li>

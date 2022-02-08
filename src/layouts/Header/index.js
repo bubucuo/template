@@ -1,7 +1,7 @@
-import {useContext, useState, useCallback, useEffect} from "react";
+import { useContext, useState, useCallback } from "react";
 import styles from "./index.less";
 import classnames from "classnames";
-import {CanvasContext} from "../../Context";
+import { CanvasContext } from "../../Context";
 import Tpl from "./Tpl";
 
 export default function Header(props) {
@@ -37,9 +37,8 @@ export default function Header(props) {
       <ul className={styles.main}>
         <li className={styles.item} onClick={openOrCloseTpl}>
           <span
-            className={`${"iconfont icon-xuanze"} ${
-              styles.chooseTemplateIcon
-            }`}></span>
+            className={`${"iconfont icon-xuanze"} ${styles.chooseTemplateIcon}`}
+          ></span>
           <span className={styles.txt}>选择模板</span>
         </li>
         <li className={styles.item} onClick={prevCanvas}>
@@ -47,7 +46,8 @@ export default function Header(props) {
             className={classnames(
               "iconfont icon-chexiaofanhuichehuishangyibu",
               styles.lastStep
-            )}></span>
+            )}
+          ></span>
           <span className={styles.txt}>上一步</span>
         </li>
         <li className={styles.item} onClick={nextCanvas}>
@@ -55,7 +55,8 @@ export default function Header(props) {
             className={classnames(
               "iconfont icon-chexiaofanhuichehuishangyibu",
               styles.nextStep
-            )}></span>
+            )}
+          ></span>
           <span className={styles.txt}>下一步</span>
         </li>
 
@@ -64,17 +65,17 @@ export default function Header(props) {
             className={classnames(
               "iconfont icon-qingkong",
               styles.clearCanvasIcon
-            )}></span>
+            )}
+          ></span>
           <span className={styles.txt}>清空画布</span>
         </li>
         <li
           className={classnames(styles.item, styles.release)}
-          onClick={release}>
+          onClick={release}
+        >
           <span
-            className={classnames(
-              "iconfont icon-fabu",
-              styles.releaseIcon
-            )}></span>
+            className={classnames("iconfont icon-fabu", styles.releaseIcon)}
+          ></span>
           <span className={styles.txt}>发布</span>
         </li>
         {/* <li className={styles.item}>下架</li> */}

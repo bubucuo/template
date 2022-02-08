@@ -1,8 +1,8 @@
-import {useEffect, useRef, useState, useContext} from "react";
+import { useEffect, useRef, useState, useContext } from "react";
 import Draggable from "../Draggable";
-import {CanvasContext} from "../../Context";
+import { CanvasContext } from "../../Context";
 import styles from "./index.less";
-import {formatStyle} from "../../utils";
+import { formatStyle } from "../../utils";
 import Header from "../Header";
 
 function Content(props) {
@@ -27,9 +27,16 @@ function Content(props) {
     setCanvasPos(canvasPos);
 
     // 取消选中
-
+    const cancelSelect = (e) => {
+      if (
+        ["canvas", "root", "app", "content", "editCmp"].indexOf(e.target.id) >
+        -1
+      ) {
+        globalCanvas.setSelectedCmp(null);
+      }
+    };
     document.getElementById("root").addEventListener("click", cancelSelect);
-  }, []);
+  }, [globalCanvas]);
 
   const handleDragEnter = (e) => {
     e.preventDefault();
@@ -77,15 +84,7 @@ function Content(props) {
 
       const top = selectedCmp.data.style.top + disY;
       const left = selectedCmp.data.style.left + disX;
-      globalCanvas.updateSelectedCmpStyle({top, left});
-    }
-  };
-
-  const cancelSelect = (e) => {
-    if (
-      ["canvas", "root", "app", "content", "editCmp"].indexOf(e.target.id) > -1
-    ) {
-      globalCanvas.setSelectedCmp(null);
+      globalCanvas.updateSelectedCmpStyle({ top, left });
     }
   };
 

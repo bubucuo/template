@@ -1,5 +1,5 @@
-import {useRef} from "react";
-import {getOnlyKey} from "../utils";
+import { useRef } from "react";
+import { getOnlyKey } from "../utils";
 
 /**
  * 组件更新
@@ -24,7 +24,7 @@ class Canvas {
       style: {
         width: 320,
         height: 568,
-        backgroundColor: "#fff",
+        backgroundColor: "#ffffff00",
         backgroundImage: "",
         backgroundPosition: "center",
         backgroundSize: "cover",
@@ -51,7 +51,7 @@ class Canvas {
   }
 
   getCanvasData = () => {
-    return {...this.canvas};
+    return { ...this.canvas };
   };
 
   goPrevCanvasHistory = () => {
@@ -90,27 +90,25 @@ class Canvas {
 
   // get canvasStyle
   getCanvasStyle = () => {
-    return {...this.canvas.style};
+    return { ...this.canvas.style };
   };
 
   // 更新整个画布
   // 记得把选中的组件设置为null，因为画布都更新了，意味着原先选中的组件也已经没有了
   updateCanvas = (canvas) => {
     this.selectedCmp = null;
-    this.canvas = {...canvas};
+    this.canvas = { ...canvas };
     this.runListeners();
     this.recordCanvasChangeHistory();
   };
 
   emptyCanvas = () => {
-    this.canvas = {...this.defaultCanvas};
+    this.canvas = { ...this.defaultCanvas };
     this.runListeners();
     this.recordCanvasChangeHistory();
   };
 
   updateCanvasStyle = (data) => {
-    console.log("hahah", this.canvasChangeHistory); //sy-log
-
     const newCanvas = {
       ...this.canvas,
       style: {
@@ -150,12 +148,12 @@ class Canvas {
     });
 
     // 更新和画布组件相关的组件，如编辑区域
-    this.storeChangeCmps.forEach(({onStoreChange}) => onStoreChange());
+    this.storeChangeCmps.forEach(({ onStoreChange }) => onStoreChange());
   };
 
   getCmp = (index) => {
     const cmps = this.getCmps();
-    return {...cmps[index]};
+    return { ...cmps[index] };
   };
 
   getCmps = () => {
@@ -197,6 +195,8 @@ class Canvas {
     }
     this.setCmps(cmps);
     this.forceCmpsUpdate(_cmp);
+
+    // console.log("画布数据", JSON.stringify(this.canvas)); //sy-log
   };
 
   /** 选中组件的操作 **/
@@ -229,12 +229,13 @@ class Canvas {
     this.forceCmpsUpdate(...needForceUpdateCmps);
   };
 
-  // 在编辑区域更新组价style、拖拽组件更新组件style
+  // 在编辑区域更新组件style、拖拽组件更新组件style
   updateSelectedCmpStyle = (_style, frequently) => {
     let _cmp = this.getSelectedCmp();
+
     let cmp = {
       ..._cmp,
-      data: {..._cmp.data, style: {..._cmp.data.style, ..._style}},
+      data: { ..._cmp.data, style: { ..._cmp.data.style, ..._style } },
     };
     if (JSON.stringify(cmp) !== JSON.stringify(this.selectedCmp)) {
       this.selectedCmp = cmp;

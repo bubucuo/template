@@ -1,10 +1,12 @@
+export const url0 = "http://150.158.30.131:8181/";
+
 export function getOnlyKey() {
   return Math.random();
 }
 
 // 规范style，如传入的lineHeight只是数字，没有px，则这里加上
 export function formatStyle(style, noDel) {
-  let newStyle = {...style};
+  let newStyle = { ...style };
 
   newStyle = checkPx(newStyle, [
     "width",

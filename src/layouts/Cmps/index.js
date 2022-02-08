@@ -1,6 +1,5 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useContext } from "react";
 import { CanvasContext } from "../../Context";
-import { getContainerDom } from "../../utils";
 import Img from "./Img";
 import styles from "./index.less";
 import {
@@ -60,9 +59,9 @@ export default function Cmps(props) {
             onDragStart={(e) => handleDragStart(e, item)}
             onClick={(e) => handleClick(e, item)}
           >
-            <span className={`${item.data.iconfont} ${styles.cmpIcon}`} > </span>
+            <span className={`${item.data.iconfont} ${styles.cmpIcon}`}> </span>
 
-            <span className = {styles.cmpText} > {item.desc} </span>
+            <span className={styles.cmpText}> {item.desc} </span>
           </div>
         ))}
       </div>

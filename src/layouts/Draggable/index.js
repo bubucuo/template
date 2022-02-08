@@ -1,6 +1,6 @@
-import {Component} from "react";
-import {CanvasContext} from "../../Context";
-import {debounce, formatStyle} from "../../utils";
+import { Component } from "react";
+import { CanvasContext } from "../../Context";
+import { debounce, formatStyle } from "../../utils";
 import ContextMenu from "./ContextMenu";
 import {
   isButtonComponent,
@@ -20,13 +20,16 @@ export default class Draggable extends Component {
   static contextType = CanvasContext;
   constructor(props, context) {
     super(props);
-    this.state = {showContextMenu: false};
+    this.state = { showContextMenu: false };
   }
 
   componentDidMount() {
     document
       .getElementById("root")
       .addEventListener("click", this.setShowContextMenu);
+
+    document.onkeydown = this.whichEvent;
+
     // 注册组件
     this.unregisterCmpsEntity = this.context.registerCmpsEntity(
       this.context.getCmp(this.props.index).onlyKey,
@@ -42,6 +45,62 @@ export default class Draggable extends Component {
     this.unregisterCmpsEntity();
   }
 
+  del = (e, cmp) => {
+    e.stopPropagation();
+    const globalCanvas = this.context;
+    globalCanvas.deleteSelectedCmp(cmp);
+  };
+
+  moveByMouse = (e, newStyle) => {
+    e.preventDefault();
+
+    this.context.updateSelectedCmpStyle(newStyle, "frequently");
+    // debounce(this.context.updateSelectedCmpStyle(newStyle, "frequently"));
+  };
+
+  whichEvent = (e) => {
+    const globalCanvas = this.context;
+
+    const selectCmp = globalCanvas.getSelectedCmp();
+
+    const newStyle = {};
+
+    switch (e.keyCode) {
+      // ?会影响输入框的内容删除，因此这里暂时不处理根据删除键删除组件
+      // 删除
+      // case 8:
+      //   this.del(e, selectCmp);
+      //   break;
+
+      // 左
+      case 37:
+        newStyle.left = selectCmp.data.style.left - 1;
+        this.moveByMouse(e, newStyle);
+        break;
+
+      // 上
+      case 38:
+        newStyle.top = selectCmp.data.style.top - 1;
+        this.moveByMouse(e, newStyle);
+        break;
+
+      // 右
+      case 39:
+        newStyle.left = selectCmp.data.style.left + 1;
+        this.moveByMouse(e, newStyle);
+        break;
+
+      //下
+      case 40:
+        newStyle.top = selectCmp.data.style.top + 1;
+        this.moveByMouse(e, newStyle);
+        break;
+
+      default:
+        break;
+    }
+  };
+
   onStoreChange = () => {
     this.forceUpdate();
   };
@@ -49,7 +108,7 @@ export default class Draggable extends Component {
   setShowContextMenu = (e) => {
     e.stopPropagation();
     e.preventDefault();
-    this.state.showContextMenu && this.setState({showContextMenu: false});
+    this.state.showContextMenu && this.setState({ showContextMenu: false });
   };
 
   handleMouseDown = (e, direction) => {
@@ -108,12 +167,11 @@ export default class Draggable extends Component {
     this.setActive(e);
     let pageX = e.pageX;
     let pageY = e.pageY;
-    e.dataTransfer.setData("startPos", JSON.stringify({pageX, pageY}));
+    e.dataTransfer.setData("startPos", JSON.stringify({ pageX, pageY }));
   };
 
   setActive = (e) => {
     e.stopPropagation();
-    const selectCmp = this.context.getSelectedCmp();
     const cmp = this.context.getCmp(this.props.index);
 
     this.context.setSelectedCmp(cmp);
@@ -121,16 +179,14 @@ export default class Draggable extends Component {
 
   handleContextMenu = (e) => {
     e.preventDefault();
-    this.setState({showContextMenu: true});
+    this.setState({ showContextMenu: true });
   };
 
   handleMouseDownofRotate = (e) => {
     e.stopPropagation();
     e.preventDefault();
 
-    const {getCmp, updateSelectedCmpStyle} = this.context;
-
-    const cmp = getCmp(this.props.index);
+    const { updateSelectedCmpStyle } = this.context;
 
     let startX = e.pageX;
     let startY = e.pageY;
@@ -166,7 +222,7 @@ export default class Draggable extends Component {
   };
 
   render() {
-    const {index} = this.props;
+    const { index } = this.props;
 
     const globalCanvas = this.context;
 
@@ -176,9 +232,9 @@ export default class Draggable extends Component {
 
     const selected = selectCmp && selectCmp.onlyKey === cmp.onlyKey;
 
-    const {showContextMenu} = this.state;
+    const { showContextMenu } = this.state;
 
-    const {style} = cmp.data;
+    const { style } = cmp.data;
 
     const top = style.top - 4;
     const left = style.left - 4;
@@ -200,13 +256,15 @@ export default class Draggable extends Component {
           draggable={true}
           onDragStart={this.handleDragStart}
           onClick={this.setActive}
-          onContextMenu={this.handleContextMenu}>
+          onContextMenu={this.handleContextMenu}
+        >
           {getComponent(cmp)}
         </div>
         {selected && (
           <ul
             className={styles.stretch}
-            style={{transform: `rotate${style.transform}`}}>
+            style={{ transform: `rotate${style.transform}` }}
+          >
             <li
               className={classnames(styles.rotate, "iconfont icon-xuanzhuan")}
               style={{
@@ -217,7 +275,7 @@ export default class Draggable extends Component {
             />
             <li
               className={styles.stretchDot}
-              style={{top, left}}
+              style={{ top, left }}
               onMouseDown={(e) => this.handleMouseDown(e, "top left")}
             />
             <li
@@ -230,7 +288,7 @@ export default class Draggable extends Component {
             />
             <li
               className={styles.stretchDot}
-              style={{top, left: left + width + 2}}
+              style={{ top, left: left + width + 2 }}
               onMouseDown={(e) => this.handleMouseDown(e, "top right")}
             />
             <li
@@ -277,8 +335,9 @@ export default class Draggable extends Component {
         {showContextMenu && (
           <ContextMenu
             index={index}
-            pos={{top: style.top - 80, left: style.left + 60}}
+            pos={{ top: style.top - 80, left: style.left + 60 }}
             cmp={cmp}
+            del={this.del}
           />
         )}
       </>
@@ -287,7 +346,7 @@ export default class Draggable extends Component {
 }
 
 export function getComponent(cmp) {
-  const {data} = cmp;
+  const { data } = cmp;
   let res = null;
   switch (data.type) {
     case isTextComponent:
