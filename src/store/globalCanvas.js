@@ -31,6 +31,7 @@ class Canvas {
         backgroundRepeat: "no-repeat",
         boxSizing: "content-box",
       },
+      // 组件
       cmps: [],
     };
     // 画布属性
@@ -38,6 +39,7 @@ class Canvas {
     this.canvas = {
       ...this.defaultCanvas,
     };
+    // 画布修改历史
     this.canvasChangeHistory = [];
     this.canvasIndex = -1;
 
@@ -127,6 +129,7 @@ class Canvas {
     this.recordCanvasChangeHistory();
   };
 
+  // 订阅与取消订阅
   registerStoreChangeCmps = (_cmp) => {
     this.storeChangeCmps.push(_cmp);
     return () => {
@@ -332,6 +335,7 @@ class Canvas {
 
 // export const globalCanvas = new Canvas();
 
+// useForm
 export function useCanvas(canvas) {
   const canvasRef = useRef();
 
