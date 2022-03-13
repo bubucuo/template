@@ -1,5 +1,34 @@
 .main {
-  display: inline-block;
-  width: 100px;
-  text-align: center;
+  .cmps {
+    width: 80px;
+  }
+  .cmp {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 10px;
+    cursor: pointer;
+
+    &:hover {
+      box-sizing: border-box;
+      border-left: solid 3px #0057ff;
+      color: #0057ff;
+      .cmpIcon,
+      .cmpText {
+        color: #0057ff;
+      }
+    }
+  }
+  .cmpIcon {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    line-height: 24px;
+    color: #181819;
+    font-size: 25px;
+  }
+  // 文字
+  .cmpText {
+    color: #666;
+  }
 }

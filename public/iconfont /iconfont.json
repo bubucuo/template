@@ -1,0 +1,121 @@
+{
+  "id": "2377237",
+  "name": "lowcode",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "15751256",
+      "name": "属性",
+      "font_class": "shuxing",
+      "unicode": "e649",
+      "unicode_decimal": 58953
+    },
+    {
+      "icon_id": "6219264",
+      "name": "清空",
+      "font_class": "qingkong",
+      "unicode": "e946",
+      "unicode_decimal": 59718
+    },
+    {
+      "icon_id": "18375450",
+      "name": "选择",
+      "font_class": "xuanze",
+      "unicode": "e618",
+      "unicode_decimal": 58904
+    },
+    {
+      "icon_id": "11493822",
+      "name": "发布",
+      "font_class": "fabu",
+      "unicode": "e621",
+      "unicode_decimal": 58913
+    },
+    {
+      "icon_id": "19682782",
+      "name": "云下载",
+      "font_class": "cloud-download",
+      "unicode": "eb49",
+      "unicode_decimal": 60233
+    },
+    {
+      "icon_id": "17692220",
+      "name": "按钮",
+      "font_class": "anniu",
+      "unicode": "e705",
+      "unicode_decimal": 59141
+    },
+    {
+      "icon_id": "10352343",
+      "name": "文本",
+      "font_class": "wenben",
+      "unicode": "e61c",
+      "unicode_decimal": 58908
+    },
+    {
+      "icon_id": "3522452",
+      "name": "图书",
+      "font_class": "tushu",
+      "unicode": "e608",
+      "unicode_decimal": 58888
+    },
+    {
+      "icon_id": "19657962",
+      "name": "图 片",
+      "font_class": "image",
+      "unicode": "e629",
+      "unicode_decimal": 58921
+    },
+    {
+      "icon_id": "566241",
+      "name": "书",
+      "font_class": "shu",
+      "unicode": "e645",
+      "unicode_decimal": 58949
+    },
+    {
+      "icon_id": "8190946",
+      "name": "文字",
+      "font_class": "Font_Linear",
+      "unicode": "e678",
+      "unicode_decimal": 59000
+    },
+    {
+      "icon_id": "688061",
+      "name": "撤销 返回 撤回 上一步",
+      "font_class": "chexiaofanhuichehuishangyibu",
+      "unicode": "e76b",
+      "unicode_decimal": 59243
+    },
+    {
+      "icon_id": "722473",
+      "name": "loading",
+      "font_class": "loading",
+      "unicode": "e61d",
+      "unicode_decimal": 58909
+    },
+    {
+      "icon_id": "9874547",
+      "name": "KHCFDC_旋转",
+      "font_class": "xuanzhuan",
+      "unicode": "e6e2",
+      "unicode_decimal": 59106
+    },
+    {
+      "icon_id": "10678407",
+      "name": "close",
+      "font_class": "close",
+      "unicode": "e6dc",
+      "unicode_decimal": 59100
+    },
+    {
+      "icon_id": "18446819",
+      "name": "无穷大",
+      "font_class": "wuqiongda",
+      "unicode": "e674",
+      "unicode_decimal": 58996
+    }
+  ]
+}

@@ -1,5 +1,3 @@
-import { useRef } from "react";
-
 import { getOnlyKey } from "../utils";
 
 const defaultCanvas = {
@@ -37,9 +35,11 @@ const defaultCanvas = {
 };
 
 // 状态
-class Canvas {
+export default class Canvas {
   constructor(_canvas = defaultCanvas) {
     this.canvas = _canvas; // 页面数据
+
+    this.listeners = [];
   }
 
   // get
@@ -57,27 +57,36 @@ class Canvas {
     Object.assign(this.canvas, _canvas);
   };
 
+  addCmp = (_cmp) => {
+    const cmp = { key: getOnlyKey(), ..._cmp };
+    // 1. 更新画布数据
+    this.canvas.cmps.push(cmp);
+    console.log("this.canvas", this.canvas); //sy-log
+    // 2. 更新组件
+    this.updateApp();
+  };
+
+  updateApp = () => {
+    // 希望组件更新
+    this.listeners.forEach((lis) => lis());
+  };
+
+  subscribe = (listener) => {
+    this.listeners.push(listener);
+    // 取消时间
+    return () => {
+      this.listeners = this.listeners.filter((lis) => lis !== listener);
+    };
+  };
+
   getPublicCanvas = () => {
     const obj = {
       getCanvas: this.getCanvas,
       getCanvasCmps: this.getCanvasCmps,
+      addCmp: this.addCmp,
+      subscribe: this.subscribe,
     };
 
     return obj;
   };
-}
-
-export function useCanvas(canvas) {
-  const canvasRef = useRef();
-
-  if (!canvasRef.current) {
-    if (canvas) {
-      canvasRef.current = canvas;
-    } else {
-      const canvas = new Canvas();
-      canvasRef.current = canvas.getPublicCanvas();
-    }
-  }
-
-  return canvasRef.current;
 }
