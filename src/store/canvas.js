@@ -14,30 +14,15 @@ const defaultCanvas = {
   },
   // 组件
   cmps: [],
-
-  // 仅用于测试
-  cmps: [
-    {
-      key: getOnlyKey(),
-      desc: "文本",
-      value: "文本",
-      style: {
-        position: "absolute",
-        top: 0,
-        left: 0,
-        width: 100,
-        height: 30,
-        fontSize: 12,
-        color: "red",
-      },
-    },
-  ],
 };
 
 // 状态
 export default class Canvas {
   constructor(_canvas = defaultCanvas) {
     this.canvas = _canvas; // 页面数据
+
+    // 被选中的组件的下标
+    this.selectedCmpIndex = null;
 
     this.listeners = [];
   }
@@ -52,17 +37,51 @@ export default class Canvas {
     return [...this.canvas.cmps];
   };
 
+  getSelectedCmpIndex = () => {
+    return this.selectedCmpIndex;
+  };
+  // 返回选中组件的参数
+  getSelectedCmp = () => {
+    const cmps = this.getCanvasCmps();
+
+    return cmps[this.selectedCmpIndex];
+  };
+
+  setSelectedCmpIndex = (index) => {
+    if (this.selectedCmpIndex === index) {
+      return;
+    }
+
+    this.selectedCmpIndex = index;
+
+    this.updateApp();
+  };
+
   // set
   setCanvas = (_canvas) => {
     Object.assign(this.canvas, _canvas);
   };
 
+  // 新增组件
   addCmp = (_cmp) => {
     const cmp = { key: getOnlyKey(), ..._cmp };
     // 1. 更新画布数据
     this.canvas.cmps.push(cmp);
-    console.log("this.canvas", this.canvas); //sy-log
-    // 2. 更新组件
+    // 2. 选中新增的组件为选中组件
+    this.selectedCmpIndex = this.canvas.cmps.length - 1;
+    // 3. 更新组件
+    this.updateApp();
+  };
+
+  updateSelectedCmp = (newStyle = {}, newValue) => {
+    const selectedCmp = this.getSelectedCmp();
+
+    Object.assign(this.canvas.cmps[this.getSelectedCmpIndex()], {
+      style: { ...selectedCmp.style, ...newStyle },
+      // todo
+      // value:
+    });
+    //  更新组件
     this.updateApp();
   };
 
@@ -84,6 +103,10 @@ export default class Canvas {
       getCanvas: this.getCanvas,
       getCanvasCmps: this.getCanvasCmps,
       addCmp: this.addCmp,
+      getSelectedCmpIndex: this.getSelectedCmpIndex,
+      getSelectedCmp: this.getSelectedCmp,
+      setSelectedCmpIndex: this.setSelectedCmpIndex,
+      updateSelectedCmp: this.updateSelectedCmp,
       subscribe: this.subscribe,
     };
 
