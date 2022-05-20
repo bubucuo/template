@@ -5,7 +5,7 @@ const defaultCanvas = {
   style: {
     width: 320,
     height: 568,
-    backgroundColor: "#ffffff00",
+    backgroundColor: "#ffffff",
     backgroundImage: "",
     backgroundPosition: "center",
     backgroundSize: "cover",
@@ -85,6 +85,16 @@ export default class Canvas {
     this.updateApp();
   };
 
+  updateCanvasStyle = (newStyle) => {
+    this.canvas.style = {
+      ...this.canvas.style,
+      ...newStyle,
+    };
+
+    console.log("this", this.canvas.style); //sy-log
+    this.updateApp();
+  };
+
   updateApp = () => {
     // 希望组件更新
     this.listeners.forEach((lis) => lis());
@@ -107,6 +117,7 @@ export default class Canvas {
       getSelectedCmp: this.getSelectedCmp,
       setSelectedCmpIndex: this.setSelectedCmpIndex,
       updateSelectedCmp: this.updateSelectedCmp,
+      updateCanvasStyle: this.updateCanvasStyle,
       subscribe: this.subscribe,
     };
 

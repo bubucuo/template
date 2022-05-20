@@ -1,9 +1,10 @@
-import styles from "./index.less";
+import EditCanvas from "../../components/EditCanvas";
+import EditCmp from "../../components/EditCmp";
+import { useCanvasByContext } from "../../store/hooks";
 
 export default function Right(props) {
-  return (
-    <div className={styles.main}>
-      <h3>Right</h3>
-    </div>
-  );
+  const canvas = useCanvasByContext();
+  const selectedCmp = canvas.getSelectedCmp();
+
+  return selectedCmp ? <EditCmp /> : <EditCanvas />;
 }
