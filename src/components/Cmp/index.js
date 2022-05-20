@@ -2,6 +2,9 @@ import React, { Component } from "react";
 import classNames from "classnames";
 import styles from "./index.less";
 import { CanvasContext } from "../../Context";
+import { isImgComponent, isTextComponent } from "../../layout/Left";
+import Text from "../Text";
+import Img from "../Img";
 
 // todo 拖拽、删除、改变层级关系等
 
@@ -82,6 +85,7 @@ export default class Cmp extends Component {
 
     const { width, height } = style;
 
+    console.log("cmp", cmp); //sy-log
     return (
       <div
         className={styles.main}
@@ -91,7 +95,7 @@ export default class Cmp extends Component {
       >
         {/* 组件本身 */}
         <div className={styles.cmp} style={style}>
-          {value}
+          {getCmp(cmp)}
         </div>
 
         {/* 组件的功能、选中的样式 */}
@@ -172,5 +176,17 @@ export default class Cmp extends Component {
         </ul>
       </div>
     );
+  }
+}
+
+function getCmp(cmp) {
+  switch (cmp.type) {
+    case isTextComponent:
+      return <Text {...cmp} />;
+
+    case isImgComponent:
+      return <Img {...cmp} />;
+    default:
+      break;
   }
 }

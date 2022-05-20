@@ -1,3 +1,4 @@
+import { isImgComponent } from "../../layout/Left";
 import { useCanvasByContext } from "../../store/hooks";
 import styles from "./index.less";
 
@@ -6,13 +7,7 @@ const defaultStyle = {
   top: 1,
   left: 0,
   width: 80,
-  height: 30,
-  lineHeight: "30px",
-  fontSize: 12,
-  fontWeight: "normal",
-  color: "#000",
-  backgroundColor: "#ffffff00",
-  textAlign: "left",
+  height: 80,
   borderRadius: "0%",
   borderStyle: "none",
   borderWidth: "0",
@@ -21,21 +16,24 @@ const defaultStyle = {
 
 const settings = [
   {
-    value: "标题",
-    style: {
-      ...defaultStyle,
-      fontSize: 28,
-      height: 50,
-      lineHeight: "50px",
-    },
+    value: "http://150.158.30.131:8181/certificate.jpg",
+    style: defaultStyle,
   },
   {
-    value: "正文",
+    value: "http://150.158.30.131:8181/chuliu.jpeg",
+    style: defaultStyle,
+  },
+  {
+    value: "http://150.158.30.131:8181/tiger.png",
+    style: defaultStyle,
+  },
+  {
+    value: "http://150.158.30.131:8181/hua.png",
     style: defaultStyle,
   },
 ];
 
-export default function DetailsList() {
+export default function ImgSide() {
   const canvas = useCanvasByContext();
   const addCmp = (_cmp) => {
     canvas.addCmp(_cmp);
@@ -47,9 +45,9 @@ export default function DetailsList() {
           <li
             key={item.value}
             className={styles.item}
-            onClick={() => addCmp({ ...item })}
+            onClick={() => addCmp({ ...item, type: isImgComponent })}
           >
-            {item.value}
+            <img src={item.value} alt="" />
           </li>
         ))}
       </ul>
