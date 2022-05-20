@@ -8,8 +8,21 @@
 
   .unselected {
     border: solid 2px transparent;
+    .stretchDot {
+      display: none;
+    }
   }
   .selected {
     border: solid 2px #02dcf7;
+  }
+
+  @size: 16px;
+  .stretchDot {
+    z-index: 9999;
+    position: absolute;
+    width: @size;
+    height: @size;
+    background-color: rgba(0, 87, 255, 0.5);
+    border-radius: 50%;
   }
 }
