@@ -1,8 +1,8 @@
-import React, { Component } from "react";
+import React, {Component} from "react";
 import classNames from "classnames";
 import styles from "./index.less";
-import { CanvasContext } from "../../Context";
-import { isImgComponent, isTextComponent } from "../../layout/Left";
+import {CanvasContext} from "../../Context";
+import {isImgComponent, isTextComponent} from "@/layout/Left";
 import Text from "../Text";
 import Img from "../Img";
 
@@ -12,7 +12,7 @@ export default class Cmp extends Component {
   static contextType = CanvasContext;
 
   onDragStart = (e) => {
-    this.setSelected();
+    this.setSelected(e);
 
     // 拖拽的开始位置
     const startX = e.pageX;
@@ -21,7 +21,8 @@ export default class Cmp extends Component {
     e.dataTransfer.setData("text", startX + "," + startY);
   };
 
-  setSelected = () => {
+  setSelected = (e) => {
+    e.stopPropagation();
     this.context.setSelectedCmpIndex(this.props.index);
   };
 
@@ -37,7 +38,7 @@ export default class Cmp extends Component {
     let startX = e.pageX;
     let startY = e.pageY;
 
-    const { cmp } = this.props;
+    const {cmp} = this.props;
     const move = (e) => {
       const x = e.pageX;
       const y = e.pageY;
@@ -80,19 +81,17 @@ export default class Cmp extends Component {
   };
 
   render() {
-    const { cmp, selected } = this.props;
-    const { style, value } = cmp;
+    const {cmp, selected} = this.props;
+    const {style, value} = cmp;
 
-    const { width, height } = style;
+    const {width, height} = style;
 
-    console.log("cmp", cmp); //sy-log
     return (
       <div
         className={styles.main}
         draggable="true"
         onDragStart={this.onDragStart}
-        onClick={this.setSelected}
-      >
+        onClick={this.setSelected}>
         {/* 组件本身 */}
         <div className={styles.cmp} style={style}>
           {getCmp(cmp)}
@@ -110,11 +109,10 @@ export default class Cmp extends Component {
             width: style.width,
             height: style.height,
           }}
-          onMouseDown={this.onMouseDown}
-        >
+          onMouseDown={this.onMouseDown}>
           <li
             className={styles.stretchDot}
-            style={{ top: -8, left: -8 }}
+            style={{top: -8, left: -8}}
             data-direction="top, left"
           />
 
@@ -129,13 +127,13 @@ export default class Cmp extends Component {
 
           <li
             className={styles.stretchDot}
-            style={{ top: -8, left: width - 8 }}
+            style={{top: -8, left: width - 8}}
             data-direction="top right"
           />
 
           <li
             className={styles.stretchDot}
-            style={{ top: height / 2 - 8, left: width - 8 }}
+            style={{top: height / 2 - 8, left: width - 8}}
             data-direction="right"
           />
 

@@ -1,5 +1,5 @@
 import classNames from "classnames";
-import { useState } from "react";
+import {useState, useEffect} from "react";
 import ImgSide from "../../components/ImgSide";
 import TextSide from "../../components/TextSide";
 import styles from "./index.less";
@@ -17,6 +17,13 @@ export default function Left(props) {
       setShowSide(which);
     }
   };
+
+  useEffect(() => {
+    document.getElementById("center").addEventListener("click", () => {
+      setShowSide(0);
+    });
+  }, []);
+
   return (
     <div className={styles.main}>
       <ul className={styles.cmps}>
@@ -25,8 +32,7 @@ export default function Left(props) {
             styles.cmp,
             showSide === isTextComponent ? styles.selected : ""
           )}
-          onClick={() => _setShowSide(isTextComponent)}
-        >
+          onClick={() => _setShowSide(isTextComponent)}>
           <span>文本</span>
         </li>
         <li
@@ -34,8 +40,7 @@ export default function Left(props) {
             styles.cmp,
             showSide === isImgComponent ? styles.selected : ""
           )}
-          onClick={() => _setShowSide(isImgComponent)}
-        >
+          onClick={() => _setShowSide(isImgComponent)}>
           <span>图片</span>
         </li>
       </ul>

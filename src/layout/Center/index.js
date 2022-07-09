@@ -1,14 +1,14 @@
-import { useCanvasByContext } from "../../store/hooks";
+import {useCanvasByContext} from "../../store/hooks";
 import Cmp from "../../components/Cmp";
 import styles from "./index.less";
-import { useCallback } from "react";
+import {useCallback, useEffect} from "react";
 
 export default function Center(props) {
   const canvas = useCanvasByContext();
 
   const canvasData = canvas.getCanvas();
 
-  const { style, cmps } = canvasData;
+  const {style, cmps} = canvasData;
 
   const onDrop = useCallback((e) => {
     const endX = e.pageX;
@@ -26,7 +26,7 @@ export default function Center(props) {
     const top = oldStyle.top + disY;
     const left = oldStyle.left + disX;
 
-    canvas.updateSelectedCmp({ top, left });
+    canvas.updateSelectedCmp({top, left});
   }, []);
 
   const allowDrop = useCallback((e) => {
@@ -35,8 +35,13 @@ export default function Center(props) {
 
   const selectedIndex = canvas.getSelectedCmpIndex();
 
+  useEffect(() => {
+    document.getElementById("center").addEventListener("click", () => {
+      canvas.setSelectedCmpIndex(-1);
+    });
+  }, []);
   return (
-    <div className={styles.main}>
+    <div id="center" className={styles.main}>
       <div
         className={styles.canvas}
         style={{
@@ -44,8 +49,7 @@ export default function Center(props) {
           backgroundImage: `url(${canvasData.style.backgroundImage})`,
         }}
         onDrop={onDrop}
-        onDragOver={allowDrop}
-      >
+        onDragOver={allowDrop}>
         {cmps.map((cmp, index) => (
           <Cmp
             key={cmp.key}

@@ -1,4 +1,4 @@
-import { getOnlyKey } from "../utils";
+import {getOnlyKey} from "../utils";
 
 const defaultCanvas = {
   // 页面样式
@@ -30,7 +30,7 @@ export default class Canvas {
   // get
 
   getCanvas = () => {
-    return { ...this.canvas };
+    return {...this.canvas};
   };
 
   getCanvasCmps = () => {
@@ -64,7 +64,7 @@ export default class Canvas {
 
   // 新增组件
   addCmp = (_cmp) => {
-    const cmp = { key: getOnlyKey(), ..._cmp };
+    const cmp = {key: getOnlyKey(), ..._cmp};
     // 1. 更新画布数据
     this.canvas.cmps.push(cmp);
     // 2. 选中新增的组件为选中组件
@@ -73,14 +73,20 @@ export default class Canvas {
     this.updateApp();
   };
 
-  updateSelectedCmp = (newStyle = {}, newValue) => {
+  updateSelectedCmp = (newStyle, newValue) => {
     const selectedCmp = this.getSelectedCmp();
 
-    Object.assign(this.canvas.cmps[this.getSelectedCmpIndex()], {
-      style: { ...selectedCmp.style, ...newStyle },
-      // todo
-      // value:
-    });
+    if (newStyle) {
+      this.canvas.cmps[this.getSelectedCmpIndex()].style = {
+        ...selectedCmp.style,
+        ...newStyle,
+      };
+    }
+
+    if (newValue != undefined) {
+      this.canvas.cmps[this.getSelectedCmpIndex()].value = newValue;
+    }
+
     //  更新组件
     this.updateApp();
   };
