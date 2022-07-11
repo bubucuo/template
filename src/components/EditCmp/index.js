@@ -84,7 +84,7 @@ export default function EditCmp(props) {
       )}
 
       {style.textAlign !== undefined && (
-        <Item label="对齐">
+        <Item label="对齐: ">
           <select
             className={styles.itemRight}
             value={style.textAlign}
@@ -102,7 +102,7 @@ export default function EditCmp(props) {
       )}
 
       {style.borderRadius !== undefined && (
-        <Item label="圆角">
+        <Item label="圆角: ">
           <input
             className={styles.itemRight}
             type="text"
@@ -117,7 +117,7 @@ export default function EditCmp(props) {
         </Item>
       )}
 
-      <Item label="边框样式">
+      <Item label="边框样式: ">
         <select
           className={styles.itemRight}
           value={style.borderStyle}
@@ -137,7 +137,7 @@ export default function EditCmp(props) {
         </select>
       </Item>
 
-      <Item label="边框宽度">
+      <Item label="边框宽度: ">
         <input
           className={styles.itemRight}
           type="number"
@@ -151,7 +151,7 @@ export default function EditCmp(props) {
         />
       </Item>
 
-      <Item label="边框颜色">
+      <Item label="边框颜色: ">
         <InputColor
           className={styles.itemRight}
           color={style.borderColor || "#ffffff00"}
@@ -162,7 +162,7 @@ export default function EditCmp(props) {
       </Item>
 
       {style.color !== undefined && (
-        <Item label="字体颜色">
+        <Item label="字体颜色: ">
           <InputColor
             className={styles.itemRight}
             color={style.color}
@@ -174,7 +174,7 @@ export default function EditCmp(props) {
       )}
 
       {style.backgroundColor !== undefined && (
-        <Item label="背景颜色">
+        <Item label="背景颜色: ">
           <InputColor
             className={styles.itemRight}
             color={style.backgroundColor}
