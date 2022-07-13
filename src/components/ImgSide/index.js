@@ -1,17 +1,10 @@
-import { isImgComponent } from "../../layout/Left";
-import { useCanvasByContext } from "../../store/hooks";
+import {isImgComponent} from "../../layout/Left";
+import {useCanvasByContext} from "../../store/hooks";
+import {defaultCommonStyle} from "../../utils/const";
 import styles from "./index.less";
 
 const defaultStyle = {
-  position: "absolute",
-  top: 1,
-  left: 0,
-  width: 80,
-  height: 80,
-  borderRadius: "0%",
-  borderStyle: "none",
-  borderWidth: "0",
-  borderColor: "#ffffff00",
+  ...defaultCommonStyle,
 };
 
 const settings = [
@@ -45,8 +38,7 @@ export default function ImgSide() {
           <li
             key={item.value}
             className={styles.item}
-            onClick={() => addCmp({ ...item, type: isImgComponent })}
-          >
+            onClick={() => addCmp({...item, type: isImgComponent})}>
             <img src={item.value} alt="" />
           </li>
         ))}

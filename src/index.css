@@ -25,6 +25,7 @@ code {
   padding: 0;
   border: none;
   box-sizing: border-box;
+  outline: none;
 }
 
 select,
@@ -34,6 +35,7 @@ input {
   line-height: 28px;
   border: solid 1px #eee;
   padding: 0 6px;
+  outline: none;
 }
 
 input,

@@ -39,9 +39,56 @@ export default function Center(props) {
     document.getElementById("center").addEventListener("click", () => {
       canvas.setSelectedCmpIndex(-1);
     });
+
+    document.getElementById("center").onkeydown = whichKeyEvent;
   }, []);
+
+  const whichKeyEvent = (e) => {
+    const selectedCmp = canvas.getSelectedCmp();
+    if (!selectedCmp) {
+      return;
+    }
+
+    if (e.keyCode < 37 || e.keyCode > 40) {
+      return;
+    }
+
+    e.preventDefault();
+    e.stopPropagation();
+
+    const {top, left} = selectedCmp.style;
+    const newStyle = {top, left};
+
+    switch (e.keyCode) {
+      // 左
+      case 37:
+        newStyle.left -= 1;
+        break;
+
+      // 上
+      case 38:
+        newStyle.top -= 1;
+        break;
+
+      // 右
+      case 39:
+        newStyle.left += 1;
+        break;
+
+      // 下
+      case 40:
+        newStyle.top += 1;
+        break;
+
+      default:
+        break;
+    }
+
+    canvas.updateSelectedCmp(newStyle);
+  };
+
   return (
-    <div id="center" className={styles.main}>
+    <div id="center" className={styles.main} tabIndex="0">
       <div
         className={styles.canvas}
         style={{

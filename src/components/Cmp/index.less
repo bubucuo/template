@@ -13,7 +13,8 @@
 
   .unselected {
     border: solid 2px transparent;
-    .stretchDot {
+    .stretchDot,
+    .rotate {
       display: none;
     }
   }
@@ -29,5 +30,13 @@
     height: @size;
     background-color: rgba(0, 87, 255, 0.5);
     border-radius: 50%;
+  }
+
+  .rotate {
+    z-index: 9999;
+    position: absolute;
+    color: rgba(0, 87, 255, 0.5);
+    font-weight: bold;
+    font-size: 24px;
   }
 }

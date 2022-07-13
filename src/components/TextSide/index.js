@@ -1,12 +1,10 @@
-import { isTextComponent } from "../../layout/Left";
-import { useCanvasByContext } from "../../store/hooks";
+import {isTextComponent} from "../../layout/Left";
+import {useCanvasByContext} from "../../store/hooks";
+import {defaultCommonStyle} from "../../utils/const";
 import styles from "./index.less";
 
 const defaultStyle = {
-  position: "absolute",
-  top: 1,
-  left: 0,
-  width: 80,
+  ...defaultCommonStyle,
   height: 30,
   lineHeight: "30px",
   fontSize: 12,
@@ -14,10 +12,6 @@ const defaultStyle = {
   color: "#000",
   backgroundColor: "#ffffff00",
   textAlign: "left",
-  borderRadius: "0%",
-  borderStyle: "none",
-  borderWidth: "0",
-  borderColor: "#ffffff00",
 };
 
 const settings = [
@@ -48,8 +42,7 @@ export default function TextSide() {
           <li
             key={item.value}
             className={styles.item}
-            onClick={() => addCmp({ ...item, type: isTextComponent })}
-          >
+            onClick={() => addCmp({...item, type: isTextComponent})}>
             {item.value}
           </li>
         ))}
