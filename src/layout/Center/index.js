@@ -53,8 +53,10 @@ export default function Center(props) {
       return;
     }
 
-    e.preventDefault();
+    // 阻止事件传播，不然别的输入框的输入事件都不生效了
     e.stopPropagation();
+    // 禁止默认事件，不然引发的可能是页面的上下左右滚动。
+    e.preventDefault();
 
     const {top, left} = selectedCmp.style;
     const newStyle = {top, left};
