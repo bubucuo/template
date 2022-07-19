@@ -30,12 +30,13 @@ code {
 
 select,
 input {
-  min-width: 80px;
+  /* min-width: 80px; */
   min-height: 28px;
   line-height: 28px;
   border: solid 1px #eee;
   padding: 0 6px;
   outline: none;
+  box-sizing: border-box;
 }
 
 input,

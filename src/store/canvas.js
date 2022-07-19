@@ -10,7 +10,7 @@ const defaultCanvas = {
     backgroundPosition: "center",
     backgroundSize: "cover",
     backgroundRepeat: "no-repeat",
-    boxSizing: "content-box",
+    // boxSizing: "content-box",
   },
   // 组件
   cmps: [],
@@ -60,6 +60,9 @@ export default class Canvas {
   // set
   setCanvas = (_canvas) => {
     Object.assign(this.canvas, _canvas);
+    this.updateApp();
+
+    console.log("this", this.canvas); //sy-log
   };
 
   // 新增组件
@@ -117,6 +120,7 @@ export default class Canvas {
   getPublicCanvas = () => {
     const obj = {
       getCanvas: this.getCanvas,
+      setCanvas: this.setCanvas,
       getCanvasCmps: this.getCanvasCmps,
       addCmp: this.addCmp,
       getSelectedCmpIndex: this.getSelectedCmpIndex,

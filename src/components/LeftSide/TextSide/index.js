@@ -1,7 +1,7 @@
-import {isTextComponent} from "../../layout/Left";
-import {useCanvasByContext} from "../../store/hooks";
-import {defaultCommonStyle} from "../../utils/const";
-import styles from "./index.less";
+import {isTextComponent} from "../../../layout/Left";
+import {useCanvasByContext} from "../../../store/hooks";
+import {defaultCommonStyle} from "../../../utils/const";
+import leftSideStyles from "../index.less";
 
 const defaultStyle = {
   ...defaultCommonStyle,
@@ -36,12 +36,12 @@ export default function TextSide() {
     canvas.addCmp(_cmp);
   };
   return (
-    <div className={styles.main}>
-      <ul className={styles.box}>
+    <div className={leftSideStyles.main}>
+      <ul className={leftSideStyles.box}>
         {settings.map((item) => (
           <li
             key={item.value}
-            className={styles.item}
+            className={leftSideStyles.item}
             onClick={() => addCmp({...item, type: isTextComponent})}>
             {item.value}
           </li>

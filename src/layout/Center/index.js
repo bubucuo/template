@@ -1,7 +1,8 @@
 import {useCanvasByContext} from "../../store/hooks";
 import Cmp from "../../components/Cmp";
 import styles from "./index.less";
-import {useCallback, useEffect} from "react";
+import {useCallback, useEffect, useState} from "react";
+import classNames from "classnames";
 
 export default function Center(props) {
   const canvas = useCanvasByContext();
@@ -89,6 +90,11 @@ export default function Center(props) {
     canvas.updateSelectedCmp(newStyle);
   };
 
+  // 缩放比例
+  const [zoom, setZoom] = useState(() =>
+    parseInt(canvasData.style.width) > 800 ? 50 : 100
+  );
+
   return (
     <div id="center" className={styles.main} tabIndex="0">
       <div
@@ -96,6 +102,7 @@ export default function Center(props) {
         style={{
           ...canvasData.style,
           backgroundImage: `url(${canvasData.style.backgroundImage})`,
+          transform: `scale(${zoom / 100})`,
         }}
         onDrop={onDrop}
         onDragOver={allowDrop}>
@@ -108,6 +115,35 @@ export default function Center(props) {
           />
         ))}
       </div>
+      <ul className={styles.zoom}>
+        <li
+          className={classNames(styles.icon)}
+          onClick={() => {
+            setZoom(zoom + 25);
+          }}>
+          +
+        </li>
+        <li className={classNames(styles.num)}>
+          <input
+            type="num"
+            value={zoom}
+            onChange={(e) => {
+              let newValue = e.target.value;
+              newValue = newValue >= 1 ? newValue : 1;
+              setZoom(newValue - 0);
+            }}
+          />
+          %
+        </li>
+        <li
+          className={classNames(styles.icon)}
+          onClick={() => {
+            const newZoom = zoom - 25 >= 1 ? zoom - 25 : 1;
+            setZoom(newZoom);
+          }}>
+          -
+        </li>
+      </ul>
     </div>
   );
 }

@@ -75,7 +75,7 @@ export default class Cmp extends Component {
           newFontSize < 12 ? 12 : newFontSize > 130 ? 130 : newFontSize;
         Object.assign(newStyle, {
           lineHeight: newHeight + "px",
-          fontSize: newFontSize,
+          fontSize: parseInt(newFontSize),
         });
       }
 
@@ -119,7 +119,7 @@ export default class Cmp extends Component {
 
       let deg = (360 * Math.atan2(disY, disX)) / (2 * Math.PI) - 90;
 
-      deg = deg.toFixed(2);
+      deg = parseInt(deg);
 
       this.context.updateSelectedCmp({
         transform: deg,
