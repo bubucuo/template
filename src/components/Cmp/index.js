@@ -8,17 +8,46 @@ import Img from "../Img";
 
 // todo 拖拽、删除、改变层级关系等
 
+// 按键小幅度移动的事件写在了Center中
 export default class Cmp extends Component {
   static contextType = CanvasContext;
 
-  onDragStart = (e) => {
-    this.setSelected(e);
+  // 在画布上移动组件位置
+  onMouseDownOfCmp = (e) => {
+    // 否则会触发其他组件的选中行为
+    e.preventDefault();
 
-    // 拖拽的开始位置
-    const startX = e.pageX;
-    const startY = e.pageY;
+    let startX = e.pageX;
+    let startY = e.pageY;
 
-    e.dataTransfer.setData("text", startX + "," + startY);
+    const {cmp, zoom} = this.props;
+    const move = (e) => {
+      const x = e.pageX;
+      const y = e.pageY;
+
+      let disX = x - startX;
+      let disY = y - startY;
+
+      disX = disX * (100 / zoom);
+      disY = disY * (100 / zoom);
+
+      const oldStyle = cmp;
+
+      const top = cmp.style.top + disY;
+      const left = cmp.style.left + disX;
+
+      this.context.updateSelectedCmp({top, left});
+
+      startX = x;
+      startY = y;
+    };
+
+    const up = () => {
+      document.removeEventListener("mousemove", move);
+      document.removeEventListener("mouseup", up);
+    };
+    document.addEventListener("mousemove", move);
+    document.addEventListener("mouseup", up);
   };
 
   setSelected = (e) => {
@@ -93,6 +122,7 @@ export default class Cmp extends Component {
     document.addEventListener("mouseup", up);
   };
 
+  // 旋转组件
   rotate = (e) => {
     e.stopPropagation();
     e.preventDefault();
@@ -144,9 +174,9 @@ export default class Cmp extends Component {
 
     return (
       <div
+        id={cmp.key}
         className={styles.main}
-        draggable="true"
-        onDragStart={this.onDragStart}
+        onMouseDown={this.onMouseDownOfCmp}
         onClick={this.setSelected}>
         {/* 组件本身 */}
         <div className={styles.cmp} style={{...style, transform}}>

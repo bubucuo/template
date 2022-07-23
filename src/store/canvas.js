@@ -61,8 +61,6 @@ export default class Canvas {
   setCanvas = (_canvas) => {
     Object.assign(this.canvas, _canvas);
     this.updateApp();
-
-    console.log("this", this.canvas); //sy-log
   };
 
   // 新增组件

@@ -1,7 +1,7 @@
 import {useCanvasByContext} from "../../store/hooks";
 import Cmp from "../../components/Cmp";
 import styles from "./index.less";
-import {useCallback, useEffect, useState} from "react";
+import {useCallback, useEffect, useState, useRef} from "react";
 import classNames from "classnames";
 
 export default function Center(props) {
@@ -11,24 +11,45 @@ export default function Center(props) {
 
   const {style, cmps} = canvasData;
 
-  const onDrop = useCallback((e) => {
-    const endX = e.pageX;
-    const endY = e.pageY;
+  // 缩放比例
+  const [zoom, setZoom] = useState(() =>
+    parseInt(canvasData.style.width) > 800 ? 50 : 100
+  );
 
-    const start = e.dataTransfer.getData("text").split(",");
+  const onDrop = useCallback(
+    (e) => {
+      const endX = e.pageX;
+      const endY = e.pageY;
 
-    const disX = endX - start[0];
-    const disY = endY - start[1];
+      let dragCmp = e.dataTransfer.getData("drag-cmp");
 
-    const selectedCmp = canvas.getSelectedCmp();
+      if (!dragCmp) {
+        return;
+      }
 
-    const oldStyle = selectedCmp.style;
+      dragCmp = JSON.parse(dragCmp);
 
-    const top = oldStyle.top + disY;
-    const left = oldStyle.left + disX;
+      const canvasDOMPos = {
+        top: 110,
+        left: document.body.clientWidth / 2 - (style.width / 2) * (zoom / 100),
+      };
 
-    canvas.updateSelectedCmp({top, left});
-  }, []);
+      const startX = canvasDOMPos.left;
+      const startY = canvasDOMPos.top;
+
+      let disX = endX - startX;
+      let disY = endY - startY;
+
+      disX = disX * (100 / zoom);
+      disY = disY * (100 / zoom);
+
+      dragCmp.style.left = disX - dragCmp.style.width / 2;
+      dragCmp.style.top = disY - dragCmp.style.height / 2;
+
+      canvas.addCmp(dragCmp);
+    },
+    [zoom, style.width]
+  );
 
   const allowDrop = useCallback((e) => {
     e.preventDefault();
@@ -41,7 +62,7 @@ export default function Center(props) {
       canvas.setSelectedCmpIndex(-1);
     });
 
-    document.getElementById("center").onkeydown = whichKeyEvent;
+    document.onkeydown = whichKeyEvent;
   }, []);
 
   const whichKeyEvent = (e) => {
@@ -90,14 +111,10 @@ export default function Center(props) {
     canvas.updateSelectedCmp(newStyle);
   };
 
-  // 缩放比例
-  const [zoom, setZoom] = useState(() =>
-    parseInt(canvasData.style.width) > 800 ? 50 : 100
-  );
-
   return (
     <div id="center" className={styles.main} tabIndex="0">
       <div
+        id="canvas"
         className={styles.canvas}
         style={{
           ...canvasData.style,
@@ -112,6 +129,7 @@ export default function Center(props) {
             cmp={cmp}
             selected={selectedIndex === index}
             index={index}
+            zoom={zoom}
           />
         ))}
       </div>

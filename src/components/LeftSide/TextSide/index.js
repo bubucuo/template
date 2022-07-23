@@ -35,6 +35,9 @@ export default function TextSide() {
   const addCmp = (_cmp) => {
     canvas.addCmp(_cmp);
   };
+  const onDragStart = (e, _cmp) => {
+    e.dataTransfer.setData("drag-cmp", JSON.stringify(_cmp));
+  };
   return (
     <div className={leftSideStyles.main}>
       <ul className={leftSideStyles.box}>
@@ -42,7 +45,11 @@ export default function TextSide() {
           <li
             key={item.value}
             className={leftSideStyles.item}
-            onClick={() => addCmp({...item, type: isTextComponent})}>
+            onClick={() => addCmp({...item, type: isTextComponent})}
+            draggable="true"
+            onDragStart={(e) =>
+              onDragStart(e, {...item, type: isTextComponent})
+            }>
             {item.value}
           </li>
         ))}

@@ -1,7 +1,7 @@
 import {isImgComponent} from "../../../layout/Left";
 import {useCanvasByContext} from "../../../store/hooks";
 import {defaultCommonStyle} from "../../../utils/const";
-import leftsidestyles from "../index.less";
+import leftSideStyles from "../index.less";
 
 const defaultStyle = {
   ...defaultCommonStyle,
@@ -86,14 +86,21 @@ export default function ImgSide() {
   const addCmp = (_cmp) => {
     canvas.addCmp(_cmp);
   };
+
+  const onDragStart = (e, _cmp) => {
+    e.dataTransfer.setData("drag-cmp", JSON.stringify(_cmp));
+  };
   return (
-    <div className={leftsidestyles.main}>
-      <ul className={leftsidestyles.box}>
+    <div className={leftSideStyles.main}>
+      <ul className={leftSideStyles.box}>
         {settings.map((item) => (
           <li
             key={item.value}
-            className={leftsidestyles.item}
-            onClick={() => addCmp({...item, type: isImgComponent})}>
+            className={leftSideStyles.item}
+            onClick={() => addCmp({...item, type: isImgComponent})}
+            onDragStart={(e) =>
+              onDragStart(e, {...item, type: isImgComponent})
+            }>
             <img src={item.value} alt="" />
           </li>
         ))}

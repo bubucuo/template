@@ -1,3 +1,5 @@
+import {useCallback} from "react";
+
 import {isGraphComponent, isTextComponent} from "../../../layout/Left";
 import {useCanvasByContext} from "../../../store/hooks";
 import {defaultCommonStyle} from "../../../utils/const";
@@ -32,12 +34,17 @@ export default function GraphSide() {
   const addCmp = (_cmp) => {
     canvas.addCmp(_cmp);
   };
+
+  const onDragStart = (e, _cmp) => {
+    e.dataTransfer.setData("drag-cmp", JSON.stringify(_cmp));
+  };
+
   return (
     <div className={leftSideStyles.main}>
       <ul className={leftSideStyles.box}>
-        {settings.map((item) => (
+        {settings.map((item, index) => (
           <li
-            key={item.value}
+            key={"item" + index}
             className={leftSideStyles.item}
             style={{
               width: item.style.width,
@@ -47,7 +54,11 @@ export default function GraphSide() {
               borderStyle: item.style.borderStyle,
               borderColor: item.style.borderColor,
             }}
-            onClick={() => addCmp({...item, type: isGraphComponent})}></li>
+            onClick={() => addCmp({...item, type: isGraphComponent})}
+            draggable="true"
+            onDragStart={(e) =>
+              onDragStart(e, {...item, type: isGraphComponent})
+            }></li>
         ))}
       </ul>
     </div>
