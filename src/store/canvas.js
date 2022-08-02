@@ -1,30 +1,40 @@
 import {getOnlyKey} from "../utils";
 
-const defaultCanvas = {
-  // 页面样式
-  style: {
-    width: 320,
-    height: 568,
-    backgroundColor: "#ffffff",
-    backgroundImage: "",
-    backgroundPosition: "center",
-    backgroundSize: "cover",
-    backgroundRepeat: "no-repeat",
-    // boxSizing: "content-box",
-  },
-  // 组件
-  cmps: [],
-};
+function getDefaultCanvas() {
+  return {
+    // 页面样式
+    style: {
+      width: 320,
+      height: 568,
+      backgroundColor: "#ffffff",
+      backgroundImage: "",
+      backgroundPosition: "center",
+      backgroundSize: "cover",
+      backgroundRepeat: "no-repeat",
+      // boxSizing: "content-box",
+    },
+    // 组件
+    cmps: [],
+  };
+}
 
 // 状态
 export default class Canvas {
-  constructor(_canvas = defaultCanvas) {
+  constructor(_canvas = getDefaultCanvas()) {
     this.canvas = _canvas; // 页面数据
 
     // 被选中的组件的下标
     this.selectedCmpIndex = null;
 
     this.listeners = [];
+
+    // 画布历史
+    this.canvasChangeHistory = [JSON.stringify(this.canvas)];
+    // 前进、后退
+    this.canvasChangeHistoryIndex = 0;
+
+    // 最多记录100条数据
+    this.maxCanvasChangeHistory = 100;
   }
 
   // get
@@ -59,8 +69,14 @@ export default class Canvas {
 
   // set
   setCanvas = (_canvas) => {
-    Object.assign(this.canvas, _canvas);
+    if (_canvas) {
+      Object.assign(this.canvas, _canvas);
+    } else {
+      this.canvas = getDefaultCanvas();
+    }
+
     this.updateApp();
+    this.recordCanvasChangeHistory();
   };
 
   // 新增组件
@@ -72,6 +88,7 @@ export default class Canvas {
     this.selectedCmpIndex = this.canvas.cmps.length - 1;
     // 3. 更新组件
     this.updateApp();
+    this.recordCanvasChangeHistory();
   };
 
   updateSelectedCmp = (newStyle, newValue) => {
@@ -100,6 +117,7 @@ export default class Canvas {
 
     console.log("this", this.canvas.style); //sy-log
     this.updateApp();
+    this.recordCanvasChangeHistory();
   };
 
   updateApp = () => {
@@ -115,6 +133,54 @@ export default class Canvas {
     };
   };
 
+  // 历史
+  // 1 2 5 4
+  recordCanvasChangeHistory = () => {
+    this.canvasChangeHistory[++this.canvasChangeHistoryIndex] = JSON.stringify(
+      this.canvas
+    );
+    this.canvasChangeHistory = this.canvasChangeHistory.slice(
+      0,
+      this.canvasChangeHistoryIndex + 1
+    );
+
+    // 最多记录100条
+    if (this.canvasChangeHistory.length > this.maxCanvasChangeHistory) {
+      this.canvasChangeHistory.shift();
+      this.canvasChangeHistoryIndex--;
+    }
+  };
+
+  goPrevCanvasHistory = () => {
+    let newIndex = this.canvasChangeHistoryIndex - 1;
+    if (newIndex < 0) {
+      newIndex = 0;
+    }
+
+    if (this.canvasChangeHistoryIndex === newIndex) {
+      return;
+    }
+    this.canvasChangeHistoryIndex = newIndex;
+    const newCanvas = JSON.parse(this.canvasChangeHistory[newIndex]);
+    this.canvas = newCanvas;
+    this.updateApp();
+  };
+
+  goNextCanvasHistory = () => {
+    let newIndex = this.canvasChangeHistoryIndex + 1;
+    if (newIndex >= this.canvasChangeHistory.length) {
+      newIndex = this.canvasChangeHistory.length - 1;
+    }
+
+    if (this.canvasChangeHistoryIndex === newIndex) {
+      return;
+    }
+    this.canvasChangeHistoryIndex = newIndex;
+    const newCanvas = JSON.parse(this.canvasChangeHistory[newIndex]);
+    this.canvas = newCanvas;
+    this.updateApp();
+  };
+
   getPublicCanvas = () => {
     const obj = {
       getCanvas: this.getCanvas,
@@ -127,6 +193,10 @@ export default class Canvas {
       updateSelectedCmp: this.updateSelectedCmp,
       updateCanvasStyle: this.updateCanvasStyle,
       subscribe: this.subscribe,
+
+      recordCanvasChangeHistory: this.recordCanvasChangeHistory,
+      goPrevCanvasHistory: this.goPrevCanvasHistory,
+      goNextCanvasHistory: this.goNextCanvasHistory,
     };
 
     return obj;

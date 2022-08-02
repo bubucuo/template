@@ -109,6 +109,7 @@ export default function Center(props) {
     }
 
     canvas.updateSelectedCmp(newStyle);
+    canvas.recordCanvasChangeHistory();
   };
 
   return (

@@ -38,7 +38,13 @@ export default function Left(props) {
             showSide === isTplSide ? styles.selected : ""
           )}
           onClick={() => _setShowSide(isTplSide)}>
-          <span>模板</span>
+          <i
+            className={classNames(
+              "iconfont icon-mobankuangjia-xianxing",
+              styles.cmpIcon
+            )}
+          />
+          <span className={styles.cmpText}>模板</span>
         </li>
         <li
           className={classNames(
@@ -46,7 +52,8 @@ export default function Left(props) {
             showSide === isTextComponent ? styles.selected : ""
           )}
           onClick={() => _setShowSide(isTextComponent)}>
-          <span>文本</span>
+          <i className={classNames("iconfont icon-wenben", styles.cmpIcon)} />
+          <span className={styles.cmpText}>文本</span>
         </li>
         <li
           className={classNames(
@@ -54,7 +61,8 @@ export default function Left(props) {
             showSide === isImgComponent ? styles.selected : ""
           )}
           onClick={() => _setShowSide(isImgComponent)}>
-          <span>图片</span>
+          <i className={classNames("iconfont icon-tupian", styles.cmpIcon)} />
+          <span className={styles.cmpText}>图片</span>
         </li>
         <li
           className={classNames(
@@ -62,7 +70,10 @@ export default function Left(props) {
             showSide === isGraphComponent ? styles.selected : ""
           )}
           onClick={() => _setShowSide(isGraphComponent)}>
-          <span>图形</span>
+          <i
+            className={classNames("iconfont icon-graphical", styles.cmpIcon)}
+          />
+          <span className={styles.cmpText}>图形</span>
         </li>
       </ul>
 

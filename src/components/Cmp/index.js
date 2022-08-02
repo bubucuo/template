@@ -45,6 +45,7 @@ export default class Cmp extends Component {
     const up = () => {
       document.removeEventListener("mousemove", move);
       document.removeEventListener("mouseup", up);
+      this.context.recordCanvasChangeHistory();
     };
     document.addEventListener("mousemove", move);
     document.addEventListener("mouseup", up);
@@ -117,6 +118,8 @@ export default class Cmp extends Component {
     const up = () => {
       document.removeEventListener("mousemove", move);
       document.removeEventListener("mouseup", up);
+
+      this.context.recordCanvasChangeHistory();
     };
     document.addEventListener("mousemove", move);
     document.addEventListener("mouseup", up);
@@ -159,6 +162,7 @@ export default class Cmp extends Component {
     const up = () => {
       document.removeEventListener("mousemove", move);
       document.removeEventListener("mouseup", up);
+      this.context.recordCanvasChangeHistory();
     };
 
     document.addEventListener("mousemove", move);
