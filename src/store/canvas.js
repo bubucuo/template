@@ -81,12 +81,22 @@ export default class Canvas {
 
   // 新增组件
   addCmp = (_cmp) => {
-    const cmp = {key: getOnlyKey(), ..._cmp};
+    const cmp = {..._cmp, key: getOnlyKey()};
     // 1. 更新画布数据
     this.canvas.cmps.push(cmp);
     // 2. 选中新增的组件为选中组件
     this.selectedCmpIndex = this.canvas.cmps.length - 1;
     // 3. 更新组件
+    this.updateApp();
+    this.recordCanvasChangeHistory();
+  };
+
+  // 删除组件
+  deleteCmp = (selectedIndex) => {
+    this.canvas.cmps.splice(selectedIndex, 1);
+
+    this.selectedCmpIndex = -1;
+
     this.updateApp();
     this.recordCanvasChangeHistory();
   };
@@ -115,7 +125,6 @@ export default class Canvas {
       ...newStyle,
     };
 
-    console.log("this", this.canvas.style); //sy-log
     this.updateApp();
     this.recordCanvasChangeHistory();
   };
@@ -187,6 +196,7 @@ export default class Canvas {
       setCanvas: this.setCanvas,
       getCanvasCmps: this.getCanvasCmps,
       addCmp: this.addCmp,
+      deleteCmp: this.deleteCmp,
       getSelectedCmpIndex: this.getSelectedCmpIndex,
       getSelectedCmp: this.getSelectedCmp,
       setSelectedCmpIndex: this.setSelectedCmpIndex,

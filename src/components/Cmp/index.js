@@ -5,12 +5,18 @@ import {CanvasContext} from "../../Context";
 import {isImgComponent, isTextComponent} from "@/layout/Left";
 import Text from "../Text";
 import Img from "../Img";
+import ContextMenu from "./ContextMenu";
 
 // todo 拖拽、删除、改变层级关系等
 
 // 按键小幅度移动的事件写在了Center中
 export default class Cmp extends Component {
   static contextType = CanvasContext;
+
+  constructor(props) {
+    super(props);
+    this.state = {showContextMenu: false};
+  }
 
   // 在画布上移动组件位置
   onMouseDownOfCmp = (e) => {
@@ -68,13 +74,16 @@ export default class Cmp extends Component {
     let startX = e.pageX;
     let startY = e.pageY;
 
-    const {cmp} = this.props;
+    const {cmp, zoom} = this.props;
     const move = (e) => {
       const x = e.pageX;
       const y = e.pageY;
 
       let disX = x - startX;
       let disY = y - startY;
+
+      disX = disX * (100 / zoom);
+      disY = disY * (100 / zoom);
 
       // style top left width height
       let newStyle = {};
@@ -97,12 +106,21 @@ export default class Cmp extends Component {
         height: newHeight,
       });
 
+      if (newStyle.width < 10) {
+        newStyle.width = 10;
+      }
+      if (newStyle.height < 10) {
+        newStyle.height = 10;
+      }
+
       if (cmp.style.fontSize) {
         // 文本组件的行高、字体大小跟着高度变化
         const n = newHeight / cmp.style.height;
         let newFontSize = n * cmp.style.fontSize;
+
         newFontSize =
           newFontSize < 12 ? 12 : newFontSize > 130 ? 130 : newFontSize;
+
         Object.assign(newStyle, {
           lineHeight: newHeight + "px",
           fontSize: parseInt(newFontSize),
@@ -130,7 +148,8 @@ export default class Cmp extends Component {
     e.stopPropagation();
     e.preventDefault();
 
-    const {style} = this.props.cmp;
+    const {cmp, zoom} = this.props;
+    const {style} = cmp;
     const {width, height, transform} = style;
     const trans = parseFloat(transform);
 
@@ -149,6 +168,9 @@ export default class Cmp extends Component {
 
       let disX = x - startX;
       let disY = y - startY;
+
+      disX = disX * (100 / zoom);
+      disY = disY * (100 / zoom);
 
       let deg = (360 * Math.atan2(disY, disX)) / (2 * Math.PI) - 90;
 
@@ -169,8 +191,13 @@ export default class Cmp extends Component {
     document.addEventListener("mouseup", up);
   };
 
+  handleShowContextMenu = (e) => {
+    e.preventDefault();
+    this.setState({showContextMenu: true});
+  };
+
   render() {
-    const {cmp, selected} = this.props;
+    const {cmp, selected, zoom, index} = this.props;
     const {style, value} = cmp;
 
     const {width, height} = style;
@@ -181,9 +208,12 @@ export default class Cmp extends Component {
         id={cmp.key}
         className={styles.main}
         onMouseDown={this.onMouseDownOfCmp}
-        onClick={this.setSelected}>
+        onClick={this.setSelected}
+        onContextMenu={this.handleShowContextMenu}>
         {/* 组件本身 */}
-        <div className={styles.cmp} style={{...style, transform}}>
+        <div
+          className={styles.cmp}
+          style={{...style, transform, zIndex: index}}>
           {getCmp(cmp)}
         </div>
 
@@ -203,7 +233,7 @@ export default class Cmp extends Component {
           onMouseDown={this.onMouseDown}>
           <li
             className={styles.stretchDot}
-            style={{top: -8, left: -8}}
+            style={{top: -8, left: -8, transform: `scale(${100 / zoom})`}}
             data-direction="top, left"
           />
 
@@ -212,19 +242,28 @@ export default class Cmp extends Component {
             style={{
               top: -8,
               left: width / 2 - 8,
+              transform: `scale(${100 / zoom})`,
             }}
             data-direction="top"
           />
 
           <li
             className={styles.stretchDot}
-            style={{top: -8, left: width - 8}}
+            style={{
+              top: -8,
+              left: width - 8,
+              transform: `scale(${100 / zoom})`,
+            }}
             data-direction="top right"
           />
 
           <li
             className={styles.stretchDot}
-            style={{top: height / 2 - 8, left: width - 8}}
+            style={{
+              top: height / 2 - 8,
+              left: width - 8,
+              transform: `scale(${100 / zoom})`,
+            }}
             data-direction="right"
           />
 
@@ -233,6 +272,7 @@ export default class Cmp extends Component {
             style={{
               top: height - 8,
               left: width - 8,
+              transform: `scale(${100 / zoom})`,
             }}
             data-direction="bottom right"
           />
@@ -242,6 +282,7 @@ export default class Cmp extends Component {
             style={{
               top: height - 8,
               left: width / 2 - 8,
+              transform: `scale(${100 / zoom})`,
             }}
             data-direction="bottom"
           />
@@ -251,6 +292,7 @@ export default class Cmp extends Component {
             style={{
               top: height - 8,
               left: -8,
+              transform: `scale(${100 / zoom})`,
             }}
             data-direction="bottom left"
           />
@@ -259,6 +301,7 @@ export default class Cmp extends Component {
             style={{
               top: height / 2 - 8,
               left: -8,
+              transform: `scale(${100 / zoom})`,
             }}
             data-direction="left"
           />
@@ -268,10 +311,23 @@ export default class Cmp extends Component {
             style={{
               top: height + 8,
               left: width / 2 - 8,
+              transform: `scale(${100 / zoom})`,
             }}
             onMouseDown={this.rotate}
           />
         </ul>
+
+        {selected && this.state.showContextMenu && (
+          <ContextMenu
+            index={index}
+            style={{
+              top: style.top,
+              left: style.left + width / 2,
+              transform: `scale(${100 / zoom})`,
+            }}
+            cmp={cmp}
+          />
+        )}
       </div>
     );
   }
