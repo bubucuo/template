@@ -190,6 +190,75 @@ export default class Canvas {
     this.updateApp();
   };
 
+  // 0 1  3 2 4
+  // 上移
+  addCmpZIndex = (cmpIndex) => {
+    const cmps = this.getCanvasCmps();
+    const targetIndex = cmpIndex + 1;
+    if (targetIndex >= cmps.length) {
+      return;
+    }
+
+    const tem = cmps[cmpIndex];
+    this.canvas.cmps[cmpIndex] = this.canvas.cmps[targetIndex];
+    this.canvas.cmps[targetIndex] = tem;
+
+    this.selectedCmpIndex = targetIndex;
+    this.updateApp();
+    this.recordCanvasChangeHistory();
+  };
+
+  // 0 1  3 2 4
+  // 下移
+  subCmpZIndex = (cmpIndex) => {
+    const cmps = this.getCanvasCmps();
+    const targetIndex = cmpIndex - 1;
+    if (targetIndex < 0) {
+      return;
+    }
+
+    const tem = cmps[cmpIndex];
+    this.canvas.cmps[cmpIndex] = this.canvas.cmps[targetIndex];
+    this.canvas.cmps[targetIndex] = tem;
+
+    this.selectedCmpIndex = targetIndex;
+    this.updateApp();
+    this.recordCanvasChangeHistory();
+  };
+
+  // 0 1  3 4 2
+  // 置顶
+  topZIndex = (cmpIndex) => {
+    const cmps = this.getCanvasCmps();
+    if (cmpIndex >= cmps.length - 1) {
+      return;
+    }
+    this.canvas.cmps = cmps
+      .slice(0, cmpIndex)
+      .concat(cmps.slice(cmpIndex + 1))
+      .concat(cmps[cmpIndex]);
+
+    this.selectedCmpIndex = cmps.length - 1;
+    this.updateApp();
+    this.recordCanvasChangeHistory();
+  };
+
+  // 置底部
+  bottomZIndex = (cmpIndex) => {
+    const cmps = this.getCanvasCmps();
+    if (cmpIndex <= 0) {
+      return;
+    }
+
+    this.canvas.cmps = [cmps[cmpIndex]]
+      .concat(cmps.slice(0, cmpIndex))
+      .concat(cmps.slice(cmpIndex + 1));
+
+    this.selectedCmpIndex = 0;
+    this.updateApp();
+    this.recordCanvasChangeHistory();
+  };
+
   getPublicCanvas = () => {
     const obj = {
       getCanvas: this.getCanvas,
@@ -207,6 +276,12 @@ export default class Canvas {
       recordCanvasChangeHistory: this.recordCanvasChangeHistory,
       goPrevCanvasHistory: this.goPrevCanvasHistory,
       goNextCanvasHistory: this.goNextCanvasHistory,
+
+      // 修改层级
+      addCmpZIndex: this.addCmpZIndex,
+      subCmpZIndex: this.subCmpZIndex,
+      topZIndex: this.topZIndex,
+      bottomZIndex: this.bottomZIndex,
     };
 
     return obj;

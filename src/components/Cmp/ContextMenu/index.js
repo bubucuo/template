@@ -3,7 +3,7 @@ import styles from "./index.less";
 import {useCanvasByContext} from "@/store/hooks";
 import classNames from "classnames";
 
-export default function ContextMenu({index, style, cmp}) {
+export default function ContextMenu({index, style, cmp, hideShowContextMenu}) {
   const canvas = useCanvasByContext();
 
   const copy = (e) => {
@@ -13,12 +13,39 @@ export default function ContextMenu({index, style, cmp}) {
     newCmp.style.top += 40;
     newCmp.style.left += 40;
     canvas.addCmp(newCmp);
+    hideShowContextMenu();
   };
 
   const del = (e) => {
     e.stopPropagation();
     canvas.deleteCmp(index);
+    hideShowContextMenu();
   };
+
+  const addCmpZIndex = (e) => {
+    e.stopPropagation();
+    canvas.addCmpZIndex(index);
+    hideShowContextMenu();
+  };
+
+  const subCmpZIndex = (e) => {
+    e.stopPropagation();
+    canvas.subCmpZIndex(index);
+    hideShowContextMenu();
+  };
+
+  const topZIndex = (e) => {
+    e.stopPropagation();
+    canvas.topZIndex(index);
+    hideShowContextMenu();
+  };
+
+  const bottomZIndex = (e) => {
+    e.stopPropagation();
+    canvas.bottomZIndex(index);
+    hideShowContextMenu();
+  };
+
   return (
     <ul className={classNames(styles.main)} style={style}>
       <li className={styles.item} onClick={copy}>
@@ -27,10 +54,18 @@ export default function ContextMenu({index, style, cmp}) {
       <li className={styles.item} onClick={del}>
         删除
       </li>
-      <li className={styles.item}>上移一层</li>
-      <li className={styles.item}>下移一层</li>
-      <li className={styles.item}>置顶</li>
-      <li className={styles.item}>置底</li>
+      <li className={styles.item} onClick={addCmpZIndex}>
+        上移一层
+      </li>
+      <li className={styles.item} onClick={subCmpZIndex}>
+        下移一层
+      </li>
+      <li className={styles.item} onClick={topZIndex}>
+        置顶
+      </li>
+      <li className={styles.item} onClick={bottomZIndex}>
+        置底
+      </li>
     </ul>
   );
 }

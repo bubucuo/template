@@ -196,6 +196,10 @@ export default class Cmp extends Component {
     this.setState({showContextMenu: true});
   };
 
+  hideShowContextMenu = (e) => {
+    this.setState({showContextMenu: false});
+  };
+
   render() {
     const {cmp, selected, zoom, index} = this.props;
     const {style, value} = cmp;
@@ -326,6 +330,7 @@ export default class Cmp extends Component {
               transform: `scale(${100 / zoom})`,
             }}
             cmp={cmp}
+            hideShowContextMenu={this.hideShowContextMenu}
           />
         )}
       </div>
