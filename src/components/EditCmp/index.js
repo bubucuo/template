@@ -2,7 +2,6 @@ import {useCanvasByContext} from "../../store/hooks";
 import InputColor from "@/lib/InputColor";
 import Item from "@/lib/Item";
 import styles from "./index.less";
-import {isImgComponent} from "../../layout/Left/index";
 
 export default function EditCmp(props) {
   const canvas = useCanvasByContext();
@@ -19,29 +18,22 @@ export default function EditCmp(props) {
 
   const handleStyleChange = (e, {name, value}) => {
     const newStyle = {[name]: value};
-
     canvas.updateSelectedCmp(newStyle);
     canvas.recordCanvasChangeHistory();
   };
-
-  const canvasData = canvas.getCanvas();
-  const canvasWidth = canvasData.style.width;
-  const selectCmpWidth = selectedCmp.style.width;
 
   return (
     <div className={styles.main}>
       <div className={styles.title}>组件属性</div>
 
-      {selectedCmp.type === isImgComponent && (
-        <Item label="描述: ">
-          <input
-            type="text"
-            className={styles.itemRight}
-            value={value}
-            onChange={handleValueChange}
-          />
-        </Item>
-      )}
+      <Item label="描述: ">
+        <input
+          type="text"
+          className={styles.itemRight}
+          value={value}
+          onChange={handleValueChange}
+        />
+      </Item>
 
       {style.fontSize != undefined && (
         <Item label="字体大小: ">
@@ -106,42 +98,10 @@ export default function EditCmp(props) {
             }}>
             <option value="left">居左</option>
             <option value="center">居中</option>
-            <option value="right">居右</option>
+            <option value="right">居右边</option>
           </select>
         </Item>
       )}
-
-      <Item label="对齐页面: ">
-        <select
-          className={styles.itemRight}
-          value={
-            style.left == 0
-              ? "left"
-              : style.left == canvasWidth / 2 - selectCmpWidth / 2
-              ? "center"
-              : style.left == canvasWidth - selectCmpWidth
-              ? "right"
-              : "default"
-          }
-          onChange={(e) => {
-            const newValue = e.target.value;
-            let newLeft = 0;
-
-            if (newValue !== "left") {
-              if (newValue === "center") {
-                newLeft = canvasWidth / 2 - selectCmpWidth / 2;
-              } else if (newValue === "right") {
-                newLeft = canvasWidth - selectCmpWidth;
-              }
-            }
-            handleStyleChange(e, {name: "left", value: newLeft});
-          }}>
-          <option value="default">--选择--</option>
-          <option value="left">居左</option>
-          <option value="center">居中</option>
-          <option value="right">居右</option>
-        </select>
-      </Item>
 
       {style.transform !== undefined && (
         <Item label="旋转: ">
@@ -214,10 +174,7 @@ export default function EditCmp(props) {
           className={styles.itemRight}
           color={style.borderColor || "#ffffff00"}
           onChangeComplete={(e) =>
-            handleStyleChange(null, {
-              name: "borderColor",
-              value: `rgba(${Object.values(e.rgb).join(",")})`,
-            })
+            handleStyleChange(null, {name: "borderColor", value: e.hex})
           }
         />
       </Item>
@@ -228,10 +185,7 @@ export default function EditCmp(props) {
             className={styles.itemRight}
             color={style.color}
             onChangeComplete={(e) =>
-              handleStyleChange(null, {
-                name: "color",
-                value: `rgba(${Object.values(e.rgb).join(",")})`,
-              })
+              handleStyleChange(null, {name: "color", value: e.hex})
             }
           />
         </Item>
@@ -242,12 +196,9 @@ export default function EditCmp(props) {
           <InputColor
             className={styles.itemRight}
             color={style.backgroundColor}
-            onChangeComplete={(e) => {
-              handleStyleChange(null, {
-                name: "backgroundColor",
-                value: `rgba(${Object.values(e.rgb).join(",")})`,
-              });
-            }}
+            onChangeComplete={(e) =>
+              handleStyleChange(null, {name: "backgroundColor", value: e.hex})
+            }
           />
         </Item>
       )}

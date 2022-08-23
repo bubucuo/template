@@ -1,6 +1,5 @@
 .main {
   position: absolute;
-  // cursor: move;
 
   img {
     width: 100%;
@@ -20,7 +19,7 @@
     }
   }
   .selected {
-    // z-index: 999;
+    z-index: 999;
     border: solid 2px #02dcf7;
   }
 
@@ -30,29 +29,15 @@
     position: absolute;
     width: @size;
     height: @size;
-    background-color: rgba(0, 87, 255, 0.8);
+    background-color: rgba(0, 87, 255, 0.5);
     border-radius: 50%;
-  }
-
-  .line {
-    z-index: 999;
-    position: absolute;
-    background-color: rgba(0, 87, 255, 1); // #02dcf7;
-  }
-  .xLine {
-    height: 2px;
-  }
-
-  .yLine {
-    width: 2px;
   }
 
   .rotate {
     z-index: 9999;
     position: absolute;
-    color: rgba(0, 87, 255, 1); // rgba(0, 87, 255, 0.5);
+    color: rgba(0, 87, 255, 0.5);
     font-weight: bold;
     font-size: 24px;
-    cursor: grab;
   }
 }

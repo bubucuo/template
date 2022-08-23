@@ -20,8 +20,6 @@ export default function InputColor({onChangeComplete, color, ...rest}) {
           style={{
             zIndex: 1,
             position: "relative",
-            marginTop: "32px",
-            marginLeft: "-70px",
           }}>
           <span
             style={{
