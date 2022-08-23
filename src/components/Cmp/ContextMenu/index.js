@@ -2,6 +2,7 @@ import {useContext} from "react";
 import styles from "./index.less";
 import {useCanvasByContext} from "@/store/hooks";
 import classNames from "classnames";
+import {cloneDeep} from "lodash";
 
 export default function ContextMenu({index, style, cmp, hideShowContextMenu}) {
   const canvas = useCanvasByContext();
@@ -9,7 +10,7 @@ export default function ContextMenu({index, style, cmp, hideShowContextMenu}) {
   const copy = (e) => {
     e.stopPropagation();
 
-    const newCmp = JSON.parse(JSON.stringify(cmp));
+    const newCmp = cloneDeep(cmp);
     newCmp.style.top += 40;
     newCmp.style.left += 40;
     canvas.addCmp(newCmp);
@@ -48,11 +49,14 @@ export default function ContextMenu({index, style, cmp, hideShowContextMenu}) {
 
   return (
     <ul className={classNames(styles.main)} style={style}>
+      <li
+        className={classNames("iconfont icon-close", styles.close)}
+        onClick={hideShowContextMenu}></li>
       <li className={styles.item} onClick={copy}>
-        复制
+        复制组件
       </li>
       <li className={styles.item} onClick={del}>
-        删除
+        删除组件
       </li>
       <li className={styles.item} onClick={addCmpZIndex}>
         上移一层

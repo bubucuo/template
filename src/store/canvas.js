@@ -1,4 +1,5 @@
 import {getOnlyKey} from "../utils";
+import {cloneDeep} from "lodash";
 
 function getDefaultCanvas() {
   return {
@@ -29,7 +30,8 @@ export default class Canvas {
     this.listeners = [];
 
     // 画布历史
-    this.canvasChangeHistory = [JSON.stringify(this.canvas)];
+    this.canvasChangeHistory = [cloneDeep(this.canvas)];
+
     // 前进、后退
     this.canvasChangeHistoryIndex = 0;
 
@@ -145,7 +147,7 @@ export default class Canvas {
   // 历史
   // 1 2 5 4
   recordCanvasChangeHistory = () => {
-    this.canvasChangeHistory[++this.canvasChangeHistoryIndex] = JSON.stringify(
+    this.canvasChangeHistory[++this.canvasChangeHistoryIndex] = cloneDeep(
       this.canvas
     );
     this.canvasChangeHistory = this.canvasChangeHistory.slice(
@@ -170,7 +172,7 @@ export default class Canvas {
       return;
     }
     this.canvasChangeHistoryIndex = newIndex;
-    const newCanvas = JSON.parse(this.canvasChangeHistory[newIndex]);
+    const newCanvas = cloneDeep(this.canvasChangeHistory[newIndex]);
     this.canvas = newCanvas;
     this.updateApp();
   };
@@ -185,7 +187,7 @@ export default class Canvas {
       return;
     }
     this.canvasChangeHistoryIndex = newIndex;
-    const newCanvas = JSON.parse(this.canvasChangeHistory[newIndex]);
+    const newCanvas = cloneDeep(this.canvasChangeHistory[newIndex]);
     this.canvas = newCanvas;
     this.updateApp();
   };

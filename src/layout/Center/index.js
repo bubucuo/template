@@ -62,7 +62,7 @@ export default function Center(props) {
   }, []);
 
   const whichKeyEvent = (e) => {
-    if (e.target.nodeName === "INPUT") {
+    if (e.target.nodeName === "INPUT" || e.target.nodeName === "TEXTAREA") {
       return;
     }
     const selectedCmp = canvas.getSelectedCmp();
@@ -142,6 +142,7 @@ export default function Center(props) {
       <ul className={styles.zoom}>
         <li
           className={classNames(styles.icon)}
+          style={{cursor: "zoom-in"}}
           onClick={() => {
             setZoom(zoom + 25);
           }}>
@@ -161,6 +162,7 @@ export default function Center(props) {
         </li>
         <li
           className={classNames(styles.icon)}
+          style={{cursor: "zoom-out"}}
           onClick={() => {
             const newZoom = zoom - 25 >= 1 ? zoom - 25 : 1;
             setZoom(newZoom);

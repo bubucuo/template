@@ -15,11 +15,15 @@ export default class Cmp extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {showContextMenu: false};
+    this.state = {showContextMenu: false, textareaFocused: false};
   }
 
   // 在画布上移动组件位置
   onMouseDownOfCmp = (e) => {
+    if (this.state.textareaFocused) {
+      return;
+    }
+
     // 否则会触发其他组件的选中行为
     e.preventDefault();
 
@@ -59,6 +63,10 @@ export default class Cmp extends Component {
 
   setSelected = (e) => {
     e.stopPropagation();
+    // 选中其他元素，则取消这个元素的焦点
+    if (this.props.index !== this.context.getSelectedCmpIndex()) {
+      document.activeElement.blur();
+    }
     this.context.setSelectedCmpIndex(this.props.index);
   };
 
@@ -111,20 +119,6 @@ export default class Cmp extends Component {
       }
       if (newStyle.height < 10) {
         newStyle.height = 10;
-      }
-
-      if (cmp.style.fontSize) {
-        // 文本组件的行高、字体大小跟着高度变化
-        const n = newHeight / cmp.style.height;
-        let newFontSize = n * cmp.style.fontSize;
-
-        newFontSize =
-          newFontSize < 12 ? 12 : newFontSize > 130 ? 130 : newFontSize;
-
-        Object.assign(newStyle, {
-          lineHeight: newHeight + "px",
-          fontSize: parseInt(newFontSize),
-        });
       }
 
       this.context.updateSelectedCmp(newStyle);
@@ -193,11 +187,17 @@ export default class Cmp extends Component {
 
   handleShowContextMenu = (e) => {
     e.preventDefault();
-    this.setState({showContextMenu: true});
+    this.props.selected && this.setState({showContextMenu: true});
   };
 
   hideShowContextMenu = (e) => {
     this.setState({showContextMenu: false});
+  };
+
+  valueChange = (e) => {
+    const newValue = e.target.value;
+    this.context.updateSelectedCmp(null, newValue);
+    this.context.recordCanvasChangeHistory();
   };
 
   render() {
@@ -207,145 +207,200 @@ export default class Cmp extends Component {
     const {width, height} = style;
     const transform = `rotate(${style.transform}deg)`;
 
+    const zIndex = index;
+
     return (
       <div
         id={cmp.key}
         className={styles.main}
+        style={{
+          ...style,
+          transform,
+          zIndex: selected && this.state.showContextMenu ? 99999 : index,
+        }}
         onMouseDown={this.onMouseDownOfCmp}
         onClick={this.setSelected}
+        onDoubleClick={(e) => {
+          this.setState({textareaFocused: true});
+        }}
         onContextMenu={this.handleShowContextMenu}>
-        {/* 组件本身 */}
-        <div
-          className={styles.cmp}
-          style={{...style, transform, zIndex: index}}>
-          {getCmp(cmp)}
-        </div>
-
         {/* 组件的功能、选中的样式 */}
-        <ul
-          className={classNames(
-            styles.editStyle,
-            selected ? styles.selected : styles.unselected
-          )}
-          style={{
-            top: style.top - 2,
-            left: style.left - 2,
-            width: style.width,
-            height: style.height,
-            transform,
-          }}
-          onMouseDown={this.onMouseDown}>
-          <li
-            className={styles.stretchDot}
-            style={{top: -8, left: -8, transform: `scale(${100 / zoom})`}}
-            data-direction="top, left"
-          />
+        {selected && (
+          <>
+            {/* line */}
+            <div
+              className={classNames(styles.line, styles.xLine)}
+              style={{width, top: -2}}
+            />
+            <div
+              className={classNames(styles.line, styles.xLine)}
+              style={{width, top: height}}
+            />
 
-          <li
-            className={styles.stretchDot}
-            style={{
-              top: -8,
-              left: width / 2 - 8,
-              transform: `scale(${100 / zoom})`,
-            }}
-            data-direction="top"
-          />
+            <div
+              className={classNames(styles.line, styles.yLine)}
+              style={{height, left: -2}}
+            />
+            <div
+              className={classNames(styles.line, styles.yLine)}
+              style={{height, left: width}}
+            />
+            {/* line */}
 
-          <li
-            className={styles.stretchDot}
-            style={{
-              top: -8,
-              left: width - 8,
-              transform: `scale(${100 / zoom})`,
-            }}
-            data-direction="top right"
-          />
+            <div
+              className={styles.stretchDot}
+              style={{
+                top: -8,
+                left: -8,
+                transform: `scale(${100 / zoom})`,
+                cursor: "nwse-resize",
+              }}
+              data-direction="top, left"
+              onMouseDown={this.onMouseDown}
+            />
 
-          <li
-            className={styles.stretchDot}
-            style={{
-              top: height / 2 - 8,
-              left: width - 8,
-              transform: `scale(${100 / zoom})`,
-            }}
-            data-direction="right"
-          />
+            <div
+              className={styles.stretchDot}
+              style={{
+                top: -8,
+                left: width / 2 - 8,
+                transform: `scale(${100 / zoom})`,
+                cursor: "row-resize",
+              }}
+              data-direction="top"
+              onMouseDown={this.onMouseDown}
+            />
 
-          <li
-            className={styles.stretchDot}
-            style={{
-              top: height - 8,
-              left: width - 8,
-              transform: `scale(${100 / zoom})`,
-            }}
-            data-direction="bottom right"
-          />
+            <div
+              className={styles.stretchDot}
+              style={{
+                top: -8,
+                left: width - 8,
+                transform: `scale(${100 / zoom})`,
+                cursor: "nesw-resize",
+              }}
+              data-direction="top right"
+              onMouseDown={this.onMouseDown}
+            />
 
-          <li
-            className={styles.stretchDot}
-            style={{
-              top: height - 8,
-              left: width / 2 - 8,
-              transform: `scale(${100 / zoom})`,
-            }}
-            data-direction="bottom"
-          />
+            <div
+              className={styles.stretchDot}
+              style={{
+                top: height / 2 - 8,
+                left: width - 8,
+                transform: `scale(${100 / zoom})`,
+                cursor: "col-resize",
+              }}
+              data-direction="right"
+              onMouseDown={this.onMouseDown}
+            />
 
-          <li
-            className={styles.stretchDot}
-            style={{
-              top: height - 8,
-              left: -8,
-              transform: `scale(${100 / zoom})`,
-            }}
-            data-direction="bottom left"
-          />
-          <li
-            className={styles.stretchDot}
-            style={{
-              top: height / 2 - 8,
-              left: -8,
-              transform: `scale(${100 / zoom})`,
-            }}
-            data-direction="left"
-          />
+            <div
+              className={styles.stretchDot}
+              style={{
+                top: height - 8,
+                left: width - 8,
+                transform: `scale(${100 / zoom})`,
+                cursor: "nwse-resize",
+              }}
+              data-direction="bottom right"
+              onMouseDown={this.onMouseDown}
+            />
 
-          <li
-            className={classNames(styles.rotate, "iconfont icon-xuanzhuan")}
-            style={{
-              top: height + 8,
-              left: width / 2 - 8,
-              transform: `scale(${100 / zoom})`,
-            }}
-            onMouseDown={this.rotate}
-          />
-        </ul>
+            <div
+              className={styles.stretchDot}
+              style={{
+                top: height - 8,
+                left: width / 2 - 8,
+                transform: `scale(${100 / zoom})`,
+                cursor: "row-resize",
+              }}
+              data-direction="bottom"
+              onMouseDown={this.onMouseDown}
+            />
+
+            <div
+              className={styles.stretchDot}
+              style={{
+                top: height - 8,
+                left: -8,
+                transform: `scale(${100 / zoom})`,
+                cursor: "nesw-resize",
+              }}
+              data-direction="bottom left"
+              onMouseDown={this.onMouseDown}
+            />
+            <div
+              className={styles.stretchDot}
+              style={{
+                top: height / 2 - 8,
+                left: -8,
+                transform: `scale(${100 / zoom})`,
+                cursor: "col-resize",
+              }}
+              data-direction="left"
+              onMouseDown={this.onMouseDown}
+            />
+
+            <div
+              className={classNames(styles.rotate, "iconfont icon-xuanzhuan")}
+              style={{
+                top: height + (30 * 100) / zoom,
+                left: width / 2 - 13,
+                transform: `scale(${100 / zoom})`,
+              }}
+              onMouseDown={this.rotate}
+            />
+          </>
+        )}
 
         {selected && this.state.showContextMenu && (
           <ContextMenu
             index={index}
             style={{
-              top: style.top,
+              top: 2, //style.top,
               left: style.left + width / 2,
-              transform: `scale(${100 / zoom})`,
+              transform: `scale(${100 / zoom}) rotate(${
+                0 - style.transform
+              }deg)`,
             }}
             cmp={cmp}
             hideShowContextMenu={this.hideShowContextMenu}
           />
         )}
+
+        {/* 组件本身 */}
+        <div
+          className={styles.cmp}
+          style={{
+            width: style.width,
+            height: style.height,
+          }}>
+          {cmp.type === isTextComponent && (
+            <textarea
+              value={cmp.value}
+              disabled={!this.state.textareaFocused}
+              onChange={(e) => {
+                const newValue = e.target.value;
+                this.context.updateSelectedCmp(null, newValue);
+                this.context.recordCanvasChangeHistory();
+              }}
+              onBlur={() => {
+                this.setState({textareaFocused: false});
+              }}
+              style={{
+                ...style,
+                width: "100%",
+                height: "100%",
+                top: 0,
+                left: 0,
+                cursor: this.state.textareaFocused ? "text" : "move",
+              }}
+            />
+          )}
+          {cmp.type === isImgComponent && <Img cmp={{...cmp}} />}
+        </div>
       </div>
     );
-  }
-}
-
-function getCmp(cmp) {
-  switch (cmp.type) {
-    case isTextComponent:
-      return <Text {...cmp} />;
-
-    case isImgComponent:
-      return <Img {...cmp} />;
-    default:
-      break;
   }
 }
