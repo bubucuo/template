@@ -45,6 +45,7 @@ textarea {
   font-family: unset;
   scroll-behavior: unset;
   overflow:hidden;
+  white-space: break-spaces;
 }
 
 input,

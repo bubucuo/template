@@ -25,7 +25,7 @@ export default class Canvas {
     this.canvas = _canvas; // 页面数据
 
     // 被选中的组件的下标
-    this.selectedCmpIndex = null;
+    this.selectedCmpIndex = -1;
 
     this.listeners = [];
 
@@ -94,7 +94,7 @@ export default class Canvas {
   };
 
   // 删除组件
-  deleteCmp = (selectedIndex) => {
+  deleteCmp = (selectedIndex = this.selectedCmpIndex) => {
     this.canvas.cmps.splice(selectedIndex, 1);
 
     this.selectedCmpIndex = -1;
@@ -194,7 +194,7 @@ export default class Canvas {
 
   // 0 1  3 2 4
   // 上移
-  addCmpZIndex = (cmpIndex) => {
+  addCmpZIndex = (cmpIndex = this.selectedCmpIndex) => {
     const cmps = this.getCanvasCmps();
     const targetIndex = cmpIndex + 1;
     if (targetIndex >= cmps.length) {
@@ -212,7 +212,7 @@ export default class Canvas {
 
   // 0 1  3 2 4
   // 下移
-  subCmpZIndex = (cmpIndex) => {
+  subCmpZIndex = (cmpIndex = this.selectedCmpIndex) => {
     const cmps = this.getCanvasCmps();
     const targetIndex = cmpIndex - 1;
     if (targetIndex < 0) {
@@ -230,7 +230,7 @@ export default class Canvas {
 
   // 0 1  3 4 2
   // 置顶
-  topZIndex = (cmpIndex) => {
+  topZIndex = (cmpIndex = this.selectedCmpIndex) => {
     const cmps = this.getCanvasCmps();
     if (cmpIndex >= cmps.length - 1) {
       return;
@@ -246,7 +246,7 @@ export default class Canvas {
   };
 
   // 置底部
-  bottomZIndex = (cmpIndex) => {
+  bottomZIndex = (cmpIndex = this.selectedCmpIndex) => {
     const cmps = this.getCanvasCmps();
     if (cmpIndex <= 0) {
       return;

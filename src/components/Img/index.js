@@ -1,3 +1,3 @@
-export default function Img({cmp}) {
-  return <img src={cmp.value} alt="" />;
+export default function Img({value}) {
+  return <img src={value} alt="" />;
 }

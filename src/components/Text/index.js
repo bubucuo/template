@@ -1,3 +1,3 @@
-export default function Text({ value }) {
+export default function Text({value}) {
   return value;
 }

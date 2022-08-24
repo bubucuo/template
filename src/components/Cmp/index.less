@@ -1,51 +1,13 @@
 .main {
   position: absolute;
-  // cursor: move;
 
   img {
     width: 100%;
     height: 100%;
   }
 
-  .editStyle {
-    box-sizing: content-box;
-    position: absolute;
-  }
-
-  @size: 16px;
-  .stretchDot {
-    z-index: 9999;
-    position: absolute;
-    width: @size;
-    height: @size;
-    background-color: rgba(0, 87, 255, 0.8);
-    border-radius: 50%;
-  }
-
-  .line {
-    z-index: 9999;
-    position: absolute;
-    background-color: rgba(0, 87, 255, 1); // #02dcf7;
-  }
-  .xLine {
-    height: 2px;
-  }
-
-  .yLine {
-    width: 2px;
-  }
-
-  .rotate {
-    @size: 26px;
-    z-index: 9999;
-    position: absolute;
-    width: @size;
-    height: @size;
-    text-align: center;
-    line-height: @size;
-    color: rgba(0, 87, 255, 1); // rgba(0, 87, 255, 0.5);
-    font-weight: bold;
-    font-size: 24px;
-    cursor: grab;
+  .cmp {
+    white-space: break-spaces;
+    overflow: "hidden";
   }
 }
