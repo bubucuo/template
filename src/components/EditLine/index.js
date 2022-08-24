@@ -17,7 +17,8 @@ export default class EditLine extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {textareaFocused: false};
+
+    this.state = {textareaFocused: false, showContextMenu: false};
     this.textareaRef = createRef();
   }
 

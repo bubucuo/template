@@ -5,7 +5,6 @@ import {CanvasContext} from "../../Context";
 import {isImgComponent, isTextComponent} from "@/layout/Left";
 import Text from "../Text";
 import Img from "../Img";
-import ContextMenu from "./ContextMenu";
 
 // todo 拖拽、删除、改变层级关系等
 
@@ -19,11 +18,7 @@ export default class Cmp extends Component {
   }
 
   setSelected = (e) => {
-    // 选中其他元素，则取消这个元素的焦点
     const selectedIndex = this.context.getSelectedCmpIndex();
-    // if (this.props.index !== selectedIndex) {
-    //   document.activeElement.blur();
-    // }
     this.context.setSelectedCmpIndex(this.props.index);
   };
 
