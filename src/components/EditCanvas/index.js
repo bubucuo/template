@@ -44,7 +44,7 @@ export default function EditCanvas(props) {
           onChangeComplete={(e) => {
             handleStyleChange(e, {
               name: "backgroundColor",
-              value: `rgba(${Object.values(e.rgb).join(",")})`,
+              value: e.hex,
             });
           }}
         />

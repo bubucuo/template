@@ -39,14 +39,6 @@ input {
   box-sizing: border-box;
 }
 
-textarea {
-  outline: none;
-  resize: none;
-  font-family: unset;
-  scroll-behavior: unset;
-  overflow:hidden;
-}
-
 input,
 button,
 a,
@@ -70,4 +62,3 @@ ul {
   z-index: 999 !important;
   border: solid 2px #02dcf7 !important;
 }
-
