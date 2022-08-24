@@ -8,7 +8,7 @@ export default function Header(props) {
   const save = () => {
     const data = canvas.getCanvas();
 
-    console.log("data", data, JSON.stringify(data)); //sy-log
+    console.log("data", data); //sy-log
   };
 
   const emptyCanvas = () => {

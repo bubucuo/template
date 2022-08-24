@@ -3,6 +3,7 @@ import Cmp from "../../components/Cmp";
 import styles from "./index.less";
 import {useCallback, useEffect, useState, useRef} from "react";
 import classNames from "classnames";
+import EditLine from "../../components/EditLine";
 
 export default function Center(props) {
   const canvas = useCanvasByContext();
@@ -62,7 +63,7 @@ export default function Center(props) {
   }, []);
 
   const whichKeyEvent = (e) => {
-    if (e.target.nodeName === "INPUT") {
+    if (e.target.nodeName === "INPUT" || e.target.nodeName === "TEXTAREA") {
       return;
     }
     const selectedCmp = canvas.getSelectedCmp();
@@ -116,8 +117,10 @@ export default function Center(props) {
       id="center"
       className={styles.main}
       tabIndex="0"
-      onClick={() => {
-        canvas.setSelectedCmpIndex(-1);
+      onClick={(e) => {
+        if (e.target.id === "center") {
+          canvas.setSelectedCmpIndex(-1);
+        }
       }}>
       <div
         id="canvas"
@@ -129,6 +132,12 @@ export default function Center(props) {
         }}
         onDrop={onDrop}
         onDragOver={allowDrop}>
+        {/* 组件选中的时候，画布显示该组件的编辑区域 */}
+        {selectedIndex !== -1 && (
+          <EditLine selectedIndex={selectedIndex} zoom={zoom} />
+        )}
+
+        {/* 组件区域 */}
         {cmps.map((cmp, index) => (
           <Cmp
             key={cmp.key}
@@ -142,6 +151,7 @@ export default function Center(props) {
       <ul className={styles.zoom}>
         <li
           className={classNames(styles.icon)}
+          style={{cursor: "zoom-in"}}
           onClick={() => {
             setZoom(zoom + 25);
           }}>
@@ -161,6 +171,7 @@ export default function Center(props) {
         </li>
         <li
           className={classNames(styles.icon)}
+          style={{cursor: "zoom-out"}}
           onClick={() => {
             const newZoom = zoom - 25 >= 1 ? zoom - 25 : 1;
             setZoom(newZoom);

@@ -5,6 +5,7 @@ import leftSideStyles from "../index.less";
 
 const defaultStyle = {
   ...defaultCommonStyle,
+  width: 170,
   height: 30,
   lineHeight: "30px",
   fontSize: 12,
@@ -16,7 +17,7 @@ const defaultStyle = {
 
 const settings = [
   {
-    value: "标题",
+    value: "双击编辑标题",
     style: {
       ...defaultStyle,
       fontSize: 28,
@@ -25,7 +26,7 @@ const settings = [
     },
   },
   {
-    value: "正文",
+    value: "双击编辑正文",
     style: defaultStyle,
   },
 ];
@@ -45,12 +46,20 @@ export default function TextSide() {
           <li
             key={item.value}
             className={leftSideStyles.item}
-            onClick={() => addCmp({...item, type: isTextComponent})}
+            onClick={() =>
+              addCmp({
+                ...item,
+                value: item.value,
+                type: isTextComponent,
+              })
+            }
             draggable="true"
             onDragStart={(e) =>
               onDragStart(e, {...item, type: isTextComponent})
             }>
-            {item.value}
+            {item.value.indexOf("双击编辑") > -1
+              ? item.value.slice(4)
+              : item.value}
           </li>
         ))}
       </ul>

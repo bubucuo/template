@@ -1,5 +1,5 @@
 .main {
-  z-index: 9999;
+  z-index: 999999;
   position: absolute;
   max-height: 410px;
   overflow: scroll;
@@ -12,6 +12,21 @@
   font-size: 12px;
   transform-origin: 50% 0;
   opacity: 0.9;
+  color: gray;
+  .close {
+    float: right;
+    @size: 24px;
+    width: @size;
+    height: @size;
+    text-align: center;
+    line-height: @size;
+    font-size: 16px;
+    cursor: pointer;
+    &:hover {
+      background-color: #0057ff;
+      color: #fff;
+    }
+  }
   .item {
     line-height: 30px;
     padding: 10px 4px;

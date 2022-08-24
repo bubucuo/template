@@ -1,4 +1,5 @@
 import {getOnlyKey} from "../utils";
+import {cloneDeep} from "lodash";
 
 function getDefaultCanvas() {
   return {
@@ -24,12 +25,13 @@ export default class Canvas {
     this.canvas = _canvas; // 页面数据
 
     // 被选中的组件的下标
-    this.selectedCmpIndex = null;
+    this.selectedCmpIndex = -1;
 
     this.listeners = [];
 
     // 画布历史
-    this.canvasChangeHistory = [JSON.stringify(this.canvas)];
+    this.canvasChangeHistory = [cloneDeep(this.canvas)];
+
     // 前进、后退
     this.canvasChangeHistoryIndex = 0;
 
@@ -92,7 +94,7 @@ export default class Canvas {
   };
 
   // 删除组件
-  deleteCmp = (selectedIndex) => {
+  deleteCmp = (selectedIndex = this.selectedCmpIndex) => {
     this.canvas.cmps.splice(selectedIndex, 1);
 
     this.selectedCmpIndex = -1;
@@ -145,7 +147,7 @@ export default class Canvas {
   // 历史
   // 1 2 5 4
   recordCanvasChangeHistory = () => {
-    this.canvasChangeHistory[++this.canvasChangeHistoryIndex] = JSON.stringify(
+    this.canvasChangeHistory[++this.canvasChangeHistoryIndex] = cloneDeep(
       this.canvas
     );
     this.canvasChangeHistory = this.canvasChangeHistory.slice(
@@ -170,7 +172,7 @@ export default class Canvas {
       return;
     }
     this.canvasChangeHistoryIndex = newIndex;
-    const newCanvas = JSON.parse(this.canvasChangeHistory[newIndex]);
+    const newCanvas = cloneDeep(this.canvasChangeHistory[newIndex]);
     this.canvas = newCanvas;
     this.updateApp();
   };
@@ -185,14 +187,14 @@ export default class Canvas {
       return;
     }
     this.canvasChangeHistoryIndex = newIndex;
-    const newCanvas = JSON.parse(this.canvasChangeHistory[newIndex]);
+    const newCanvas = cloneDeep(this.canvasChangeHistory[newIndex]);
     this.canvas = newCanvas;
     this.updateApp();
   };
 
   // 0 1  3 2 4
   // 上移
-  addCmpZIndex = (cmpIndex) => {
+  addCmpZIndex = (cmpIndex = this.selectedCmpIndex) => {
     const cmps = this.getCanvasCmps();
     const targetIndex = cmpIndex + 1;
     if (targetIndex >= cmps.length) {
@@ -210,7 +212,7 @@ export default class Canvas {
 
   // 0 1  3 2 4
   // 下移
-  subCmpZIndex = (cmpIndex) => {
+  subCmpZIndex = (cmpIndex = this.selectedCmpIndex) => {
     const cmps = this.getCanvasCmps();
     const targetIndex = cmpIndex - 1;
     if (targetIndex < 0) {
@@ -228,7 +230,7 @@ export default class Canvas {
 
   // 0 1  3 4 2
   // 置顶
-  topZIndex = (cmpIndex) => {
+  topZIndex = (cmpIndex = this.selectedCmpIndex) => {
     const cmps = this.getCanvasCmps();
     if (cmpIndex >= cmps.length - 1) {
       return;
@@ -244,7 +246,7 @@ export default class Canvas {
   };
 
   // 置底部
-  bottomZIndex = (cmpIndex) => {
+  bottomZIndex = (cmpIndex = this.selectedCmpIndex) => {
     const cmps = this.getCanvasCmps();
     if (cmpIndex <= 0) {
       return;
