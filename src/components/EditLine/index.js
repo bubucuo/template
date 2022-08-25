@@ -139,7 +139,6 @@ export default class EditLine extends Component {
             }}
             style={{
               ...style,
-              zIndex: selectedIndex,
               width,
               height,
               top: 0,

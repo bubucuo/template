@@ -12,19 +12,13 @@ import Img from "../Img";
 export default class Cmp extends Component {
   static contextType = CanvasContext;
 
-  constructor(props) {
-    super(props);
-    this.state = {showContextMenu: false, textareaFocused: false};
-  }
-
   setSelected = (e) => {
-    const selectedIndex = this.context.getSelectedCmpIndex();
     this.context.setSelectedCmpIndex(this.props.index);
   };
 
   render() {
-    const {cmp, selected, zoom, index} = this.props;
-    const {style, value} = cmp;
+    const {cmp, index} = this.props;
+    const {style} = cmp;
 
     const {width, height} = style;
     const transform = `rotate(${style.transform}deg)`;
@@ -38,7 +32,7 @@ export default class Cmp extends Component {
         style={{
           ...style,
           transform,
-          zIndex: selected && this.state.showContextMenu ? 99999 : index,
+          zIndex,
         }}
         onClick={this.setSelected}>
         {/* 组件本身 , 注意如果是文本组件 ，如果处于选中状态，则目前处理是，textarea与这里的div Text重叠*/}
