@@ -21,11 +21,11 @@ export default class Lines extends Component {
 
         <div
           className={classNames(styles.line, styles.yLine)}
-          style={{height, left: -2}}
+          style={{height: height + 4, top: -2, left: -2}}
         />
         <div
           className={classNames(styles.line, styles.yLine)}
-          style={{height, left: width}}
+          style={{height: height + 4, top: -2, left: width}}
         />
       </>
     );
