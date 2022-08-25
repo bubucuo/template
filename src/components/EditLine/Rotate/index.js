@@ -40,8 +40,8 @@ export default class Rotate extends Component {
 
       deg = parseInt(deg);
 
-      this.context.updateSelectedCmp({
-        transform: deg,
+      this.context.updateAssemblyCmps({
+        transform: deg - transform,
       });
     };
 

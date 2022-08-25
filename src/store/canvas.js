@@ -24,9 +24,6 @@ export default class Canvas {
   constructor(_canvas = getDefaultCanvas()) {
     this.canvas = _canvas; // 页面数据
 
-    // 被选中的组件的下标
-    this.selectedCmpIndex = -1;
-
     this.listeners = [];
 
     // 画布历史
@@ -37,6 +34,9 @@ export default class Canvas {
 
     // 最多记录100条数据
     this.maxCanvasChangeHistory = 100;
+
+    // 选中组件的下标集合
+    this.assembly = new Set();
   }
 
   // get
@@ -50,21 +50,27 @@ export default class Canvas {
   };
 
   getSelectedCmpIndex = () => {
-    return this.selectedCmpIndex;
+    const selectedCmpIndex = Array.from(this.assembly)[0];
+
+    return selectedCmpIndex === undefined ? -1 : selectedCmpIndex;
   };
   // 返回选中组件的参数
   getSelectedCmp = () => {
     const cmps = this.getCanvasCmps();
 
-    return cmps[this.selectedCmpIndex];
+    return cmps[this.getSelectedCmpIndex()];
   };
 
   setSelectedCmpIndex = (index) => {
-    if (this.selectedCmpIndex === index) {
+    if (this.getSelectedCmpIndex() === index) {
       return;
     }
 
-    this.selectedCmpIndex = index;
+    this.assembly.clear();
+
+    if (index > -1) {
+      this.addToAssembly(index);
+    }
 
     this.updateApp();
   };
@@ -87,17 +93,23 @@ export default class Canvas {
     // 1. 更新画布数据
     this.canvas.cmps.push(cmp);
     // 2. 选中新增的组件为选中组件
-    this.selectedCmpIndex = this.canvas.cmps.length - 1;
+
+    this.assembly.clear();
+    this.addToAssembly(this.canvas.cmps.length - 1);
+
     // 3. 更新组件
     this.updateApp();
     this.recordCanvasChangeHistory();
   };
 
   // 删除组件
-  deleteCmp = (selectedIndex = this.selectedCmpIndex) => {
-    this.canvas.cmps.splice(selectedIndex, 1);
+  deleteCmps = () => {
+    const sorted = Array.from(this.assembly).sort((a, b) => b - a);
+    sorted.forEach((index) => {
+      this.canvas.cmps.splice(index, 1);
+    });
 
-    this.selectedCmpIndex = -1;
+    this.assembly.clear();
 
     this.updateApp();
     this.recordCanvasChangeHistory();
@@ -194,7 +206,7 @@ export default class Canvas {
 
   // 0 1  3 2 4
   // 上移
-  addCmpZIndex = (cmpIndex = this.selectedCmpIndex) => {
+  addCmpZIndex = (cmpIndex = this.getSelectedCmpIndex()) => {
     const cmps = this.getCanvasCmps();
     const targetIndex = cmpIndex + 1;
     if (targetIndex >= cmps.length) {
@@ -205,14 +217,15 @@ export default class Canvas {
     this.canvas.cmps[cmpIndex] = this.canvas.cmps[targetIndex];
     this.canvas.cmps[targetIndex] = tem;
 
-    this.selectedCmpIndex = targetIndex;
+    this.setSelectedCmpIndex(targetIndex);
+
     this.updateApp();
     this.recordCanvasChangeHistory();
   };
 
   // 0 1  3 2 4
   // 下移
-  subCmpZIndex = (cmpIndex = this.selectedCmpIndex) => {
+  subCmpZIndex = (cmpIndex = this.getSelectedCmpIndex()) => {
     const cmps = this.getCanvasCmps();
     const targetIndex = cmpIndex - 1;
     if (targetIndex < 0) {
@@ -223,14 +236,15 @@ export default class Canvas {
     this.canvas.cmps[cmpIndex] = this.canvas.cmps[targetIndex];
     this.canvas.cmps[targetIndex] = tem;
 
-    this.selectedCmpIndex = targetIndex;
+    this.setSelectedCmpIndex(targetIndex);
+
     this.updateApp();
     this.recordCanvasChangeHistory();
   };
 
   // 0 1  3 4 2
   // 置顶
-  topZIndex = (cmpIndex = this.selectedCmpIndex) => {
+  topZIndex = (cmpIndex = this.getSelectedCmpIndex()) => {
     const cmps = this.getCanvasCmps();
     if (cmpIndex >= cmps.length - 1) {
       return;
@@ -240,13 +254,14 @@ export default class Canvas {
       .concat(cmps.slice(cmpIndex + 1))
       .concat(cmps[cmpIndex]);
 
-    this.selectedCmpIndex = cmps.length - 1;
+    this.setSelectedCmpIndex(cmps.length - 1);
+
     this.updateApp();
     this.recordCanvasChangeHistory();
   };
 
   // 置底部
-  bottomZIndex = (cmpIndex = this.selectedCmpIndex) => {
+  bottomZIndex = (cmpIndex = this.getSelectedCmpIndex()) => {
     const cmps = this.getCanvasCmps();
     if (cmpIndex <= 0) {
       return;
@@ -256,9 +271,84 @@ export default class Canvas {
       .concat(cmps.slice(0, cmpIndex))
       .concat(cmps.slice(cmpIndex + 1));
 
-    this.selectedCmpIndex = 0;
+    this.setSelectedCmpIndex(0);
+
     this.updateApp();
     this.recordCanvasChangeHistory();
+  };
+
+  // 组件
+
+  addToAssembly = (indexes) => {
+    if (Array.isArray(indexes)) {
+      indexes.forEach((index) => index !== -1 && this.assembly.add(index - 0));
+    } else {
+      indexes !== -1 && this.assembly.add(indexes);
+    }
+  };
+
+  // 批量操作组件
+  addAndUpdateAssembly = (indexes) => {
+    this.addToAssembly(indexes);
+    this.updateApp();
+  };
+
+  // 判断下标为index的组件是否被批量选中
+  belongingToAssembly = (index) => {
+    return this.assembly.has(index);
+  };
+
+  // newStyle里面是移动的差值
+  updateAssemblyCmps = (newStyle) => {
+    this.assembly.forEach((index) => {
+      const cmp = this.canvas.cmps[index];
+      for (const key in newStyle) {
+        cmp.style[key] += newStyle[key] - 0;
+
+        if (cmp.style.width < 10) {
+          cmp.style.width = 10;
+        }
+        if (cmp.style.height < 10) {
+          cmp.style.height = 10;
+        }
+      }
+    });
+
+    this.updateApp();
+  };
+
+  // 批量添加组件
+  addAssemblyCms = () => {
+    this.assembly.forEach((index) => {
+      const cmp = this.canvas.cmps[index];
+      const newCmp = cloneDeep(cmp);
+      newCmp.key = getOnlyKey();
+
+      newCmp.style.top += 40;
+      newCmp.style.left += 40;
+
+      this.canvas.cmps.push(newCmp);
+    });
+
+    // 添加组件之后，更新选中的组件
+    // 5 7 9
+    // 10
+    const cmpsLength = this.canvas.cmps.length;
+    const assemblySize = this.assembly.size;
+
+    this.assembly.clear();
+    for (let i = cmpsLength - assemblySize; i < cmpsLength; i++) {
+      this.assembly.add(i);
+    }
+
+    this.updateApp();
+    this.recordCanvasChangeHistory();
+  };
+
+  // 判断有没有组件组合
+
+  hasAssembly = () => {
+    return this.assembly.size > 1;
   };
 
   getPublicCanvas = () => {
@@ -267,7 +357,7 @@ export default class Canvas {
       setCanvas: this.setCanvas,
       getCanvasCmps: this.getCanvasCmps,
       addCmp: this.addCmp,
-      deleteCmp: this.deleteCmp,
+      deleteCmps: this.deleteCmps,
       getSelectedCmpIndex: this.getSelectedCmpIndex,
       getSelectedCmp: this.getSelectedCmp,
       setSelectedCmpIndex: this.setSelectedCmpIndex,
@@ -284,6 +374,13 @@ export default class Canvas {
       subCmpZIndex: this.subCmpZIndex,
       topZIndex: this.topZIndex,
       bottomZIndex: this.bottomZIndex,
+
+      // 批量操作组件
+      addAndUpdateAssembly: this.addAndUpdateAssembly,
+      belongingToAssembly: this.belongingToAssembly,
+      updateAssemblyCmps: this.updateAssemblyCmps,
+      addAssemblyCms: this.addAssemblyCms,
+      hasAssembly: this.hasAssembly,
     };
 
     return obj;

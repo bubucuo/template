@@ -5,6 +5,7 @@ import {CanvasContext} from "../../Context";
 import {isImgComponent, isTextComponent} from "@/layout/Left";
 import Text from "../Text";
 import Img from "../Img";
+import Lines from "../EditLine/Lines";
 
 // todo 拖拽、删除、改变层级关系等
 
@@ -13,7 +14,13 @@ export default class Cmp extends Component {
   static contextType = CanvasContext;
 
   setSelected = (e) => {
-    this.context.setSelectedCmpIndex(this.props.index);
+    //
+    if (e.metaKey) {
+      // 把选中的组件填入组件集合
+      this.context.addAndUpdateAssembly(this.props.index);
+    } else {
+      this.context.setSelectedCmpIndex(this.props.index);
+    }
   };
 
   render() {
@@ -25,6 +32,8 @@ export default class Cmp extends Component {
 
     const zIndex = index;
 
+    const belongingToAssembly = this.context.belongingToAssembly(index);
+
     return (
       <div
         id={cmp.key}
@@ -35,6 +44,8 @@ export default class Cmp extends Component {
           zIndex,
         }}
         onClick={this.setSelected}>
+        {belongingToAssembly && <Lines style={{width, height, transform}} />}
+
         {/* 组件本身 , 注意如果是文本组件 ，如果处于选中状态，则目前处理是，textarea与这里的div Text重叠*/}
         <div
           className={styles.cmp}

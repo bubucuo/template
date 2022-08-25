@@ -66,6 +66,15 @@ export default function Center(props) {
     if (e.target.nodeName === "INPUT" || e.target.nodeName === "TEXTAREA") {
       return;
     }
+
+    if (e.metaKey && e.code === "KeyA") {
+      // 选中所有组件
+      const allCmps = canvas.getCanvasCmps();
+      canvas.addAndUpdateAssembly(Object.keys(allCmps));
+      e.preventDefault();
+      return;
+    }
+
     const selectedCmp = canvas.getSelectedCmp();
     if (!selectedCmp) {
       return;
@@ -80,35 +89,34 @@ export default function Center(props) {
     // 禁止默认事件，不然引发的可能是页面的上下左右滚动。
     e.preventDefault();
 
-    const {top, left} = selectedCmp.style;
-    const newStyle = {top, left};
+    const newStyle = {};
 
     switch (e.keyCode) {
       // 左
       case 37:
-        newStyle.left -= 1;
+        newStyle.left = -1;
         break;
 
       // 上
       case 38:
-        newStyle.top -= 1;
+        newStyle.top = -1;
         break;
 
       // 右
       case 39:
-        newStyle.left += 1;
+        newStyle.left = 1;
         break;
 
       // 下
       case 40:
-        newStyle.top += 1;
+        newStyle.top = 1;
         break;
 
       default:
         break;
     }
 
-    canvas.updateSelectedCmp(newStyle);
+    canvas.updateAssemblyCmps(newStyle);
     canvas.recordCanvasChangeHistory();
   };
 

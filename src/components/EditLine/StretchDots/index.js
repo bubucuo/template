@@ -17,8 +17,6 @@ export default class StretchDots extends Component {
     let startX = e.pageX;
     let startY = e.pageY;
 
-    const cmp = this.context.getSelectedCmp();
-
     const {zoom} = this.props;
     const move = (e) => {
       const x = e.pageX;
@@ -36,29 +34,21 @@ export default class StretchDots extends Component {
       if (direction) {
         if (direction.indexOf("top") >= 0) {
           disY = 0 - disY;
-          newStyle.top = cmp.style.top - disY;
+          newStyle.top = -disY;
         }
 
         if (direction.indexOf("left") >= 0) {
           disX = 0 - disX;
-          newStyle.left = cmp.style.left - disX;
+          newStyle.left = -disX;
         }
       }
 
-      const newHeight = cmp.style.height + disY;
       Object.assign(newStyle, {
-        width: cmp.style.width + disX,
-        height: newHeight,
+        width: disX,
+        height: disY,
       });
 
-      if (newStyle.width < 10) {
-        newStyle.width = 10;
-      }
-      if (newStyle.height < 10) {
-        newStyle.height = 10;
-      }
-
-      this.context.updateSelectedCmp(newStyle);
+      this.context.updateAssemblyCmps(newStyle);
 
       startX = x;
       startY = y;
