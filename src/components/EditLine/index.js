@@ -95,9 +95,8 @@ export default class EditLine extends Component {
   };
 
   render() {
-    const {selected, zoom, index} = this.props;
+    const {zoom} = this.props;
     const cmp = this.context.getSelectedCmp();
-    const selectedIndex = this.context.getSelectedCmpIndex();
 
     if (!cmp) {
       // 没有选择线
@@ -167,7 +166,6 @@ export default class EditLine extends Component {
                 0 - style.transform
               }deg)`,
             }}
-            hideShowContextMenu={this.hideShowContextMenu}
           />
         )}
 
