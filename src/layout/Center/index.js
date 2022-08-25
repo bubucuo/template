@@ -139,13 +139,7 @@ export default function Center(props) {
 
         {/* 组件区域 */}
         {cmps.map((cmp, index) => (
-          <Cmp
-            key={cmp.key}
-            cmp={cmp}
-            selected={selectedIndex === index}
-            index={index}
-            zoom={zoom}
-          />
+          <Cmp key={cmp.key} cmp={cmp} index={index} />
         ))}
       </div>
       <ul className={styles.zoom}>
