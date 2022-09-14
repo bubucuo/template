@@ -7,7 +7,8 @@ const defaultStyle = {
   ...defaultCommonStyle,
 };
 
-const url = "http://150.158.30.131:8181/";
+// const url = "http://150.158.30.131:8181/";
+const url = "https://www.bubucuo.cn/"; //"http://150.158.30.131:8181/";
 
 const settings = [
   {

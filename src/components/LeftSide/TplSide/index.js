@@ -9,7 +9,7 @@ const defaultStyle = {
   ...defaultCommonStyle,
 };
 
-const url = "http://150.158.30.131:8181/";
+const url = "https://www.bubucuo.cn/";
 
 const settings = [
   {
@@ -29,7 +29,7 @@ const settings = [
       },
       cmps: [
         {
-          value: "http://150.158.30.131:8181/color_line.png",
+          value: "https://www.bubucuo.cn/color_line.png",
           style: {
             position: "absolute",
             top: 6126,
@@ -46,7 +46,7 @@ const settings = [
           key: 0.34654537262239304,
         },
         {
-          value: "http://150.158.30.131:8181/ribbon.png",
+          value: "https://www.bubucuo.cn/ribbon.png",
           style: {
             position: "absolute",
             top: 4145.666666666666,
@@ -82,7 +82,7 @@ const settings = [
         },
         {
           key: 0.46365164238209244,
-          value: "http://150.158.30.131:8181/bg1.png",
+          value: "https://www.bubucuo.cn/bg1.png",
           style: {
             position: "absolute",
             top: 0,
@@ -99,7 +99,7 @@ const settings = [
         },
         {
           key: 0.534850732632776,
-          value: "http://150.158.30.131:8181/react-head.png",
+          value: "https://www.bubucuo.cn/react-head.png",
           style: {
             position: "absolute",
             top: 310,
@@ -162,7 +162,7 @@ const settings = [
         },
         {
           key: 0.9084638260168219,
-          value: "http://150.158.30.131:8181/lock.png",
+          value: "https://www.bubucuo.cn/lock.png",
           style: {
             position: "absolute",
             top: 784,
@@ -179,7 +179,7 @@ const settings = [
         },
         {
           key: 0.4594197912293638,
-          value: "http://150.158.30.131:8181/blue-star.png",
+          value: "https://www.bubucuo.cn/blue-star.png",
           style: {
             position: "absolute",
             top: 566,
@@ -219,7 +219,7 @@ const settings = [
         },
         {
           key: 0.45078607010441796,
-          value: "http://150.158.30.131:8181/girl.png",
+          value: "https://www.bubucuo.cn/girl.png",
           style: {
             position: "absolute",
             top: 1000,
@@ -236,7 +236,7 @@ const settings = [
         },
         {
           key: 0.5498624272093084,
-          value: "http://150.158.30.131:8181/dancer.png",
+          value: "https://www.bubucuo.cn/dancer.png",
           style: {
             position: "absolute",
             top: 826,
@@ -253,7 +253,7 @@ const settings = [
         },
         {
           key: 0.3860585230608764,
-          value: "http://150.158.30.131:8181/tree.png",
+          value: "https://www.bubucuo.cn/tree.png",
           style: {
             position: "absolute",
             top: 686,
@@ -316,7 +316,7 @@ const settings = [
           key: 0.5628331215042139,
         },
         {
-          value: "http://150.158.30.131:8181/yellow-star.png",
+          value: "https://www.bubucuo.cn/yellow-star.png",
           style: {
             position: "absolute",
             top: 1004,
@@ -380,7 +380,7 @@ const settings = [
           key: 0.9088302981292888,
         },
         {
-          value: "http://150.158.30.131:8181/yellow-star.png",
+          value: "https://www.bubucuo.cn/yellow-star.png",
           style: {
             position: "absolute",
             top: 1591,
@@ -397,7 +397,7 @@ const settings = [
           key: 0.1268271648476469,
         },
         {
-          value: "http://150.158.30.131:8181/book.png",
+          value: "https://www.bubucuo.cn/book.png",
           style: {
             position: "absolute",
             top: 2430,
@@ -461,7 +461,7 @@ const settings = [
           key: 0.7467154258577349,
         },
         {
-          value: "http://150.158.30.131:8181/yellow-star.png",
+          value: "https://www.bubucuo.cn/yellow-star.png",
           style: {
             position: "absolute",
             top: 2099,
@@ -776,7 +776,7 @@ const settings = [
           key: 0.7222882900994978,
         },
         {
-          value: "http://150.158.30.131:8181/bg2.png",
+          value: "https://www.bubucuo.cn/bg2.png",
           style: {
             position: "absolute",
             top: 4596,
@@ -841,7 +841,7 @@ const settings = [
           key: 0.5266737136463195,
         },
         {
-          value: "http://150.158.30.131:8181/balloon_ribbon.png",
+          value: "https://www.bubucuo.cn/balloon_ribbon.png",
           style: {
             position: "absolute",
             top: 5204,
@@ -876,7 +876,7 @@ const settings = [
           key: 0.7510267690864492,
         },
         {
-          value: "http://150.158.30.131:8181/plank.png",
+          value: "https://www.bubucuo.cn/plank.png",
           style: {
             position: "absolute",
             top: 5168,
@@ -988,7 +988,7 @@ const settings = [
           key: 0.6609359313845731,
         },
         {
-          value: "http://150.158.30.131:8181/icon.png",
+          value: "https://www.bubucuo.cn/icon.png",
           style: {
             position: "absolute",
             top: 4266,
@@ -1083,7 +1083,7 @@ const settings = [
           key: 0.2160005901319011,
         },
         {
-          value: "http://150.158.30.131:8181/sale.png",
+          value: "https://www.bubucuo.cn/sale.png",
           style: {
             position: "absolute",
             top: 6062,
@@ -1100,7 +1100,7 @@ const settings = [
           key: 0.32411482791557633,
         },
         {
-          value: "http://150.158.30.131:8181/balance.png",
+          value: "https://www.bubucuo.cn/balance.png",
           style: {
             position: "absolute",
             top: 6812,
@@ -1182,7 +1182,7 @@ const settings = [
           key: 0.09661138720208329,
         },
         {
-          value: "http://150.158.30.131:8181/star.png",
+          value: "https://www.bubucuo.cn/star.png",
           style: {
             position: "absolute",
             top: 3246,
@@ -1199,7 +1199,7 @@ const settings = [
           key: 0.17652411077488717,
         },
         {
-          value: "http://150.158.30.131:8181/red-girl.png",
+          value: "https://www.bubucuo.cn/red-girl.png",
           style: {
             position: "absolute",
             top: 4114,
@@ -1216,7 +1216,7 @@ const settings = [
           key: 0.04677706025041739,
         },
         {
-          value: "http://150.158.30.131:8181/deer.png",
+          value: "https://www.bubucuo.cn/deer.png",
           style: {
             position: "absolute",
             top: 6240,
@@ -1233,7 +1233,7 @@ const settings = [
           key: 0.13964987035649723,
         },
         {
-          value: "http://150.158.30.131:8181/react-buy.webp",
+          value: "https://www.bubucuo.cn/react-buy.webp",
           style: {
             position: "absolute",
             top: 6985,
@@ -1250,7 +1250,7 @@ const settings = [
           key: 0.7167970881332288,
         },
         {
-          value: "http://150.158.30.131:8181/wx.webp",
+          value: "https://www.bubucuo.cn/wx.webp",
           style: {
             position: "absolute",
             top: 5995,
@@ -1267,7 +1267,7 @@ const settings = [
           key: 0.1691818013042694,
         },
         {
-          value: "http://150.158.30.131:8181/gaoshaoyun-react.webp",
+          value: "https://www.bubucuo.cn/gaoshaoyun-react.webp",
           style: {
             position: "absolute",
             top: 5389,
@@ -1304,7 +1304,7 @@ const settings = [
       ],
       key: 0,
       desc: "《精通React》",
-      img: "http://150.158.30.131:8181/react-head.png",
+      img: "https://www.bubucuo.cn/react-head.png",
     },
   },
 
@@ -1325,7 +1325,7 @@ const settings = [
       },
       cmps: [
         {
-          value: "http://150.158.30.131:8181/gaoshaoyun-lowcode.webp",
+          value: "https://www.bubucuo.cn/gaoshaoyun-lowcode.webp",
           style: {
             position: "absolute",
             top: 3933,
@@ -1342,7 +1342,7 @@ const settings = [
           key: 0.4259412008629684,
         },
         {
-          value: "http://150.158.30.131:8181/hua-bg.png",
+          value: "https://www.bubucuo.cn/hua-bg.png",
           style: {
             position: "absolute",
             top: 4720.784313725484,
@@ -1359,7 +1359,7 @@ const settings = [
           key: 0.676929504558925,
         },
         {
-          value: "http://150.158.30.131:8181/board.png",
+          value: "https://www.bubucuo.cn/board.png",
           style: {
             position: "absolute",
             top: 4816.862745098029,
@@ -1395,7 +1395,7 @@ const settings = [
         },
         {
           key: 0.46365164238209244,
-          value: "http://150.158.30.131:8181/bg1.png",
+          value: "https://www.bubucuo.cn/bg1.png",
           style: {
             position: "absolute",
             top: 58,
@@ -1412,7 +1412,7 @@ const settings = [
         },
         {
           key: 0.9084638260168219,
-          value: "http://150.158.30.131:8181/lock.png",
+          value: "https://www.bubucuo.cn/lock.png",
           style: {
             position: "absolute",
             top: 557,
@@ -1475,7 +1475,7 @@ const settings = [
           key: 0.9107798699721636,
         },
         {
-          value: "http://150.158.30.131:8181/yellow-star.png",
+          value: "https://www.bubucuo.cn/yellow-star.png",
           style: {
             position: "absolute",
             top: 1172,
@@ -1492,7 +1492,7 @@ const settings = [
           key: 0.3836135008998969,
         },
         {
-          value: "http://150.158.30.131:8181/bg2.png",
+          value: "https://www.bubucuo.cn/bg2.png",
           style: {
             position: "absolute",
             top: 3376.769230769236,
@@ -1533,7 +1533,7 @@ const settings = [
           key: 0.2160005901319011,
         },
         {
-          value: "http://150.158.30.131:8181/sale.png",
+          value: "https://www.bubucuo.cn/sale.png",
           style: {
             position: "absolute",
             top: 4828.66666666667,
@@ -1615,7 +1615,7 @@ const settings = [
           key: 0.09661138720208329,
         },
         {
-          value: "http://150.158.30.131:8181/star.png",
+          value: "https://www.bubucuo.cn/star.png",
           style: {
             position: "absolute",
             top: 3246,
@@ -1632,7 +1632,7 @@ const settings = [
           key: 0.17652411077488717,
         },
         {
-          value: "http://150.158.30.131:8181/technoiogy.png",
+          value: "https://www.bubucuo.cn/technoiogy.png",
           style: {
             position: "absolute",
             top: 252,
@@ -1649,7 +1649,7 @@ const settings = [
           key: 0.30901181821023216,
         },
         {
-          value: "http://150.158.30.131:8181/title.png",
+          value: "https://www.bubucuo.cn/title.png",
           style: {
             position: "absolute",
             top: 100,
@@ -1666,7 +1666,7 @@ const settings = [
           key: 0.9529657285829101,
         },
         {
-          value: "http://150.158.30.131:8181/paper_plane.png",
+          value: "https://www.bubucuo.cn/paper_plane.png",
           style: {
             position: "absolute",
             top: 0,
@@ -1683,7 +1683,7 @@ const settings = [
           key: 0.2999399392821902,
         },
         {
-          value: "http://150.158.30.131:8181/paper_plane.png",
+          value: "https://www.bubucuo.cn/paper_plane.png",
           style: {
             position: "absolute",
             top: 782,
@@ -1700,7 +1700,7 @@ const settings = [
           key: 0.7582888736605065,
         },
         {
-          value: "http://150.158.30.131:8181/fire_bird.png",
+          value: "https://www.bubucuo.cn/fire_bird.png",
           style: {
             position: "absolute",
             top: 563,
@@ -1717,7 +1717,7 @@ const settings = [
           key: 0.49049376849027926,
         },
         {
-          value: "http://150.158.30.131:8181/pink_flower.png",
+          value: "https://www.bubucuo.cn/pink_flower.png",
           style: {
             position: "absolute",
             top: 1228,
@@ -1734,7 +1734,7 @@ const settings = [
           key: 0.13344426988402303,
         },
         {
-          value: "http://150.158.30.131:8181/red_flower.png",
+          value: "https://www.bubucuo.cn/red_flower.png",
           style: {
             position: "absolute",
             top: 1848,
@@ -1751,7 +1751,7 @@ const settings = [
           key: 0.8178218824492909,
         },
         {
-          value: "http://150.158.30.131:8181/OMG.png",
+          value: "https://www.bubucuo.cn/OMG.png",
           style: {
             position: "absolute",
             top: 1845,
@@ -1768,7 +1768,7 @@ const settings = [
           key: 0.02099549312365956,
         },
         {
-          value: "http://150.158.30.131:8181/rainbow1.png",
+          value: "https://www.bubucuo.cn/rainbow1.png",
           style: {
             position: "absolute",
             top: 1951.8039215686276,
@@ -1785,7 +1785,7 @@ const settings = [
           key: 0.31328135923908973,
         },
         {
-          value: "http://150.158.30.131:8181/rainbow.png",
+          value: "https://www.bubucuo.cn/rainbow.png",
           style: {
             position: "absolute",
             top: 1939.8627450980403,
@@ -1849,7 +1849,7 @@ const settings = [
           key: 0.3205450179714402,
         },
         {
-          value: "http://150.158.30.131:8181/pink_ball.png",
+          value: "https://www.bubucuo.cn/pink_ball.png",
           style: {
             position: "absolute",
             top: 2983.0769230769247,
@@ -1866,7 +1866,7 @@ const settings = [
           key: 0.021370837837130452,
         },
         {
-          value: "http://150.158.30.131:8181/icon.png",
+          value: "https://www.bubucuo.cn/icon.png",
           style: {
             position: "absolute",
             top: 2660.615384615385,
@@ -1931,7 +1931,7 @@ const settings = [
           key: 0.5266737136463195,
         },
         {
-          value: "http://150.158.30.131:8181/cloud.png",
+          value: "https://www.bubucuo.cn/cloud.png",
           style: {
             position: "absolute",
             top: 3742.3529411764694,
@@ -1971,8 +1971,7 @@ const settings = [
           key: 0.9129426673590202,
         },
         {
-          value:
-            "http://150.158.30.131:8181/39c32b1693ca603b95a0c10622d72a27.png",
+          value: "https://www.bubucuo.cn/39c32b1693ca603b95a0c10622d72a27.png",
           style: {
             position: "absolute",
             top: 4016.862745098034,
@@ -1989,7 +1988,7 @@ const settings = [
           key: 0.6025099095082334,
         },
         {
-          value: "http://150.158.30.131:8181/star1.png",
+          value: "https://www.bubucuo.cn/star1.png",
           style: {
             position: "absolute",
             top: 4248.235294117642,
@@ -2078,7 +2077,7 @@ const settings = [
           key: 0.6609359313845731,
         },
         {
-          value: "http://150.158.30.131:8181/flower.png",
+          value: "https://www.bubucuo.cn/flower.png",
           style: {
             position: "absolute",
             top: 4662.803921568628,
@@ -2095,7 +2094,7 @@ const settings = [
           key: 0.5959843143856347,
         },
         {
-          value: "http://150.158.30.131:8181/lowcode-buy.webp",
+          value: "https://www.bubucuo.cn/lowcode-buy.webp",
           style: {
             position: "absolute",
             top: 5707.058823529409,
@@ -2112,7 +2111,7 @@ const settings = [
           key: 0.1237743826901394,
         },
         {
-          value: "http://150.158.30.131:8181/wx.webp",
+          value: "https://www.bubucuo.cn/wx.webp",
           style: {
             position: "absolute",
             top: 4665.058823529412,
@@ -2129,7 +2128,7 @@ const settings = [
           key: 0.2995609037256024,
         },
         {
-          value: "http://150.158.30.131:8181/lowcode-show.png",
+          value: "https://www.bubucuo.cn/lowcode-show.png",
           style: {
             position: "absolute",
             top: 2361.960784313727,
@@ -2148,7 +2147,7 @@ const settings = [
       ],
       key: 0,
       desc: "《精通React》",
-      img: "http://150.158.30.131:8181/react-head.png",
+      img: "https://www.bubucuo.cn/react-head.png",
     },
   },
 ];
