@@ -1,3 +1,4 @@
+import axios from "axios";
 export const end = "//www.bubucuo.cn";
 
 export function common(res, successCallback, failedCallback) {
@@ -18,3 +19,12 @@ export function common(res, successCallback, failedCallback) {
     typeof failedCallback === "function" ? failedCallback() : alert("失败！");
   }
 }
+
+// export function needAuthorizationPost(url, ) {
+//   axios.post(url, values).then(
+//     (res) => {
+//       common(res, successCallback);
+//     },
+//     {headers: {Authorization: getSessionId()}}
+//   );
+// }

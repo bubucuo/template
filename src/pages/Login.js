@@ -9,7 +9,7 @@ export default function Login() {
   const onFinish = (values) => {
     console.log("Success:", values);
     login(values, () => {
-      navigate("/");
+      navigate("/?id=23");
     });
   };
 
