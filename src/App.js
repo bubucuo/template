@@ -3,9 +3,9 @@ import Left from "./layout/Left";
 import Center from "./layout/Center";
 import Right from "./layout/Right";
 import styles from "./App.less";
-import { useCanvas } from "./store/hooks";
-import { CanvasContext } from "./Context";
-import { useEffect, useReducer } from "react";
+import {useCanvas, useGetCanvas} from "./store/hooks";
+import {CanvasContext} from "./Context";
+import {useEffect, useLayoutEffect, useReducer} from "react";
 
 export default function App(props) {
   const canvas = useCanvas();
@@ -20,6 +20,8 @@ export default function App(props) {
       unsubscribe();
     };
   }, []);
+
+  const data = useGetCanvas(canvas);
   return (
     <div className={styles.main}>
       <CanvasContext.Provider value={canvas}>

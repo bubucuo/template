@@ -145,10 +145,17 @@ export default function Center(props) {
           <EditLine selectedIndex={selectedIndex} zoom={zoom} />
         )}
 
-        {/* 组件区域 */}
-        {cmps.map((cmp, index) => (
-          <Cmp key={cmp.key} cmp={cmp} index={index} />
-        ))}
+        <div
+          className={styles.cmps}
+          style={{
+            width: canvasData.style.width,
+            height: canvasData.style.height,
+          }}>
+          {/* 组件区域 */}
+          {cmps.map((cmp, index) => (
+            <Cmp key={cmp.key} cmp={cmp} index={index} />
+          ))}
+        </div>
       </div>
       <ul className={styles.zoom}>
         <li

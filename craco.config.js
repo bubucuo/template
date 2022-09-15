@@ -18,9 +18,12 @@ module.exports = {
       plugin: CracoLessPlugin,
       options: {
         lessLoaderOptions: {
-          lessOptions: {javascriptEnabled: true},
+          lessOptions: {
+            javascriptEnabled: true,
+            modifyVars: {"@primary-color": "#1DA57A"},
+          },
         },
-        modifyLessRule: function() {
+        modifyLessRule: function () {
           return {
             test: /\.less$/,
             exclude: /node_modules/,
@@ -41,4 +44,11 @@ module.exports = {
       },
     },
   ],
+
+  devServer: {
+    proxy: {
+      "/api": {target: "http://150.158.30.131:8989", changeOrigin: true},
+      "/all": {target: "https://commom.pek3b.qingstor.com", changeOrigin: true},
+    },
+  },
 };

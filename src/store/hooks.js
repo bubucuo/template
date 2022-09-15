@@ -1,6 +1,8 @@
-import { useContext, useRef } from "react";
-import { CanvasContext } from "../Context";
+import {useContext, useRef, useEffect} from "react";
+import {useSearchParams} from "react-router-dom";
+import {CanvasContext} from "../Context";
 import Canvas from "./canvas";
+import {getCanvas} from "../request/canvas";
 
 export function useCanvas(canvas) {
   const canvasRef = useRef();
@@ -33,4 +35,24 @@ export function useCanvasData() {
 export function useCanvasCmps() {
   const canvas = useContext(CanvasContext);
   return canvas.getCanvasCmps();
+}
+
+// 通过网络请求获取画布数据
+export function useGetCanvas(canvas) {
+  const id = useCanvasId();
+
+  useEffect(() => {
+    if (id !== null) {
+      getCanvas(id, (res) => canvas.setCanvas(JSON.parse(res.content)));
+    }
+  }, []);
+}
+
+// 获取画布唯一标识id
+
+export function useCanvasId(canvas) {
+  const [params] = useSearchParams();
+  const id = params.get("id");
+
+  return id;
 }

@@ -261,6 +261,36 @@ const settings = [
   },
 ];
 
+// 前端算法实战
+const arithmetic = [
+  "金九银十",
+  "前端算法实战-buy.webp",
+  "前端算法实战-title",
+  "前端算法实战",
+  "balloon-1",
+  "balloon-2",
+  "balloon-green",
+  "cloud",
+  "fairytale.webp",
+  "five-balls",
+  "flower",
+  "girl-balloon",
+  "green-learning",
+  "heart-balloon",
+  "prince",
+  "red-flower",
+  "ribbons",
+  "up",
+  "wing",
+];
+
+arithmetic.forEach((item) => {
+  settings.push({
+    value: `/all/arithmetic/${item.indexOf(".") > 0 ? item : item + ".png"}`,
+    style: defaultStyle,
+  });
+});
+
 export default function ImgSide() {
   const canvas = useCanvasByContext();
   const addCmp = (_cmp) => {
