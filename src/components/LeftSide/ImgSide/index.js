@@ -7,8 +7,7 @@ const defaultStyle = {
   ...defaultCommonStyle,
 };
 
-// const url = "http://150.158.30.131:8181/";
-const url = "https://www.bubucuo.cn/"; //"http://150.158.30.131:8181/";
+const url = "https://www.bubucuo.cn/";
 
 const settings = [
   {
@@ -286,7 +285,9 @@ const arithmetic = [
 
 arithmetic.forEach((item) => {
   settings.push({
-    value: `/all/arithmetic/${item.indexOf(".") > 0 ? item : item + ".png"}`,
+    value: `https://commom.pek3b.qingstor.com/all/arithmetic/${
+      item.indexOf(".") > 0 ? item : item + ".png"
+    }`,
     style: defaultStyle,
   });
 });

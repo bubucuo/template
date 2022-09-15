@@ -1,3 +1,5 @@
+export const end = "//www.bubucuo.cn";
+
 export function common(res, successCallback, failedCallback) {
   if (res.status === 200) {
     let code = res.data.code;
