@@ -18,12 +18,9 @@ export function getCanvas(values, successCallback) {
 // 保存
 export function saveCanvas(values, successCallback) {
   axios
-    .post(
-      end + "/api/web/content/save",
-      values,
-
-      {headers: {Authorization: getSessionId()}}
-    )
+    .post(end + "/api/web/content/save", values, {
+      headers: {Authorization: getSessionId()},
+    })
     .then((res) => {
       common(res, successCallback);
     });
