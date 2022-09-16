@@ -2168,7 +2168,8 @@ const settings = [
       },
       cmps: [
         {
-          value: "/all/arithmetic/five-balls.png",
+          value:
+            "https://commom.pek3b.qingstor.com/all/arithmetic/five-balls.png",
           style: {
             position: "absolute",
             top: 892,
@@ -2185,7 +2186,7 @@ const settings = [
           key: 0.002113549497086531,
         },
         {
-          value: "/all/arithmetic/wing.png",
+          value: "https://commom.pek3b.qingstor.com/all/arithmetic/wing.png",
           style: {
             position: "absolute",
             top: 87.66666666666637,
@@ -2220,7 +2221,8 @@ const settings = [
           key: 0.7699096606496494,
         },
         {
-          value: "/all/arithmetic/balloon-2.png",
+          value:
+            "https://commom.pek3b.qingstor.com/all/arithmetic/balloon-2.png",
           style: {
             position: "absolute",
             top: 402.6666666666667,
@@ -2237,7 +2239,8 @@ const settings = [
           key: 0.903927223409988,
         },
         {
-          value: "/all/arithmetic/balloon-1.png",
+          value:
+            "https://commom.pek3b.qingstor.com/all/arithmetic/balloon-1.png",
           style: {
             position: "absolute",
             top: -133.6666666666667,
@@ -2254,7 +2257,7 @@ const settings = [
           key: 0.026140853185594226,
         },
         {
-          value: "/all/arithmetic/cloud.png",
+          value: "https://commom.pek3b.qingstor.com/all/arithmetic/cloud.png",
           style: {
             position: "absolute",
             top: -149,
@@ -2271,7 +2274,8 @@ const settings = [
           key: 0.9832198659371143,
         },
         {
-          value: "/all/arithmetic/green-learning.png",
+          value:
+            "https://commom.pek3b.qingstor.com/all/arithmetic/green-learning.png",
           style: {
             position: "absolute",
             top: 251.3333333333348,
@@ -2288,7 +2292,8 @@ const settings = [
           key: 0.5426410982936347,
         },
         {
-          value: "/all/arithmetic/前端算法实战-title.png",
+          value:
+            "https://commom.pek3b.qingstor.com/all/arithmetic/前端算法实战-title.png",
           style: {
             position: "absolute",
             top: 103.33333333333333,
@@ -2322,7 +2327,8 @@ const settings = [
           key: 0.45632825674347943,
         },
         {
-          value: "/all/arithmetic/金九银十.png",
+          value:
+            "https://commom.pek3b.qingstor.com/all/arithmetic/金九银十.png",
           style: {
             position: "absolute",
             top: 624.0000000000006,
@@ -2339,7 +2345,7 @@ const settings = [
           key: 0.8274901370152534,
         },
         {
-          value: "/all/arithmetic/up.png",
+          value: "https://commom.pek3b.qingstor.com/all/arithmetic/up.png",
           style: {
             position: "absolute",
             top: 576.0000000000006,
@@ -2356,7 +2362,7 @@ const settings = [
           key: 0.34233203596830974,
         },
         {
-          value: "/all/arithmetic/prince.png",
+          value: "https://commom.pek3b.qingstor.com/all/arithmetic/prince.png",
           style: {
             position: "absolute",
             top: 788.0000000000014,
@@ -2373,7 +2379,8 @@ const settings = [
           key: 0.9584751656140365,
         },
         {
-          value: "/all/arithmetic/前端算法实战.png",
+          value:
+            "https://commom.pek3b.qingstor.com/all/arithmetic/前端算法实战.png",
           style: {
             position: "absolute",
             top: 860.0000000000003,
@@ -3119,7 +3126,8 @@ const settings = [
           key: 0.7077040751224706,
         },
         {
-          value: "/all/arithmetic/heart-balloon.png",
+          value:
+            "https://commom.pek3b.qingstor.com/all/arithmetic/heart-balloon.png",
           style: {
             position: "absolute",
             top: 3246,
@@ -3136,7 +3144,8 @@ const settings = [
           key: 0.08141673709469388,
         },
         {
-          value: "/all/arithmetic/red-flower.png",
+          value:
+            "https://commom.pek3b.qingstor.com/all/arithmetic/red-flower.png",
           style: {
             position: "absolute",
             top: 1055,
@@ -3153,7 +3162,8 @@ const settings = [
           key: 0.425993895605852,
         },
         {
-          value: "/all/arithmetic/red-flower.png",
+          value:
+            "https://commom.pek3b.qingstor.com/all/arithmetic/red-flower.png",
           style: {
             position: "absolute",
             top: 2500,
@@ -3170,7 +3180,7 @@ const settings = [
           key: 0.14288334423038385,
         },
         {
-          value: "/all/arithmetic/flower.png",
+          value: "https://commom.pek3b.qingstor.com/all/arithmetic/flower.png",
           style: {
             position: "absolute",
             top: 3389,
@@ -3187,7 +3197,8 @@ const settings = [
           key: 0.17789118181745178,
         },
         {
-          value: "/all/arithmetic/girl-balloon.png",
+          value:
+            "https://commom.pek3b.qingstor.com/all/arithmetic/girl-balloon.png",
           style: {
             position: "absolute",
             top: 3382,

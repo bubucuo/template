@@ -3,6 +3,7 @@ import {cloneDeep} from "lodash";
 
 function getDefaultCanvas() {
   return {
+    title: "未命名",
     // 页面样式
     style: {
       width: 320,

@@ -5,6 +5,7 @@ import styles from "./index.less";
 
 export default function EditCanvas(props) {
   const canvas = useCanvasByContext();
+  const canvasData = canvas.getCanvas();
   const style = canvas.getCanvas().style;
 
   const handleStyleChange = (e, {name, value}) => {
@@ -14,6 +15,17 @@ export default function EditCanvas(props) {
   return (
     <div className={styles.main}>
       <div className={styles.title}>画布属性</div>
+      <Item label="标题: ">
+        <input
+          type="text"
+          className={styles.itemRight}
+          value={canvasData.title}
+          onChange={(e) => {
+            let newValue = e.target.value;
+            canvas.setCanvas({title: newValue});
+          }}
+        />
+      </Item>
 
       <Item label="画布宽度 (px): ">
         <input

@@ -43,7 +43,11 @@ export function useGetCanvas(canvas) {
 
   useEffect(() => {
     if (id !== null) {
-      getCanvas(id, (res) => canvas.setCanvas(JSON.parse(res.content)));
+      getCanvas(id, (res) => {
+        if (res.content.length > 100) {
+          canvas.setCanvas(JSON.parse(res.content));
+        }
+      });
     }
   }, []);
 }

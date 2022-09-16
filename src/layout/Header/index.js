@@ -9,6 +9,7 @@ import {useEffect} from "react";
 import {saveCanvas} from "../../request/canvas";
 import {useCanvasId} from "../../store/hooks";
 import {useNavigate} from "react-router-dom";
+import {Link} from "react-router-dom";
 
 export default function Header(props) {
   const canvas = useCanvasByContext();
@@ -29,6 +30,7 @@ export default function Header(props) {
       {
         id,
         content: JSON.stringify(data),
+        // title: data.title,
         type: "template",
       },
       (res) => {
@@ -54,6 +56,10 @@ export default function Header(props) {
 
   return (
     <div className={styles.main}>
+      <div className={classNames(styles.item)}>
+        <Link to="/">首页</Link>
+      </div>
+
       <div className={classNames(styles.item)} onClick={save}>
         <span
           className={classNames("iconfont icon-baocun", styles.icon)}></span>
@@ -85,10 +91,10 @@ export default function Header(props) {
         <span className={styles.txt}>清空</span>
       </div>
 
-      <div className={classNames(styles.item)} onClick={save}>
+      {/* <div className={classNames(styles.item)} onClick={save}>
         <span className={classNames("iconfont icon-fabu", styles.icon)}></span>
         <span className={styles.txt}>发布</span>
-      </div>
+      </div> */}
     </div>
   );
 }

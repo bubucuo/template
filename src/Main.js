@@ -8,15 +8,17 @@ import {
 import App from "./App";
 import Login from "./pages/Login";
 import Layout from "./layout/";
+import Home from "./pages/Home";
 
 export default function Main(props) {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Layout />}>
+        <Route path="/" element={<Home />} />
+        <Route path="/edit" element={<Layout />}>
           <Route index element={<App />} />
-          <Route path="login" element={<Login />} />
         </Route>
+        <Route path="login" element={<Login />} />
       </Routes>
     </Router>
   );
