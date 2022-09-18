@@ -7,7 +7,13 @@ export default function Home(props) {
   const [list, setList] = useState([]);
 
   const fresh = () => {
-    getCanvasList("", (res) => setList(res.content));
+    getCanvasList("", (res) => {
+      let data = res.content;
+      data = data.filter(
+        (item) => item.id !== 23 && item.id !== 15 && item.id !== 17
+      );
+      setList(data);
+    });
   };
 
   useEffect(() => {
@@ -36,11 +42,13 @@ export default function Home(props) {
       key: "action",
       render: (item) => (
         <Space size="middle">
+          <Link
+            target="_blank"
+            to={"https://builder-lemon.vercel.app/?id=" + item.id}>
+            线上查看（切移动端）
+          </Link>
           <Link to={"/edit?id=" + item.id}>编辑</Link>
-          {/* 朋友，不要删我的数据 */}
-          {item.id > 23 && (
-            <Button onClick={() => del({id: item.id})}>删除</Button>
-          )}
+          <Button onClick={() => del({id: item.id})}>删除</Button>
         </Space>
       ),
     },
