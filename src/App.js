@@ -23,7 +23,7 @@ export default function App(props) {
 
   const data = useGetCanvas(canvas);
   return (
-    <div className={styles.main}>
+    <div className={styles.main} style={{marginTop: -60}}>
       <CanvasContext.Provider value={canvas}>
         <Header />
         <div className={styles.content}>

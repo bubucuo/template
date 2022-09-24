@@ -1,10 +1,18 @@
 import axios from "axios";
 import {common, end} from "./index";
+import docCookies from "../utils/cookies";
 
 export function login(values, successCallback, failedCallback) {
   axios.post(end + "/api/login", values).then((res) => {
     // 缓存 sessionId
-    document.cookie = "sessionId=" + res.data.result.sessionId;
-    common(res, successCallback);
+    common(
+      res,
+      () => {
+        docCookies.setItem("sessionId", res.data.result.sessionId);
+        docCookies.setItem("name", res.data.result.name);
+        successCallback();
+      },
+      failedCallback
+    );
   });
 }

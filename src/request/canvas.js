@@ -16,11 +16,11 @@ export function saveCanvas(values, successCallback) {
 }
 
 // 查询列表
-export function getCanvasList(values, successCallback) {
+export function getCanvasList(values, successCallback, failedCallback) {
   myAxios
     .get(end + "/api/web/content/list?pageSize=1000" + values)
     .then((res) => {
-      common(res, successCallback);
+      common(res, successCallback, failedCallback);
     });
 }
 

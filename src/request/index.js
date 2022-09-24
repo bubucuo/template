@@ -1,4 +1,5 @@
 import axios from "axios";
+import docCookies from "../utils/cookies";
 export const end = "//www.bubucuo.cn";
 
 export function common(res, successCallback, failedCallback) {
@@ -20,17 +21,18 @@ export function common(res, successCallback, failedCallback) {
   }
 }
 
-// 为了登录
-export function getSessionId() {
+export function getUserName() {
   return document.cookie.replace(
-    /(?:(?:^|.*;\s*)sessionId\s*\=\s*([^;]*).*$)|^.*$/,
+    /(?:(?:^|.*;\s*)name\s*\=\s*([^;]*).*$)|^.*$/,
     "$1"
   );
 }
 
-const headers = {headers: {Authorization: getSessionId()}};
+function getHeaders() {
+  return {headers: {Authorization: docCookies.getItem("sessionId")}};
+}
 
 export const myAxios = {
-  get: (url, values) => axios.get(url, headers),
-  post: (url, values) => axios.post(url, values, headers),
+  get: (url, values) => axios.get(url, getHeaders()),
+  post: (url, values) => axios.post(url, values, getHeaders()),
 };

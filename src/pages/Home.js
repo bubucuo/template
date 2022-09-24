@@ -8,7 +8,7 @@ export default function Home(props) {
 
   const fresh = () => {
     getCanvasList("", (res) => {
-      let data = res.content;
+      let data = res.content || [];
       data = data.filter(
         (item) => item.id !== 23 && item.id !== 15 && item.id !== 17
       );
@@ -55,14 +55,15 @@ export default function Home(props) {
   ];
 
   return (
-    <Card title="首页">
-      <h3>Home</h3>
+    <Card>
       <Space size="middle">
-        <Link to={"/login"}>登录</Link>
         <Link to={"/edit"}>新增</Link>
       </Space>
-
-      <Table columns={columns} dataSource={list} />
+      <Table
+        columns={columns}
+        dataSource={list}
+        rowKey={(record) => record.id}
+      />
     </Card>
   );
 }

@@ -1,24 +1,42 @@
 import React from "react";
-import {Button, Card, Form, Input} from "antd";
+import {Button, Card, Form, Input, Checkbox} from "antd";
 import {login} from "../request/login";
-import {useNavigate} from "react-router-dom";
+import {useNavigate, useLocation, Link} from "react-router-dom";
+import {register} from "../request/register";
 
 export default function Login() {
   let navigate = useNavigate();
 
-  const onFinish = (values) => {
-    console.log("Success:", values);
-    login(values, () => {
-      navigate("/?id=23");
-    });
+  let location = useLocation();
+
+  let from = location.state?.from?.pathname || "/";
+
+  const onFinish = ({name, password, register_login}) => {
+    console.log("Success:", {name, password, register_login});
+
+    if (register_login) {
+      registerAndLogin({name, password});
+    } else {
+      login({name, password}, () => {
+        navigate(from);
+      });
+    }
   };
 
   const onFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);
   };
 
+  const registerAndLogin = (values) => {
+    register(values, () => {
+      login(values, () => {
+        navigate(from);
+      });
+    });
+  };
+
   return (
-    <Card title="登录">
+    <Card title="注册与登录">
       <Form
         name="basic"
         labelCol={{
@@ -58,12 +76,19 @@ export default function Login() {
         </Form.Item>
 
         <Form.Item
+          name="register_login"
+          valuePropName="checked"
+          wrapperCol={{offset: 7}}>
+          <Checkbox>注册并登录</Checkbox>
+        </Form.Item>
+
+        <Form.Item
           wrapperCol={{
             offset: 8,
             span: 16,
           }}>
           <Button type="primary" htmlType="submit">
-            Submit
+            提交
           </Button>
         </Form.Item>
       </Form>
