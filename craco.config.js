@@ -6,7 +6,9 @@ const pathResolve = (pathUrl) => path.join(__dirname, pathUrl);
 module.exports = {
   webpack: {
     alias: {
-      "@": pathResolve("src"),
+      // "@": pathResolve("src"),
+      // "@components": path.resolve(__dirname, "src/components"),
+      src: path.resolve(__dirname, "src/"),
     },
   },
   babel: {

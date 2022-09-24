@@ -1,6 +1,6 @@
 import {Component} from "react";
 import classNames from "classnames";
-import {CanvasContext} from "@/Context";
+import {CanvasContext} from "src/Context";
 import styles from "./index.less";
 
 export default class Lines extends Component {
