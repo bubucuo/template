@@ -29,7 +29,7 @@ export default function Header() {
       {
         id,
         content: JSON.stringify(data),
-        // title: data.title,
+        title: data.title,
         type: "template",
       },
       (res: any) => {

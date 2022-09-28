@@ -6,7 +6,7 @@ import {cloneDeep} from "lodash";
 const settings = [
   {
     key: 0,
-    title: "《精通React》",
+    title: "精通React",
     img: "https://www.bubucuo.cn/react-head.png",
     data: {
       style: {
@@ -1380,6 +1380,8 @@ const settings = [
         },
         {
           value: "课程学习地址",
+          onClick:
+            "https://appuwwsm6cl6690.pc.xiaoe-tech.com/detail/p_62b2ce2ee4b0ba331dcb87c1/8?product_id=p_62b2ce2ee4b0ba331dcb87c1",
           style: {
             position: "absolute",
             top: 7035,
@@ -1403,13 +1405,12 @@ const settings = [
         },
       ],
       key: 0,
-      desc: "《精通React》",
       img: "https://www.bubucuo.cn/react-head.png",
     },
   },
   {
     key: 1,
-    desc: "《React低代码》",
+    title: "React低代码",
     img: "https://wechatapppro-1252524126.cdn.xiaoeknow.com/appuwwsm6cl6690/image/b_u_6216026f4bce0_QSywwter/l4p14fss0542.png?imageMogr2/thumbnail/454x/quality/80|imageMogr2/ignore-error/1",
     data: {
       style: {
@@ -1649,7 +1650,9 @@ const settings = [
           key: 0.32411482791557633,
         },
         {
-          value: "课程抢购地址",
+          value: "课程学习地址",
+          onClick:
+            "https://appuwwsm6cl6690.pc.xiaoe-tech.com/detail/p_62b2a825e4b06accb0709923/6?product_id=p_62b2a825e4b06accb0709923",
           style: {
             position: "absolute",
             top: 5778.058823529408,
@@ -1902,6 +1905,8 @@ const settings = [
         },
         {
           value: "代码演示地址",
+          onClick:
+            "https://www.bilibili.com/video/BV14b4y1R7hk/?spm_id_from=333.999.0.0",
           style: {
             position: "absolute",
             top: 2271.843137254904,
@@ -2299,14 +2304,13 @@ const settings = [
         },
       ],
       key: 0,
-      desc: "《React低代码》",
       img: "https://www.bubucuo.cn/react-head.png",
     },
   },
 
   {
     key: 2,
-    desc: "《前端算法实战》",
+    title: "前端算法实战",
     img: "https://commom.pek3b.qingstor.com/all/arithmetic/%E5%89%8D%E7%AB%AF%E7%AE%97%E6%B3%95%E5%AE%9E%E6%88%98-head.png",
 
     data: {
@@ -3845,6 +3849,8 @@ const settings = [
         },
         {
           value: "课程学习地址",
+          onClick:
+            "https://appuwwsm6cl6690.pc.xiaoe-tech.com/detail/p_63118a98e4b0c942648ff238/8?product_id=p_63118a98e4b0c942648ff238",
           style: {
             position: "absolute",
             top: 6398.00000000003,
@@ -3984,8 +3990,8 @@ const settings = [
 export default function TplSide() {
   const canvas = useCanvasByContext();
 
-  const setCanvas = (_cmp: any) => {
-    canvas.setCanvas(cloneDeep(_cmp));
+  const setCanvas = (_cmp: any, options?: {title: string}) => {
+    canvas.setCanvas(cloneDeep(_cmp), options);
   };
 
   return (
@@ -3995,9 +4001,9 @@ export default function TplSide() {
           <li
             className={leftSideStyles.item}
             key={item.key}
-            onClick={() => setCanvas(item.data)}>
-            <div className={leftSideStyles.desc}>{item.desc}</div>
-            <img src={item.img} alt={item.desc} />
+            onClick={() => setCanvas(item.data, {title: item.title})}>
+            <div className={leftSideStyles.desc}>{item.title}</div>
+            <img src={item.img} alt={item.title} />
           </li>
         ))}
       </ul>

@@ -1,6 +1,6 @@
-import {isGraphComponent} from "../../../layout/Left";
-import {useCanvasByContext} from "../../../store/hooks";
-import {defaultCommonStyle} from "../../../utils/const";
+import {isGraphComponent} from "src/layout/Left";
+import {useCanvasByContext} from "src/store/hooks";
+import {defaultCommonStyle} from "src/utils/const";
 import leftSideStyles from "../index.less";
 
 const defaultStyle = {

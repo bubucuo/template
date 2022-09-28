@@ -29,6 +29,7 @@ export interface ICmp {
   style: _Style;
   data: Object;
   value: string;
+  onClick?: string; //点击跳转
 }
 export interface ICanvas {
   title: string;
@@ -106,13 +107,16 @@ export default class Canvas {
   };
 
   // set
-  setCanvas = (_canvas: ICanvas) => {
+  setCanvas = (_canvas: ICanvas, options?: {title: string}) => {
     if (_canvas) {
       Object.assign(this.canvas, _canvas);
     } else {
       this.canvas = getDefaultCanvas();
     }
 
+    if (options && options.title) {
+      this.canvas.title = options.title;
+    }
     this.updateApp();
     this.recordCanvasChangeHistory();
   };
@@ -160,6 +164,13 @@ export default class Canvas {
     }
 
     //  更新组件
+    this.updateApp();
+  };
+
+  // 更新属性，如value、onClick等
+  updateSelectedCmpAttr = (name: string, value: string) => {
+    const selectedIndex = this.getSelectedCmpIndex();
+    this.canvas.cmps[selectedIndex][name] = value;
     this.updateApp();
   };
 
@@ -391,6 +402,7 @@ export default class Canvas {
       getSelectedCmp: this.getSelectedCmp,
       setSelectedCmpIndex: this.setSelectedCmpIndex,
       updateSelectedCmp: this.updateSelectedCmp,
+      updateSelectedCmpAttr: this.updateSelectedCmpAttr,
       updateCanvasStyle: this.updateCanvasStyle,
       subscribe: this.subscribe,
 

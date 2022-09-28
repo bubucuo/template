@@ -1,13 +1,13 @@
 import React, {Component} from "react";
 import styles from "./index.less";
-import {CanvasContext} from "../../Context";
+import {CanvasContext} from "src/Context";
 // import {CanvasContext} from "@/src/Context";
 
-import {isImgComponent, isTextComponent} from "../../layout/Left";
+import {isImgComponent, isTextComponent} from "src/layout/Left";
 import Text from "../Text";
 import Img from "../Img";
 import Lines from "../EditLine/Lines";
-import {ICmp} from "../../store/canvas";
+import {ICmp} from "src/store/canvas";
 
 // todo 拖拽、删除、改变层级关系等
 
@@ -43,6 +43,10 @@ export default class Cmp extends Component<ICmpProps> {
 
     const belongingToAssembly = this.context.belongingToAssembly(index);
 
+    const innerWidth = style.width - (style.borderWidth || 0) * 2;
+    const innerHeight = style.height - (style.borderWidth || 0) * 2;
+
+    const selectedIndex = this.context.getSelectedCmpIndex();
     return (
       <div
         id={cmp.key + ""}
@@ -53,14 +57,19 @@ export default class Cmp extends Component<ICmpProps> {
           zIndex,
         }}
         onClick={this.setSelected}>
-        {belongingToAssembly && <Lines style={{width, height, transform}} />}
+        {selectedIndex !== index && belongingToAssembly && (
+          <Lines
+            style={{width, height, transform}}
+            basePos={style.borderWidth}
+          />
+        )}
 
         {/* 组件本身 , 注意如果是文本组件 ，如果处于选中状态，则目前处理是，textarea与这里的div Text重叠*/}
         <div
           className={styles.cmp}
           style={{
-            width: style.width,
-            height: style.height,
+            width: innerWidth,
+            height: innerHeight,
           }}>
           {cmp.type === isTextComponent && <Text {...cmp} />}
           {cmp.type === isImgComponent && <Img {...cmp} />}

@@ -2,14 +2,14 @@ import {useCanvasByContext} from "src/store/hooks";
 import InputColor from "src/lib/InputColor";
 import Item from "src/lib/Item";
 import styles from "./index.less";
-import {isImgComponent} from "src/layout/Left/index";
+import {isImgComponent, isTextComponent} from "src/layout/Left/index";
 
 export default function EditCmp() {
   const canvas = useCanvasByContext();
 
   const selectedCmp = canvas.getSelectedCmp();
 
-  const {value, style} = selectedCmp;
+  const {value, style, onClick = ""} = selectedCmp;
 
   const handleValueChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = e.target.value;
@@ -24,6 +24,14 @@ export default function EditCmp() {
     const newStyle = {[name]: value};
 
     canvas.updateSelectedCmp(newStyle);
+    canvas.recordCanvasChangeHistory();
+  };
+
+  const handleAttrChange = (
+    e: any,
+    {name, value}: {name: string; value: string}
+  ) => {
+    canvas.updateSelectedCmpAttr(name, value);
     canvas.recordCanvasChangeHistory();
   };
 
@@ -93,6 +101,27 @@ export default function EditCmp() {
               });
             }}
           />
+        </Item>
+      )}
+
+      {selectedCmp.type === isTextComponent && (
+        <Item
+          label="装饰线: "
+          tips="如果设置完还是看不到装饰线，调整下行高试试~">
+          <select
+            className={styles.itemRight}
+            value={style.textDecoration || "none"}
+            onChange={(e) => {
+              handleStyleChange(e, {
+                name: "textDecoration",
+                value: e.target.value,
+              });
+            }}>
+            <option value="none">无</option>
+            <option value="underline">下划线</option>
+            <option value="overline">上划线</option>
+            <option value="line-through">删除线</option>
+          </select>
         </Item>
       )}
 
@@ -254,6 +283,20 @@ export default function EditCmp() {
           />
         </Item>
       )}
+
+      <Item label="点击跳转: ">
+        <input
+          className={styles.itemRight}
+          type="text"
+          value={onClick}
+          onChange={(e) =>
+            handleAttrChange(e, {
+              name: "onClick",
+              value: e.target.value,
+            })
+          }
+        />
+      </Item>
     </div>
   );
 }

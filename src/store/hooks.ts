@@ -46,7 +46,7 @@ export function useGetCanvas(canvas: ICanvasInstance) {
     if (id !== null) {
       getCanvas(id, (res: any) => {
         if (res.content.length > 100) {
-          canvas.setCanvas(JSON.parse(res.content));
+          canvas.setCanvas(JSON.parse(res.content), {title: res.title});
         }
       });
     }
@@ -56,7 +56,13 @@ export function useGetCanvas(canvas: ICanvasInstance) {
 // 获取画布唯一标识id
 export function useCanvasId(): number {
   const [params] = useSearchParams();
-  const id = parseInt(params.get("id") || "");
+  let id: string | number = params.get("id");
+
+  if (id === null) {
+    return null;
+  }
+
+  id = parseInt(id || "");
 
   return id;
 }

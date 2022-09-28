@@ -6,6 +6,7 @@ import {ICmp} from "../store/canvas";
 
 type ListItem = {
   id: number;
+  title: string;
   content: string;
 };
 export default function Home() {
@@ -37,7 +38,14 @@ export default function Home() {
       title: "id",
       key: "id",
       render: (item: ListItem) => {
-        const title = JSON.parse(item.content).title;
+        return <Link to={"/edit?id=" + item.id}>{item.id}</Link>;
+      },
+    },
+    {
+      title: "标题",
+      key: "title",
+      render: (item: ListItem) => {
+        const title = item.title || "未命名";
         return <Link to={"/edit?id=" + item.id}>{title}</Link>;
       },
     },
@@ -47,11 +55,11 @@ export default function Home() {
       key: "action",
       render: (item: ListItem) => (
         <Space size="middle">
-          <Link
+          <a
             target="_blank"
-            to={"https://builder-lemon.vercel.app/?id=" + item.id}>
+            href={"https://builder-lemon.vercel.app/?id=" + item.id}>
             线上查看（切移动端）
-          </Link>
+          </a>
           <Link to={"/edit?id=" + item.id}>编辑</Link>
           <Button onClick={() => del({id: item.id})}>删除</Button>
         </Space>

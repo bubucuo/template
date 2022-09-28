@@ -18,7 +18,7 @@ export function common(
     } else if (code === 500) {
       typeof failedCallback === "function"
         ? failedCallback()
-        : alert("信息有误，失败！");
+        : alert(res.data.msg || "信息有误，失败！");
     }
   } else if (res.status === 500) {
     typeof failedCallback === "function" ? failedCallback() : alert("失败！");

@@ -14,7 +14,7 @@ export function getCanvas(
 
 // 保存
 export function saveCanvas(
-  values: {id: number | null; content: string; type: string},
+  values: {id: number | null; content: string; type: string; title?: string},
   successCallback: Function,
   failedCallback?: Function
 ) {

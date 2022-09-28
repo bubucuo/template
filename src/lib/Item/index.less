@@ -1,12 +1,28 @@
 .main {
+  position: relative;
   display: flex;
   justify-content: flex-start;
   align-items: center;
+
+  &:hover {
+    .tips {
+      display: block;
+    }
+  }
 
   padding: 0 8px;
   margin-top: 16px;
   label {
     width: 60px;
     color: #666;
+  }
+
+  .tips {
+    display: none;
+    position: absolute;
+    bottom: -30px;
+    left: 78px;
+    font-size: 12px;
+    color: orange;
   }
 }

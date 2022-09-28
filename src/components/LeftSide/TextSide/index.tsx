@@ -10,6 +10,7 @@ const defaultStyle = {
   lineHeight: "30px",
   fontSize: 12,
   fontWeight: "normal",
+  textDecoration: "none",
   color: "#000",
   backgroundColor: "#ffffff00",
   textAlign: "left",
